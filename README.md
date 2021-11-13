@@ -14,7 +14,7 @@
     - hofix: hotfix 브랜치에서 생성되는 모든 커밋 헤더
     - docs: 문서 작업
     - PR: PR 생성할 때 붙여주는 헤더
-
+    - test : 페어끼리 git branch 작업할때 테스트
 ### Branch Convention
 
 - 브랜치 네이밍 컨벤션
