@@ -42,7 +42,6 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	public static void setDistance(int distance) {
 		SEPARATION_DISTANCE = distance;
 	}
-
 	/**
 	 * Proportion of C-type ships. C형 함선의 비율.
 	 */

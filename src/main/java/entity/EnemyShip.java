@@ -59,7 +59,13 @@ public class EnemyShip extends Entity {
 	 *                   대응하는 이미지.
 	 */
 	public EnemyShip(final int positionX, final int positionY, final SpriteType spriteType) {
+<<<<<<< HEAD
 		super(positionX, positionY, 12 * modiWidth, 8 * modiWidth, Color.WHITE);
+=======
+//		super(positionX, positionY, 12 * 2, 8 * 2, Color.WHITE); // min
+//		super(positionX, positionY, 12 * 3, 8 * 2, Color.WHITE); // medium
+		super(positionX, positionY, 12 * 4, 8 * 2, Color.WHITE); // max
+>>>>>>> origin/SETB-19/feat-setting
 
 		this.spriteType = spriteType;
 		this.animationCooldown = Core.getCooldown(500);

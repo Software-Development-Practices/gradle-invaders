@@ -317,7 +317,10 @@ public final class DrawManager {
         backBufferGraphics.drawString(Integer.toString(lives), 20, 25);
         Ship dummyShip = new Ship(0, 0);
         for (int i = 0; i < lives; i++)
-            drawEntity(dummyShip, 40 + 35 * i, 10);
+            //            drawEntity(dummyShip, 40 + 35 * i, 10); //min (default)
+//            drawEntity(dummyShip, 40 + 45 * i, 10); // medium
+            drawEntity(dummyShip, 40 + 60 * i, 7); //max
+
     }
 
     /**
@@ -547,7 +550,7 @@ public final class DrawManager {
      */
     public void drawRegularRect(final Screen screen) {
         backBufferGraphics.setFont(fontRegular);
-        backBufferGraphics.drawRect(screen.getWidth() / 2 - 80, screen.getHeight() - fontBigMetrics.getHeight() * 2 , 160,50);
+        backBufferGraphics.drawRect(screen.getWidth() / 2 - 80, screen.getHeight() - fontBigMetrics.getHeight() * 2, 160, 50);
 
     }
 
