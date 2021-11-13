@@ -23,13 +23,25 @@ import screen.TitleScreen;
 public final class Core {
 
 	/**
+	 * 화면 크기 변경을 위한 변수입니다.
+	 * (0: 기본 화면 / 1: 조금 더 큰 화면 / 2: 아주 큰 화면)
+	 */
+	private static int screenSizeMode = 0;
+
+	/**
+	 * 난이도 변경을 위한 변수입니다.
+	 * (0: Easy / 1: Normal / 2: Hard)
+	 */
+	private static int difficulty = 0;
+
+	/**
 	 * Width of current screen. 현재 화면의 너비입니다.
 	 */
-	private static final int WIDTH = 448;
+	private static int WIDTH = 448;
 	/**
 	 * Height of current screen. 현재 화면의 높이입니다.
 	 */
-	private static final int HEIGHT = 520;
+	private static int HEIGHT = 520;
 	/**
 	 * Max fps of current screen. 현재 화면의 최대 fps.
 	 */
@@ -47,22 +59,6 @@ public final class Core {
 	 * Total number of levels. 총 레벨 수.
 	 */
 	private static final int NUM_LEVELS = 7;
-
-	/* 레벨들의 난이도 설정 */
-	/** Difficulty settings for level 1. */
-	private static final GameSettings SETTINGS_LEVEL_1 = new GameSettings(5, 4, 60, 2000);
-	/** Difficulty settings for level 2. */
-	private static final GameSettings SETTINGS_LEVEL_2 = new GameSettings(5, 5, 50, 2500);
-	/** Difficulty settings for level 3. */
-	private static final GameSettings SETTINGS_LEVEL_3 = new GameSettings(6, 5, 40, 1500);
-	/** Difficulty settings for level 4. */
-	private static final GameSettings SETTINGS_LEVEL_4 = new GameSettings(6, 6, 30, 1500);
-	/** Difficulty settings for level 5. */
-	private static final GameSettings SETTINGS_LEVEL_5 = new GameSettings(7, 6, 20, 1000);
-	/** Difficulty settings for level 6. */
-	private static final GameSettings SETTINGS_LEVEL_6 = new GameSettings(7, 7, 10, 1000);
-	/** Difficulty settings for level 7. */
-	private static final GameSettings SETTINGS_LEVEL_7 = new GameSettings(8, 7, 2, 500);
 
 	/**
 	 * Frame to draw the screen on. 화면을 그릴 Frame 입니다.
@@ -113,25 +109,75 @@ public final class Core {
 			e.printStackTrace();
 		}
 
-		frame = new Frame(WIDTH, HEIGHT);
-		DrawManager.getInstance().setFrame(frame);
-		int width = frame.getWidth();
-		int height = frame.getHeight();
-
-		gameSettings = new ArrayList<GameSettings>();
-		gameSettings.add(SETTINGS_LEVEL_1);
-		gameSettings.add(SETTINGS_LEVEL_2);
-		gameSettings.add(SETTINGS_LEVEL_3);
-		gameSettings.add(SETTINGS_LEVEL_4);
-		gameSettings.add(SETTINGS_LEVEL_5);
-		gameSettings.add(SETTINGS_LEVEL_6);
-		gameSettings.add(SETTINGS_LEVEL_7);
-
 		GameState gameState;
+		int width, height;
+		int modiSpeed, modiFreq;
 
 		int returnCode = 1;
 		do {
 			gameState = new GameState(1, 0, MAX_LIVES, 0, 0);
+
+			switch (screenSizeMode) {
+				case 1 -> {
+					WIDTH = 550;
+					HEIGHT = 638;
+				}
+				case 2 -> {
+					WIDTH = 710;
+					HEIGHT = 824;
+				}
+				default -> {
+					WIDTH = 448;
+					HEIGHT = 520;
+				}
+			}
+
+			frame = new Frame(WIDTH, HEIGHT);
+			DrawManager.getInstance().setFrame(frame);
+			width = frame.getWidth();
+			height = frame.getHeight();
+
+			// 게임 난이도 초기화
+			gameSettings = new ArrayList<GameSettings>();
+
+			switch (difficulty) {
+				case 1:
+					modiSpeed = 5;
+					modiFreq = 250;
+					break;
+				case 2:
+					modiSpeed = 10;
+					modiFreq = 400;
+					break;
+				default:
+					modiSpeed = 0;
+					modiFreq = 0;
+					break;
+			}
+
+			/* 레벨들의 난이도 설정 */
+			/** Difficulty settings for level 1. */
+			GameSettings SETTINGS_LEVEL_1 = new GameSettings(5, 4, 60-modiSpeed, 2500-modiFreq);
+			/** Difficulty settings for level 2. */
+			GameSettings SETTINGS_LEVEL_2 = new GameSettings(5, 5, 50-modiSpeed, 2500-modiFreq);
+			/** Difficulty settings for level 3. */
+			GameSettings SETTINGS_LEVEL_3 = new GameSettings(6, 5, 40-modiSpeed, 1500-modiFreq);
+			/** Difficulty settings for level 4. */
+			GameSettings SETTINGS_LEVEL_4 = new GameSettings(6, 6, 30-modiSpeed, 1500-modiFreq);
+			/** Difficulty settings for level 5. */
+			GameSettings SETTINGS_LEVEL_5 = new GameSettings(7, 6, 20-modiSpeed, 1000-modiFreq);
+			/** Difficulty settings for level 6. */
+			GameSettings SETTINGS_LEVEL_6 = new GameSettings(7, 7, 10-modiSpeed, 1000-modiFreq);
+			/** Difficulty settings for level 7. */
+			GameSettings SETTINGS_LEVEL_7 = new GameSettings(8, 7, 2-modiSpeed, 500-modiFreq);
+
+			gameSettings.add(SETTINGS_LEVEL_1);
+			gameSettings.add(SETTINGS_LEVEL_2);
+			gameSettings.add(SETTINGS_LEVEL_3);
+			gameSettings.add(SETTINGS_LEVEL_4);
+			gameSettings.add(SETTINGS_LEVEL_5);
+			gameSettings.add(SETTINGS_LEVEL_6);
+			gameSettings.add(SETTINGS_LEVEL_7);
 
 			switch (returnCode) {
 			case 1:
@@ -250,5 +296,33 @@ public final class Core {
 	 */
 	public static Cooldown getVariableCooldown(final int milliseconds, final int variance) {
 		return new Cooldown(milliseconds, variance);
+	}
+
+	/**
+	 * screen 사이즈 모드 int 값에 대한 getter 함수입니다.
+	 */
+	public static int getScreenSizeMode() {
+		return screenSizeMode;
+	}
+
+	/**
+	 * difficulty 모드 int 값에 대한 getter 함수입니다.
+	 */
+	public static int getDifficulty() {
+		return difficulty;
+	}
+
+	/**
+	 * screen 사이즈 모드 int 값에 대한 setter 함수입니다.
+	 */
+	public static void setScreenSizeMode(int mode) {
+		screenSizeMode = mode;
+	}
+
+	/**
+	 * difficulty 모드 int 값에 대한 setter 함수입니다.
+	 */
+	public static void setDifficulty(int mode) {
+		difficulty = mode;
 	}
 }
