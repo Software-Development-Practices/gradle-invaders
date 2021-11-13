@@ -34,6 +34,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	/**
 	 * Distance between ships. 선박 사이의 거리.
 	 */
+
 	private static int SEPARATION_DISTANCE = 40;
 
 	/**

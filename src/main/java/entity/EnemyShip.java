@@ -61,6 +61,7 @@ public class EnemyShip extends Entity {
 	public EnemyShip(final int positionX, final int positionY, final SpriteType spriteType) {
 		super(positionX, positionY, 12 * modiWidth, 8 * modiWidth, Color.WHITE);
 
+
 		this.spriteType = spriteType;
 		this.animationCooldown = Core.getCooldown(500);
 		this.isDestroyed = false;
