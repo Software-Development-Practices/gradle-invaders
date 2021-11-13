@@ -36,6 +36,17 @@ public class EnemyShip extends Entity {
 	 * Values of the ship, in points, when destroyed. 파괴된 선박의 가치(포인트)입니다.
 	 */
 	private int pointValue;
+	/**
+	 * resize시 EnemyShip의 크기도 커지는데 타격범위도 키우기 위해 사용되는 변수들입니다.
+	 */
+	private static int modiWidth = 2;
+
+	/**
+	 * modiWidth 변수의 setter함수입니다.
+	 */
+	public static void setModiWidth(int wid) {
+		modiWidth = wid;
+	}
 
 	/**
 	 * Constructor, establishes the ship's properties. 생성자, 함선의 속성을 설정합니다.
@@ -48,7 +59,7 @@ public class EnemyShip extends Entity {
 	 *                   대응하는 이미지.
 	 */
 	public EnemyShip(final int positionX, final int positionY, final SpriteType spriteType) {
-		super(positionX, positionY, 12 * 2, 8 * 2, Color.WHITE);
+		super(positionX, positionY, 12 * modiWidth, 8 * modiWidth, Color.WHITE);
 
 		this.spriteType = spriteType;
 		this.animationCooldown = Core.getCooldown(500);

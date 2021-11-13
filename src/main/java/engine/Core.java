@@ -8,6 +8,8 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import entity.EnemyShip;
+import entity.EnemyShipFormation;
 import screen.*;
 
 /**
@@ -134,14 +136,23 @@ public final class Core {
 				case 1 -> {
 					WIDTH = 550;
 					HEIGHT = 638;
+					DrawManager.setEntitySize(3,3,3,3);
+					EnemyShip.setModiWidth(3);	// EnemyShip의 타격범위 설정
+					EnemyShipFormation.setDistance(60);
 				}
 				case 2 -> {
 					WIDTH = 710;
 					HEIGHT = 824;
+					DrawManager.setEntitySize(4,4,4,4);
+					EnemyShip.setModiWidth(3);	// EnemyShip의 타격범위 설정
+					EnemyShipFormation.setDistance(80);
 				}
 				default -> {
 					WIDTH = 448;
 					HEIGHT = 520;
+					DrawManager.setEntitySize(2,2,1,1);
+					EnemyShip.setModiWidth(2);	// EnemyShip의 타격범위 설정
+					EnemyShipFormation.setDistance(40);
 				}
 			}
 

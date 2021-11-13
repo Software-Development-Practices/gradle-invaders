@@ -128,6 +128,25 @@ public final class DrawManager {
         Explosion
     }
 
+    /**
+     * resize시 entity 크기도 키우기 위해 사용되는 변수들입니다.
+     */
+    private static int x = 2, y = 2, width = 1, height = 1;
+
+    /**
+     * resize시 entity 크기도 키우기 위해 사용되는 변수들의 setter함수입니다.
+     * @param x_para
+     * @param y_para
+     * @param width_para
+     * @param height_para
+     */
+    public static void setEntitySize(int x_para, int y_para, int width_para, int height_para) {
+        x = x_para;
+        y = y_para;
+        width = width_para;
+        height = height_para;
+    }
+
     ;
 
     /**
@@ -236,7 +255,12 @@ public final class DrawManager {
         for (int i = 0; i < image.length; i++)
             for (int j = 0; j < image[i].length; j++)
                 if (image[i][j])
-                    backBufferGraphics.drawRect(positionX + i * 2, positionY + j * 2, 1, 1);
+                    // 작은 창에서 fillReat를 쓰면 Entity가 깨져서 작은창에서만 drawRect를 쓸 수 있게해줌.
+                    if (x==2) {
+                        backBufferGraphics.drawRect(positionX + i * 2, positionY + j * 2, 1, 1);
+                    } else {
+                        backBufferGraphics.fillRect(positionX + i * x, positionY + j * y, width, height);
+                    }
     }
 
     /**
