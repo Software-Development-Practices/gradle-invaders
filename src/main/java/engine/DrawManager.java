@@ -187,9 +187,13 @@ public final class DrawManager {
 		backBufferGraphics.setColor(entity.getColor());
 		for (int i = 0; i < image.length; i++)
 			for (int j = 0; j < image[i].length; j++)
-				if (image[i][j])
-					backBufferGraphics.drawRect(positionX + i * 2, positionY + j * 2, 1, 1);
+				if (image[i][j]) {
+//                    backBufferGraphics.fillRect(positionX + i * 2 ,positionY + j * 2,2,2);
+//                    backBufferGraphics.fillRect(positionX + i * 3,positionY + j * 3,3,3); // mid
+					backBufferGraphics.fillRect(positionX + i * 4, positionY + j * 4, 4, 4);  // max
+				}
 	}
+
 
 	/**
 	 * For debugging purposes, draws the canvas borders. 디버깅을 위해 캔버스 테두리를 그립니다.
@@ -245,7 +249,9 @@ public final class DrawManager {
 		backBufferGraphics.drawString(Integer.toString(lives), 20, 25);
 		Ship dummyShip = new Ship(0, 0);
 		for (int i = 0; i < lives; i++)
-			drawEntity(dummyShip, 40 + 35 * i, 10);
+//            drawEntity(dummyShip, 40 + 35 * i, 10); //min (default)
+//            drawEntity(dummyShip, 40 + 45 * i, 10); // medium
+			drawEntity(dummyShip, 40 + 60 * i, 7); //max
 	}
 
 	/**
