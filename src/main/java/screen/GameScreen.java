@@ -125,7 +125,7 @@ public class GameScreen extends Screen {
 	 * 
 	 * @param gameState    Current game state. 현재 게임 상태입니다.
 	 * @param gameSettings Current game settings. 현재 게임 설정.
-	 * @param bonnusLife   Checks if a bonus life is awarded this level. 이 레벨에서 보너스
+	 * @param bonusLife   Checks if a bonus life is awarded this level. 이 레벨에서 보너스
 	 *                     생명이 주어지는지 확인합니다.
 	 * @param width        Screen width. 화면 너비.
 	 * @param height       Screen height. 화면 높이.
