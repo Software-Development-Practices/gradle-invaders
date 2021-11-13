@@ -175,3 +175,4 @@ log*
 /out/
 .idea
 /space-invaders.iml
+/.gradle/
