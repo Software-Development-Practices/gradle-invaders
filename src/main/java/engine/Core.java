@@ -8,11 +8,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import screen.GameScreen;
-import screen.HighScoreScreen;
-import screen.ScoreScreen;
-import screen.Screen;
-import screen.TitleScreen;
+import screen.*;
 
 /**
  * Implements core game logic. 핵심 게임 로직을 구현합니다.
@@ -62,8 +58,14 @@ public final class Core {
 
 	/**
 	 * Frame to draw the screen on. 화면을 그릴 Frame 입니다.
+	 * (resize를 위해 Frame 변수를 두 개 만들어 사용합니다.)
 	 */
-	private static Frame frame;
+	private static Frame frame1;
+	/**
+	 * Frame to draw the screen on. 화면을 그릴 Frame 입니다.
+	 * (resize를 위해 Frame 변수를 두 개 만들어 사용합니다.)
+	 */
+	private static Frame frame2;
 	/**
 	 * Screen currently shown. 현재 보여지는 화면.
 	 */
@@ -110,13 +112,24 @@ public final class Core {
 		}
 
 		GameState gameState;
-		int width, height;
+		int width = 448, height= 520;
 		int modiSpeed, modiFreq;
+
+		/**
+		 * 처음에 frame을 만듦
+		 */
+		frame1 = new Frame(WIDTH, HEIGHT);
+		DrawManager.getInstance().setFrame(frame1);
+		width = frame1.getWidth();
+		height = frame1.getHeight();
 
 		int returnCode = 1;
 		do {
 			gameState = new GameState(1, 0, MAX_LIVES, 0, 0);
 
+			/**
+			 * SettingScreen에서 정한 화면 사이즈에 맞추어 WIDTH, HEIGHT가 변경됨.
+			 */
 			switch (screenSizeMode) {
 				case 1 -> {
 					WIDTH = 550;
@@ -132,10 +145,19 @@ public final class Core {
 				}
 			}
 
-			frame = new Frame(WIDTH, HEIGHT);
-			DrawManager.getInstance().setFrame(frame);
-			width = frame.getWidth();
-			height = frame.getHeight();
+			/**
+			 * 변경된 WIDTH, HEIGHT에 맞추어 화면을 새로띄움.
+			 */
+			frame2 = new Frame(WIDTH, HEIGHT);
+			DrawManager.getInstance().setFrame(frame2);
+			width = frame2.getWidth();
+			height = frame2.getHeight();
+
+			// 이전에 띄웠던 창인 frame1을 종료함.
+			frame1.dispose();
+
+			// 새로 띄운 창인 frame2를 frame1 변수로 이동시킴.
+			frame1 = frame2;
 
 			// 게임 난이도 초기화
 			gameSettings = new ArrayList<GameSettings>();
@@ -184,7 +206,7 @@ public final class Core {
 				// Main menu.
 				currentScreen = new TitleScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " title screen at " + FPS + " fps.");
-				returnCode = frame.setScreen(currentScreen);
+				returnCode = frame1.setScreen(currentScreen);
 				LOGGER.info("Closing title screen.");
 				break;
 			case 2:
@@ -197,7 +219,7 @@ public final class Core {
 					currentScreen = new GameScreen(gameState, gameSettings.get(gameState.getLevel() - 1), bonusLife,
 							width, height, FPS);
 					LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " game screen at " + FPS + " fps.");
-					frame.setScreen(currentScreen);
+					frame1.setScreen(currentScreen);
 					LOGGER.info("Closing game screen.");
 
 					gameState = ((GameScreen) currentScreen).getGameState();
@@ -212,16 +234,24 @@ public final class Core {
 						+ gameState.getBulletsShot() + " bullets shot and " + gameState.getShipsDestroyed()
 						+ " ships destroyed.");
 				currentScreen = new ScoreScreen(width, height, FPS, gameState);
-				returnCode = frame.setScreen(currentScreen);
+				returnCode = frame1.setScreen(currentScreen);
 				LOGGER.info("Closing score screen.");
 				break;
 			case 3:
 				// High scores.
 				currentScreen = new HighScoreScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " high score screen at " + FPS + " fps.");
-				returnCode = frame.setScreen(currentScreen);
+				returnCode = frame1.setScreen(currentScreen);
 				LOGGER.info("Closing high score screen.");
 				break;
+			case 4:
+				currentScreen = new SettingScreen(width, height, FPS);
+				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " setting screen at " + FPS + " fps.");
+
+				returnCode = frame1.setScreen(currentScreen);
+
+				break;
+
 			default:
 				break;
 			}
