@@ -34,7 +34,7 @@ public final class Core {
 	 */
 	private static int difficulty = 0;
 
-	/**
+	/**d
 	 * Width of current screen. 현재 화면의 너비입니다.
 	 */
 	private static int WIDTH = 448;
