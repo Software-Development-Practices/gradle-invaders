@@ -144,7 +144,7 @@ public final class Core {
 					WIDTH = 710;
 					HEIGHT = 824;
 					DrawManager.setEntitySize(4,4,4,4);
-					EnemyShip.setModiWidth(3);	// EnemyShip의 타격범위 설정
+					EnemyShip.setModiWidth(4);	// EnemyShip의 타격범위 설정
 					EnemyShipFormation.setDistance(80);
 				}
 				default -> {
