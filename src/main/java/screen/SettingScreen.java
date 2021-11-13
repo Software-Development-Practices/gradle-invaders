@@ -81,6 +81,8 @@ public class SettingScreen extends Screen {
 
             if (activated == 3 &&inputManager.isKeyDown(KeyEvent.VK_SPACE) ){
                 this.returnCode = 1;
+                Core.setScreenSizeMode(resizeOption);
+                Core.setDifficulty(difficultyOption);
                 this.isRunning = false;
             }
 
