@@ -35,7 +35,6 @@ public class SettingScreen extends Screen {
         activated = 0;
 
         // Defaults to resize screen
-        this.returnCode = 2;
 
         this.selectionCooldown = Core.getCooldown(SELECTION_TIME);
         this.selectionCooldown.reset();
