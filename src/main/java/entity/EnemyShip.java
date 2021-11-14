@@ -49,6 +49,11 @@ public class EnemyShip extends Entity {
 	 */
 	public EnemyShip(final int positionX, final int positionY, final SpriteType spriteType) {
 		super(positionX, positionY, 12 * 2, 8 * 2, Color.WHITE);
+		//보스 경우 너비랑 높이도 스프라이트 크기에 맞게 바꿔 줍니다.
+		if(spriteType == SpriteType.BossA1 || spriteType == SpriteType.BossA2){
+			width = 12*10;
+			height = 8*10;
+		}
 
 		this.spriteType = spriteType;
 		this.animationCooldown = Core.getCooldown(500);
