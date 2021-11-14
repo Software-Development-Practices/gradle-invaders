@@ -58,13 +58,13 @@ public final class Core {
 	// 편의를 위해서 2레벨부터 보스 나오도록 해놨습니다.
 	/** Difficulty settings for Boss level 1. */
 	private static final GameSettings Boss_LEVEL_1 =
-			new GameSettings(5, 5, 50, 2500,1);
+			new GameSettings(5, 5, 50, 500,1);
 	/** Difficulty settings for Boss level 1. */
 	private static final GameSettings Boss_LEVEL_2 =
-			new GameSettings(5, 5, 50, 2500,2);
+			new GameSettings(5, 5, 50, 300,2);
 	/** Difficulty settings for Boss level 1. */
 	private static final GameSettings Boss_LEVEL_3 =
-			new GameSettings(5, 5, 50, 2500,3);
+			new GameSettings(5, 5, 50, 250,3);
 	private static final GameSettings SETTINGS_LEVEL_2 =
 			new GameSettings(5, 5, 50, 2500,0);
 	/** Difficulty settings for level 3. */
