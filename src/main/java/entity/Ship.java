@@ -18,7 +18,8 @@ public class Ship extends Entity {
 	/**
 	 * Time between shots. 샷 사이의 시간.
 	 */
-	private static final int SHOOTING_INTERVAL = 750;
+	//편의를 위해 총알 쿨타임 짧게 변경했습니다.
+	private static final int SHOOTING_INTERVAL = 50;
 	/**
 	 * Speed of the bullets shot by the ship. 함선이 발사하는 총알의 속도.
 	 */

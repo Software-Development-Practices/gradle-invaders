@@ -79,7 +79,11 @@ public final class DrawManager {
 		/** Bonus ship. */
 		EnemyShipSpecial,
 		/** Destroyed enemy ship. */
-		Explosion
+		Explosion,
+		/** boss first form. */
+		BossA1,
+		/** boss second form. */
+		BossA2
 	};
 
 	/**
@@ -105,6 +109,9 @@ public final class DrawManager {
 			spriteMap.put(SpriteType.EnemyShipC2, new boolean[12][8]);
 			spriteMap.put(SpriteType.EnemyShipSpecial, new boolean[16][7]);
 			spriteMap.put(SpriteType.Explosion, new boolean[13][7]);
+			//스프라이트는 EnemyShipA1모양과 같은모양으로 해주었습니다.
+			spriteMap.put(SpriteType.BossA1, new boolean[12][8]);
+			spriteMap.put(SpriteType.BossA2, new boolean[12][8]);
 
 			fileManager.loadSprite(spriteMap);
 			logger.info("Finished loading the sprites.");
@@ -185,10 +192,20 @@ public final class DrawManager {
 		boolean[][] image = spriteMap.get(entity.getSpriteType());
 
 		backBufferGraphics.setColor(entity.getColor());
-		for (int i = 0; i < image.length; i++)
-			for (int j = 0; j < image[i].length; j++)
-				if (image[i][j])
-					backBufferGraphics.drawRect(positionX + i * 2, positionY + j * 2, 1, 1);
+		//우선 보스 1만 해봤습니다.
+		if(entity.getSpriteType() != SpriteType.BossA1 && entity.getSpriteType() != SpriteType.BossA2) {
+			for (int i = 0; i < image.length; i++)
+				for (int j = 0; j < image[i].length; j++)
+					if (image[i][j])
+						backBufferGraphics.drawRect(positionX + i * 2, positionY
+								+ j * 2, 1, 1);
+		}else{
+			for (int i = 0; i < image.length; i++)
+				for (int j = 0; j < image[i].length; j++)
+					if (image[i][j])
+						backBufferGraphics.fillRect(positionX + i * 10, positionY
+								+ j * 10, 10, 10);
+		}
 	}
 
 	/**

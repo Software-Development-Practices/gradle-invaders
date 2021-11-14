@@ -17,9 +17,10 @@ import screen.TitleScreen;
 /**
  * Implements core game logic. 핵심 게임 로직을 구현합니다.
  * 
- * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
+ * @author <aN href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
  * 
  */
+//test
 public final class Core {
 
 	/**
