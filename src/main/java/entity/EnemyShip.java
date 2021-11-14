@@ -21,6 +21,9 @@ public class EnemyShip extends Entity {
 	private static final int B_TYPE_POINTS = 20;
 	/** Point value of a type C enemy. */
 	private static final int C_TYPE_POINTS = 30;
+	/** Point value of a type Boss1. */
+	//일단은 백점으로 해두었습니다.
+	private static final int Boss1_POINTS = 100;
 	/** Point value of a bonus enemy. */
 	private static final int BONUS_TYPE_POINTS = 100;
 
@@ -49,6 +52,11 @@ public class EnemyShip extends Entity {
 	 */
 	public EnemyShip(final int positionX, final int positionY, final SpriteType spriteType) {
 		super(positionX, positionY, 12 * 2, 8 * 2, Color.WHITE);
+		//보스 경우 너비랑 높이도 스프라이트 크기에 맞게 바꿔 줍니다.
+		if(spriteType == SpriteType.BossA1 || spriteType == SpriteType.BossA2){
+			width = 12*10;
+			height = 8*10;
+		}
 
 		this.spriteType = spriteType;
 		this.animationCooldown = Core.getCooldown(500);
@@ -66,7 +74,12 @@ public class EnemyShip extends Entity {
 		case EnemyShipC1:
 		case EnemyShipC2:
 			this.pointValue = C_TYPE_POINTS;
-			break;
+			break; 
+		//보스 포인트 설정.	
+		case BossA1: 
+		case BossA2:
+			this.pointValue = Boss1_POINTS;
+			break;		
 		default:
 			this.pointValue = 0;
 			break;
@@ -133,6 +146,13 @@ public class EnemyShip extends Entity {
 			case EnemyShipC2:
 				this.spriteType = SpriteType.EnemyShipC1;
 				break;
+			//boss 움직임
+			case BossA1:
+				this.spriteType = SpriteType.BossA2;
+				break;
+			case BossA2:
+				this.spriteType = SpriteType.BossA1;
+				break;				
 			default:
 				break;
 			}

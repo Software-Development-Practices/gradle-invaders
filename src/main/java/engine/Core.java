@@ -17,9 +17,10 @@ import screen.TitleScreen;
 /**
  * Implements core game logic. 핵심 게임 로직을 구현합니다.
  * 
- * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
+ * @author <aN href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
  * 
  */
+//test
 public final class Core {
 
 	/**
@@ -50,19 +51,30 @@ public final class Core {
 
 	/* 레벨들의 난이도 설정 */
 	/** Difficulty settings for level 1. */
-	private static final GameSettings SETTINGS_LEVEL_1 = new GameSettings(5, 4, 60, 2000);
+	private static final GameSettings SETTINGS_LEVEL_1 =
+			new GameSettings(5, 4, 60, 2000,false);
 	/** Difficulty settings for level 2. */
-	private static final GameSettings SETTINGS_LEVEL_2 = new GameSettings(5, 5, 50, 2500);
+	// 편의를 위해서 2레벨부터 보스 나오도록 해놨습니다.
+	private static final GameSettings SETTINGS_LEVEL_2 =
+			new GameSettings(5, 5, 50, 2500,true);
+	/** Difficulty settings for Boss level 1. */
+	private static final GameSettings Boss_LEVEL_1 =
+			new GameSettings(5, 5, 50, 2500,true);
 	/** Difficulty settings for level 3. */
-	private static final GameSettings SETTINGS_LEVEL_3 = new GameSettings(6, 5, 40, 1500);
+	private static final GameSettings SETTINGS_LEVEL_3 =
+			new GameSettings(6, 5, 40, 1500,false);
 	/** Difficulty settings for level 4. */
-	private static final GameSettings SETTINGS_LEVEL_4 = new GameSettings(6, 6, 30, 1500);
+	private static final GameSettings SETTINGS_LEVEL_4 =
+			new GameSettings(6, 6, 30, 1500,false);
 	/** Difficulty settings for level 5. */
-	private static final GameSettings SETTINGS_LEVEL_5 = new GameSettings(7, 6, 20, 1000);
+	private static final GameSettings SETTINGS_LEVEL_5 =
+			new GameSettings(7, 6, 20, 1000,false);
 	/** Difficulty settings for level 6. */
-	private static final GameSettings SETTINGS_LEVEL_6 = new GameSettings(7, 7, 10, 1000);
+	private static final GameSettings SETTINGS_LEVEL_6 =
+			new GameSettings(7, 7, 10, 1000,false);
 	/** Difficulty settings for level 7. */
-	private static final GameSettings SETTINGS_LEVEL_7 = new GameSettings(8, 7, 2, 500);
+	private static final GameSettings SETTINGS_LEVEL_7 =
+			new GameSettings(8, 7, 2, 500,false);
 
 	/**
 	 * Frame to draw the screen on. 화면을 그릴 Frame 입니다.
@@ -121,6 +133,8 @@ public final class Core {
 		gameSettings = new ArrayList<GameSettings>();
 		gameSettings.add(SETTINGS_LEVEL_1);
 		gameSettings.add(SETTINGS_LEVEL_2);
+		//보스레벨 추가
+		gameSettings.add(Boss_LEVEL_1);
 		gameSettings.add(SETTINGS_LEVEL_3);
 		gameSettings.add(SETTINGS_LEVEL_4);
 		gameSettings.add(SETTINGS_LEVEL_5);

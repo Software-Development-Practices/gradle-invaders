@@ -161,6 +161,8 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	 * Number of not destroyed ships. 파괴되지 않은 선박의 수.
 	 */
 	private int shipCount;
+	/** Checking Boss */
+	private boolean bossCheck ;
 
 	/**
 	 * Directions the formation can move. 포메이션이 움직일 수 있는 방향.
@@ -201,37 +203,58 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 		this.positionY = INIT_POS_Y;
 		this.shooters = new ArrayList<EnemyShip>();
 		SpriteType spriteType;
+		this.bossCheck = gameSettings.isBossCheck();
 
 		this.logger.info("Initializing " + nShipsWide + "x" + nShipsHigh + " ship formation in (" + positionX + ","
 				+ positionY + ")");
+		//보스 스테이지 일때 보스 하나만 나오도록 함
+		if (bossCheck){
 
-		// Each sub-list is a column on the formation.
-		for (int i = 0; i < this.nShipsWide; i++)
-			this.enemyShips.add(new ArrayList<EnemyShip>());
-
-		for (List<EnemyShip> column : this.enemyShips) {
-			for (int i = 0; i < this.nShipsHigh; i++) {
-				if (i / (float) this.nShipsHigh < PROPORTION_C)
-					spriteType = SpriteType.EnemyShipC1;
-				else if (i / (float) this.nShipsHigh < PROPORTION_B + PROPORTION_C)
-					spriteType = SpriteType.EnemyShipB1;
-				else
-					spriteType = SpriteType.EnemyShipA1;
-
-				column.add(new EnemyShip((SEPARATION_DISTANCE * this.enemyShips.indexOf(column)) + positionX,
-						(SEPARATION_DISTANCE * i) + positionY, spriteType));
-				this.shipCount++;
-			}
-		}
-
-		this.shipWidth = this.enemyShips.get(0).get(0).getWidth();
-		this.shipHeight = this.enemyShips.get(0).get(0).getHeight();
-
-		this.width = (this.nShipsWide - 1) * SEPARATION_DISTANCE + this.shipWidth;
-		this.height = (this.nShipsHigh - 1) * SEPARATION_DISTANCE + this.shipHeight;
-
-		for (List<EnemyShip> column : this.enemyShips)
+			List<EnemyShip> column = new ArrayList<EnemyShip>();
+			column.add(new EnemyShip(
+					positionX, positionY, SpriteType.BossA1));
+			this.shipCount = 1;
 			this.shooters.add(column.get(column.size() - 1));
+			this.enemyShips.add(column);
+			this.shipWidth = this.enemyShips.get(0).get(0).getWidth();
+			this.shipHeight = this.enemyShips.get(0).get(0).getHeight();
+
+			this.width = this.shipWidth;
+			this.height =  this.shipHeight;
+		}else {
+			// Each sub-list is a column on the formation.
+			for (int i = 0; i < this.nShipsWide; i++)
+				this.enemyShips.add(new ArrayList<EnemyShip>());
+			for (List<EnemyShip> column : this.enemyShips) {
+				for (int i = 0; i < this.nShipsHigh; i++) {
+					if (i / (float) this.nShipsHigh < PROPORTION_C)
+						spriteType = SpriteType.EnemyShipC1;
+					else if (i / (float) this.nShipsHigh < PROPORTION_B
+							+ PROPORTION_C)
+						spriteType = SpriteType.EnemyShipB1;
+					else
+						spriteType = SpriteType.EnemyShipA1;
+
+					column.add(new EnemyShip((SEPARATION_DISTANCE
+							* this.enemyShips.indexOf(column))
+							+ positionX, (SEPARATION_DISTANCE * i)
+							+ positionY, spriteType));
+					this.shipCount++;
+				}
+			}
+
+
+			this.shipWidth = this.enemyShips.get(0).get(0).getWidth();
+			this.shipHeight = this.enemyShips.get(0).get(0).getHeight();
+
+			this.width = (this.nShipsWide - 1) * SEPARATION_DISTANCE
+					+ this.shipWidth;
+			this.height = (this.nShipsHigh - 1) * SEPARATION_DISTANCE
+					+ this.shipHeight;
+
+			for (List<EnemyShip> column : this.enemyShips)
+				this.shooters.add(column.get(column.size() - 1));
+		}
 	}
 
 	/**

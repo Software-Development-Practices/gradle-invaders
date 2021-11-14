@@ -25,6 +25,9 @@ public class GameSettings {
 	 * Frequency of enemy shootings, +/- 30%. 적의 총격 빈도, +/- 30%.
 	 */
 	private int shootingFrecuency;
+	/** 보스 스테이지 인지 체크 합니다. */
+	//우선은 하나라서 boolean으로 했으나 후에 3개로 늘리면 int로 할예정입니다.
+	private boolean bossCheck ;
 
 	/**
 	 * Constructor.
@@ -33,13 +36,16 @@ public class GameSettings {
 	 * @param formationHeight   Height of the level's enemy formation.
 	 * @param baseSpeed         Speed of the enemies.
 	 * @param shootingFrecuency Frecuency of enemy shootings, +/- 30%.
+	 * @param bossCheck 	 checking boss stage.
 	 */
 	public GameSettings(final int formationWidth, final int formationHeight, final int baseSpeed,
-			final int shootingFrecuency) {
+			final int shootingFrecuency, final boolean bossCheck) {
 		this.formationWidth = formationWidth;
 		this.formationHeight = formationHeight;
 		this.baseSpeed = baseSpeed;
 		this.shootingFrecuency = shootingFrecuency;
+		//생성자에 보스체크추가
+		this.bossCheck = bossCheck;
 	}
 
 	/**
@@ -68,6 +74,12 @@ public class GameSettings {
 	 */
 	public final int getShootingFrecuency() {
 		return shootingFrecuency;
+	}
+	/**
+	 * @return the bossCheck
+	 */
+	public boolean isBossCheck() {
+		return bossCheck;
 	}
 
 }
