@@ -340,20 +340,6 @@ public final class Core {
 	}
 
 	/**
-	 * screen 사이즈 모드 int 값에 대한 getter 함수입니다.
-	 */
-	public static int getScreenSizeMode() {
-		return screenSizeMode;
-	}
-
-	/**
-	 * difficulty 모드 int 값에 대한 getter 함수입니다.
-	 */
-	public static int getDifficulty() {
-		return difficulty;
-	}
-
-	/**
 	 * screen 사이즈 모드 int 값에 대한 setter 함수입니다.
 	 */
 	public static void setScreenSizeMode(int mode) {
