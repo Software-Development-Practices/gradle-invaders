@@ -102,7 +102,7 @@ public class TitleScreen extends Screen {
 	private void draw() {
 		drawManager.initDrawing(this);
 
-		drawManager.drawTitle(this);
+		drawManager.drawTitle(this,"Invaders",3);
 		drawManager.drawMenu(this, this.returnCode);
 
 		drawManager.completeDrawing(this);

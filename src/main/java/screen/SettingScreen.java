@@ -11,7 +11,6 @@ public class SettingScreen extends Screen {
      * Milliseconds between changes in user selection. 사용자 선택 변경 사이의 밀리초입니다.
      */
     private static final int SELECTION_TIME = 200;
-    private static Logger logger = Core.getLogger();
     private static int resizeOption = 0;
     private static int soundOption = 0;
     private static int difficultyOption = 0;
@@ -103,7 +102,7 @@ public class SettingScreen extends Screen {
                     resizeOption++;
                 break;
             case 1:
-                if (soundOption == 1)
+                if (soundOption == 2)
                     soundOption = 0;
                 else
                     soundOption++;
@@ -133,7 +132,7 @@ public class SettingScreen extends Screen {
                 break;
             case 1:
                 if (soundOption == 0)
-                    soundOption = 1;
+                    soundOption = 2;
                 else
                     soundOption--;
                 break;
@@ -176,11 +175,9 @@ public class SettingScreen extends Screen {
     private void draw() {
         drawManager.initDrawing(this);
 
-        drawManager.drawSettingTitle(this);
+        drawManager.drawTitle(this,"Setting",4);
         drawManager.drawMenuTitle(this,activated);
-        drawManager.drawResizeSelectMenu(this,resizeOption);
-        drawManager.drawSoundSelectMenu(this,soundOption);
-        drawManager.drawDifficultySelectMenu(this,difficultyOption);
+        drawManager.drawSelectMenu(this,resizeOption,soundOption,difficultyOption);
         drawManager.drawSaveButton(this,activated);
         drawManager.completeDrawing(this);
     }

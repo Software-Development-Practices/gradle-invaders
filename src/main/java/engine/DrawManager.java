@@ -135,6 +135,7 @@ public final class DrawManager {
 
     /**
      * resize시 entity 크기도 키우기 위해 사용되는 변수들의 setter함수입니다.
+     *
      * @param x_para
      * @param y_para
      * @param width_para
@@ -256,7 +257,7 @@ public final class DrawManager {
             for (int j = 0; j < image[i].length; j++)
                 if (image[i][j])
                     // 작은 창에서 fillReat를 쓰면 Entity가 깨져서 작은창에서만 drawRect를 쓸 수 있게해줌.
-                    if (x==2) {
+                    if (x == 2) {
                         backBufferGraphics.drawRect(positionX + i * 2, positionY + j * 2, 1, 1);
                     } else {
                         backBufferGraphics.fillRect(positionX + i * x, positionY + j * y, width, height);
@@ -340,15 +341,15 @@ public final class DrawManager {
      *
      * @param screen Screen to draw on. 그릴 수 있는 화면입니다.
      */
-    public void drawTitle(final Screen screen) {
-        String titleString = "Invaders";
+    public void drawTitle(final Screen screen, String title, int yWeight) {
+        String titleString = title;
         String instructionsString = "select with w+s / arrows, confirm with space";
-
-        backBufferGraphics.setColor(Color.GRAY);
-        drawCenteredRegularString(screen, instructionsString, screen.getHeight() / 2);
-
+        if (title.equals("Invaders")) {
+            backBufferGraphics.setColor(Color.GRAY);
+            drawCenteredRegularString(screen, instructionsString, screen.getHeight() / 2);
+        }
         backBufferGraphics.setColor(Color.GREEN);
-        drawCenteredBigString(screen, titleString, screen.getHeight() / 3);
+        drawCenteredBigString(screen, titleString, screen.getHeight() / yWeight);
     }
 
     /**
@@ -595,16 +596,6 @@ public final class DrawManager {
             drawCenteredBigString(screen, "GO!", screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
     }
 
-    /**
-     * Draws setting screen title.
-     *
-     * @param screen Screen to draw on setting screen. 그릴 수 있는 화면입니다.
-     */
-    public void drawSettingTitle(final Screen screen) {
-        String titleString = "Setting";
-        backBufferGraphics.setColor(Color.GREEN);
-        drawCenteredBigString(screen, titleString, screen.getHeight() / 4 - fontBigMetrics.getHeight());
-    }
 
     public void drawSaveButton(final Screen screen, int activated) {
         String saveString = "save & quit";
@@ -628,48 +619,42 @@ public final class DrawManager {
         }
     }
 
-    public void drawResizeSelectMenu(final Screen screen, int resizeOption) {
+    public void drawSelectMenu(final Screen screen, int resizeOption, int soundOption, int difficultyOption) {
         String minString = "min";
         String midString = "mid";
         String maxString = "max";
-        String[] options = {minString, midString, maxString};
-        for (int i = 0; i < options.length; i++) {
+        String zeroString = "0%";
+        String fiftyString = "50%";
+        String hundreadString = "100%";
+        String easyString = "easy";
+        String hellString = "hell";
+        String[] resizeOptions = {minString, midString, maxString};
+        String[] soundOptions = {zeroString, fiftyString, hundreadString};
+        String[] difficultyOptions = {easyString, midString, hellString};
+
+
+        for (int i = 0; i < 3; i++) {
             if (resizeOption == i) backBufferGraphics.setColor(Color.CYAN);
             else backBufferGraphics.setColor(Color.DARK_GRAY);
-
-            drawRegularString(screen, options[i],
+            drawRegularString(screen, resizeOptions[i],
                     screen.getWidth() / 2 - fontRegularMetrics.getWidths()[0] - fontRegularMetrics.getHeight() * 5 + fontRegularMetrics.getHeight() * i * 4,
                     screen.getHeight() / 3 + fontBigMetrics.getHeight());
-        }
 
-    }
-
-    public void drawSoundSelectMenu(final Screen screen, int soundOption) {
-        String onString = "on";
-        String offString = "off";
-        String[] options = {onString, offString};
-        for (int i = 0; i < options.length; i++) {
             if (soundOption == i) backBufferGraphics.setColor(Color.CYAN);
             else backBufferGraphics.setColor(Color.DARK_GRAY);
-            drawRegularString(screen, options[i],
-                    screen.getWidth() / 2 - fontRegularMetrics.getWidths()[0] - fontRegularMetrics.getHeight() * 3 + fontRegularMetrics.getHeight() * i * 4,
-                    screen.getHeight() / 3 + fontBigMetrics.getHeight() * 3 + fontRegularMetrics.getHeight());
-        }
-    }
+            drawRegularString(screen, soundOptions[i],
+                    screen.getWidth() / 2 - fontRegularMetrics.getWidths()[0] - fontRegularMetrics.getHeight() * 5 + fontRegularMetrics.getHeight() * i * 4,
+                    screen.getHeight() / 3 + fontBigMetrics.getHeight() * 4 );
 
-    public void drawDifficultySelectMenu(final Screen screen, int difficultyOption) {
-        String easyString = "easy";
-        String midString = "mid";
-        String hellString = "hell";
-        String[] options = {easyString, midString, hellString};
-        for (int i = 0; i < options.length; i++) {
             if (difficultyOption == i) backBufferGraphics.setColor(Color.CYAN);
             else backBufferGraphics.setColor(Color.DARK_GRAY);
-            drawRegularString(screen, options[i],
+            drawRegularString(screen, difficultyOptions[i],
                     screen.getWidth() / 2 - fontRegularMetrics.getWidths()[0] - fontRegularMetrics.getHeight() * 5 + fontRegularMetrics.getHeight() * i * 4,
-                    screen.getHeight() / 3 + fontBigMetrics.getHeight() * 7 + fontRegularMetrics.getHeight());
+                    screen.getHeight() / 3 + fontBigMetrics.getHeight() * 7 );
         }
+
     }
+
 }
 
 
