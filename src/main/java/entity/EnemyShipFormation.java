@@ -163,6 +163,11 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	private int shipCount;
 	/** Checking Boss */
 	private int bossCheck ;
+	//보스별 총알 맞는 수
+	private int boss_life;
+	private final int bossA_life = 5;
+	private final int bossB_life = 10;
+	private final int bossC_life = 20;
 
 	/**
 	 * Directions the formation can move. 포메이션이 움직일 수 있는 방향.
@@ -208,6 +213,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 		this.logger.info("Initializing " + nShipsWide + "x" + nShipsHigh + " ship formation in (" + positionX + ","
 				+ positionY + ")");
 		//보스 스테이지 일때 보스 하나만 나오도록 함
+
 		if (this.bossCheck==1){
 			List<EnemyShip> column = new ArrayList<EnemyShip>();
 			column.add(new EnemyShip(
@@ -220,6 +226,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 
 			this.width = this.shipWidth;
 			this.height =  this.shipHeight;
+			this.boss_life = bossA_life;
 		}else if(this.bossCheck == 2){
 			List<EnemyShip> column = new ArrayList<EnemyShip>();
 			column.add(new EnemyShip(
@@ -232,6 +239,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 
 			this.width = this.shipWidth;
 			this.height =  this.shipHeight;
+			this.boss_life = bossB_life;
 		}
 		else if(this.bossCheck == 3){
 			List<EnemyShip> column = new ArrayList<EnemyShip>();
@@ -245,6 +253,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 
 			this.width = this.shipWidth;
 			this.height =  this.shipHeight;
+			this.boss_life = bossC_life;
 		}
 		else {
 			// Each sub-list is a column on the formation.
@@ -457,9 +466,21 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 		for (List<EnemyShip> column : this.enemyShips)
 			for (int i = 0; i < column.size(); i++)
 				if (column.get(i).equals(destroyedShip)) {
-					column.get(i).destroy();
-					this.logger.info("Destroyed ship in (" + this.enemyShips.indexOf(column) + "," + i + ")");
+					if(bossCheck!=0) {
+						this.boss_life --;
+						if(this.boss_life==0) {
+							column.get(i).destroy();
+							this.logger.info("Destroyed ship in (" + this.enemyShips.indexOf(column) + "," + i + ")");
+						}
+					}
+					else {
+						column.get(i).destroy();
+						this.logger.info("Destroyed ship in (" + this.enemyShips.indexOf(column) + "," + i + ")");
+					}
+
 				}
+
+
 
 		// Updates the list of ships that can shoot the player.
 		if (this.shooters.contains(destroyedShip)) {
@@ -482,7 +503,14 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 			}
 		}
 
-		this.shipCount--;
+		if(bossCheck!=0) {
+			if(this.boss_life==0) this.shipCount=0;
+		}
+
+		else {
+			this.shipCount--;
+
+		}
 	}
 
 	/**
