@@ -89,7 +89,7 @@ public class EnemyShip extends Entity {
 	 * starting properties. 생성자, 알려진 시작 속성을 사용하여 특수 함선에 대한 함선 속성을 설정합니다.
 	 */
 	public EnemyShip() {
-		super(-32, 60, 16 * 2, 7 * 2, Color.RED);
+		super(-32, 60, 16 * modiWidth, 7 * modiWidth, Color.RED);
 
 		this.spriteType = SpriteType.EnemyShipSpecial;
 		this.isDestroyed = false;
