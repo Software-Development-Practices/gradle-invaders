@@ -21,6 +21,11 @@ public class EnemyShip extends Entity {
 	private static final int B_TYPE_POINTS = 20;
 	/** Point value of a type C enemy. */
 	private static final int C_TYPE_POINTS = 30;
+	/** Point value of a type Boss1. */
+	//보스 포인트
+	private static final int BossA_POINTS = 50;
+	private static final int BossB_POINTS = 100;
+	private static final int BossC_POINTS = 200;
 	/** Point value of a bonus enemy. */
 	private static final int BONUS_TYPE_POINTS = 100;
 
@@ -50,9 +55,19 @@ public class EnemyShip extends Entity {
 	public EnemyShip(final int positionX, final int positionY, final SpriteType spriteType) {
 		super(positionX, positionY, 12 * 2, 8 * 2, Color.WHITE);
 		//보스 경우 너비랑 높이도 스프라이트 크기에 맞게 바꿔 줍니다.
-		if(spriteType == SpriteType.BossA1 || spriteType == SpriteType.BossA2){
-			width = 12*10;
-			height = 8*10;
+		switch(spriteType){
+			case BossA1:
+			case BossA2:
+				width = 12*10;
+				height = 8*10;
+			case BossB1:
+			case BossB2:
+				width = 12*10;
+				height = 8*10;
+			case BossC1:
+			case BossC2:
+				width = 12*10;
+				height = 8*10;
 		}
 
 		this.spriteType = spriteType;
@@ -71,6 +86,19 @@ public class EnemyShip extends Entity {
 		case EnemyShipC1:
 		case EnemyShipC2:
 			this.pointValue = C_TYPE_POINTS;
+			break; 
+		//보스 포인트 설정.	
+		case BossA1: 
+		case BossA2:
+			this.pointValue = BossA_POINTS;
+			break;
+		case BossB1:
+		case BossB2:
+			this.pointValue = BossB_POINTS;
+			break;
+		case BossC1:
+		case BossC2:
+			this.pointValue = BossC_POINTS;
 			break;
 		default:
 			this.pointValue = 0;
@@ -137,6 +165,25 @@ public class EnemyShip extends Entity {
 				break;
 			case EnemyShipC2:
 				this.spriteType = SpriteType.EnemyShipC1;
+				break;
+			//boss 움직임
+			case BossA1:
+				this.spriteType = SpriteType.BossA2;
+				break;
+			case BossA2:
+				this.spriteType = SpriteType.BossA1;
+				break;
+			case BossB1:
+				this.spriteType = SpriteType.BossB2;
+				break;
+			case BossB2:
+				this.spriteType = SpriteType.BossB1;
+				break;
+			case BossC1:
+				this.spriteType = SpriteType.BossC2;
+				break;
+			case BossC2:
+				this.spriteType = SpriteType.BossC1;
 				break;
 			default:
 				break;
