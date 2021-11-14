@@ -22,8 +22,10 @@ public class EnemyShip extends Entity {
 	/** Point value of a type C enemy. */
 	private static final int C_TYPE_POINTS = 30;
 	/** Point value of a type Boss1. */
-	//일단은 백점으로 해두었습니다.
-	private static final int Boss1_POINTS = 100;
+	//보스 포인트
+	private static final int BossA_POINTS = 50;
+	private static final int BossB_POINTS = 100;
+	private static final int BossC_POINTS = 200;
 	/** Point value of a bonus enemy. */
 	private static final int BONUS_TYPE_POINTS = 100;
 
@@ -78,8 +80,16 @@ public class EnemyShip extends Entity {
 		//보스 포인트 설정.	
 		case BossA1: 
 		case BossA2:
-			this.pointValue = Boss1_POINTS;
-			break;		
+			this.pointValue = BossA_POINTS;
+			break;
+		case BossB1:
+		case BossB2:
+			this.pointValue = BossB_POINTS;
+			break;
+		case BossC1:
+		case BossC2:
+			this.pointValue = BossC_POINTS;
+			break;
 		default:
 			this.pointValue = 0;
 			break;
