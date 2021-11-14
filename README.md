@@ -1,4 +1,4 @@
-채# Space Invaders
+# Space Invaders
 
 ## Convention
 
