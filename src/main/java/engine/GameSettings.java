@@ -26,8 +26,8 @@ public class GameSettings {
 	 */
 	private int shootingFrecuency;
 	/** 보스 스테이지 인지 체크 합니다. */
-	//우선은 하나라서 boolean으로 했으나 후에 3개로 늘리면 int로 할예정입니다.
-	private boolean bossCheck ;
+	//int로 변경.
+	private int bossCheck ;
 
 	/**
 	 * Constructor.
@@ -39,7 +39,7 @@ public class GameSettings {
 	 * @param bossCheck 	 checking boss stage.
 	 */
 	public GameSettings(final int formationWidth, final int formationHeight, final int baseSpeed,
-			final int shootingFrecuency, final boolean bossCheck) {
+			final int shootingFrecuency, final int bossCheck) {
 		this.formationWidth = formationWidth;
 		this.formationHeight = formationHeight;
 		this.baseSpeed = baseSpeed;
@@ -78,7 +78,7 @@ public class GameSettings {
 	/**
 	 * @return the bossCheck
 	 */
-	public boolean isBossCheck() {
+	public int getBossCheck() {
 		return bossCheck;
 	}
 

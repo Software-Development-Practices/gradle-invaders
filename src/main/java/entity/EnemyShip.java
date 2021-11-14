@@ -152,7 +152,19 @@ public class EnemyShip extends Entity {
 				break;
 			case BossA2:
 				this.spriteType = SpriteType.BossA1;
-				break;				
+				break;
+			case BossB1:
+				this.spriteType = SpriteType.BossB2;
+				break;
+			case BossB2:
+				this.spriteType = SpriteType.BossB1;
+				break;
+			case BossC1:
+				this.spriteType = SpriteType.BossC2;
+				break;
+			case BossC2:
+				this.spriteType = SpriteType.BossC1;
+				break;
 			default:
 				break;
 			}

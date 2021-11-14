@@ -80,10 +80,18 @@ public final class DrawManager {
 		EnemyShipSpecial,
 		/** Destroyed enemy ship. */
 		Explosion,
-		/** boss first form. */
+		/** boss1 first form. */
 		BossA1,
-		/** boss second form. */
-		BossA2
+		/** boss1 second form. */
+		BossA2,
+		/** boss2 first form. */
+		BossB1,
+		/** boss2 second form. */
+		BossB2,
+		/** boss3 first form. */
+		BossC1,
+		/** boss3 second form. */
+		BossC2,
 	};
 
 	/**
@@ -109,9 +117,12 @@ public final class DrawManager {
 			spriteMap.put(SpriteType.EnemyShipC2, new boolean[12][8]);
 			spriteMap.put(SpriteType.EnemyShipSpecial, new boolean[16][7]);
 			spriteMap.put(SpriteType.Explosion, new boolean[13][7]);
-			//스프라이트는 EnemyShipA1모양과 같은모양으로 해주었습니다.
 			spriteMap.put(SpriteType.BossA1, new boolean[12][8]);
 			spriteMap.put(SpriteType.BossA2, new boolean[12][8]);
+			spriteMap.put(SpriteType.BossB1, new boolean[12][8]);
+			spriteMap.put(SpriteType.BossB2, new boolean[12][8]);
+			spriteMap.put(SpriteType.BossC1, new boolean[12][8]);
+			spriteMap.put(SpriteType.BossC2, new boolean[12][8]);
 
 			fileManager.loadSprite(spriteMap);
 			logger.info("Finished loading the sprites.");
@@ -192,8 +203,41 @@ public final class DrawManager {
 		boolean[][] image = spriteMap.get(entity.getSpriteType());
 
 		backBufferGraphics.setColor(entity.getColor());
-		//우선 보스 1만 해봤습니다.
-		if(entity.getSpriteType() != SpriteType.BossA1 && entity.getSpriteType() != SpriteType.BossA2) {
+		//보스 1,2,3 switch문으로 변경
+		switch (entity.getSpriteType()){
+			case BossA1:
+			case BossA2:
+				for (int i = 0; i < image.length; i++)
+					for (int j = 0; j < image[i].length; j++)
+						if (image[i][j])
+							backBufferGraphics.fillRect(positionX + i * 10, positionY
+									+ j * 10, 10, 10);
+				break;
+			case BossB1:
+			case BossB2:
+				for (int i = 0; i < image.length; i++)
+					for (int j = 0; j < image[i].length; j++)
+						if (image[i][j])
+							backBufferGraphics.fillRect(positionX + i * 10, positionY
+									+ j * 10, 10, 10);
+				break;
+			case BossC1:
+			case BossC2:
+				for (int i = 0; i < image.length; i++)
+					for (int j = 0; j < image[i].length; j++)
+						if (image[i][j])
+							backBufferGraphics.fillRect(positionX + i * 10, positionY
+									+ j * 10, 10, 10);
+				break;
+			default:
+				for (int i = 0; i < image.length; i++)
+					for (int j = 0; j < image[i].length; j++)
+						if (image[i][j])
+							backBufferGraphics.drawRect(positionX + i * 2, positionY
+									+ j * 2, 1, 1);
+				break;
+		}
+		/*if(entity.getSpriteType() != SpriteType.BossA1 && entity.getSpriteType() != SpriteType.BossA2) {
 			for (int i = 0; i < image.length; i++)
 				for (int j = 0; j < image[i].length; j++)
 					if (image[i][j])
@@ -206,6 +250,7 @@ public final class DrawManager {
 						backBufferGraphics.fillRect(positionX + i * 10, positionY
 								+ j * 10, 10, 10);
 		}
+		*/
 	}
 
 	/**

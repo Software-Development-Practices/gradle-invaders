@@ -162,7 +162,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	 */
 	private int shipCount;
 	/** Checking Boss */
-	private boolean bossCheck ;
+	private int bossCheck ;
 
 	/**
 	 * Directions the formation can move. 포메이션이 움직일 수 있는 방향.
@@ -203,13 +203,12 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 		this.positionY = INIT_POS_Y;
 		this.shooters = new ArrayList<EnemyShip>();
 		SpriteType spriteType;
-		this.bossCheck = gameSettings.isBossCheck();
+		this.bossCheck = gameSettings.getBossCheck();
 
 		this.logger.info("Initializing " + nShipsWide + "x" + nShipsHigh + " ship formation in (" + positionX + ","
 				+ positionY + ")");
 		//보스 스테이지 일때 보스 하나만 나오도록 함
-		if (bossCheck){
-
+		if (this.bossCheck==1){
 			List<EnemyShip> column = new ArrayList<EnemyShip>();
 			column.add(new EnemyShip(
 					positionX, positionY, SpriteType.BossA1));
@@ -221,7 +220,33 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 
 			this.width = this.shipWidth;
 			this.height =  this.shipHeight;
-		}else {
+		}else if(this.bossCheck == 2){
+			List<EnemyShip> column = new ArrayList<EnemyShip>();
+			column.add(new EnemyShip(
+					positionX, positionY, SpriteType.BossB1));
+			this.shipCount = 1;
+			this.shooters.add(column.get(column.size() - 1));
+			this.enemyShips.add(column);
+			this.shipWidth = this.enemyShips.get(0).get(0).getWidth();
+			this.shipHeight = this.enemyShips.get(0).get(0).getHeight();
+
+			this.width = this.shipWidth;
+			this.height =  this.shipHeight;
+		}
+		else if(this.bossCheck == 3){
+			List<EnemyShip> column = new ArrayList<EnemyShip>();
+			column.add(new EnemyShip(
+					positionX, positionY, SpriteType.BossC1));
+			this.shipCount = 1;
+			this.shooters.add(column.get(column.size() - 1));
+			this.enemyShips.add(column);
+			this.shipWidth = this.enemyShips.get(0).get(0).getWidth();
+			this.shipHeight = this.enemyShips.get(0).get(0).getHeight();
+
+			this.width = this.shipWidth;
+			this.height =  this.shipHeight;
+		}
+		else {
 			// Each sub-list is a column on the formation.
 			for (int i = 0; i < this.nShipsWide; i++)
 				this.enemyShips.add(new ArrayList<EnemyShip>());
