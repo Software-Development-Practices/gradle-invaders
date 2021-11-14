@@ -92,6 +92,8 @@ public final class DrawManager {
 		BossC1,
 		/** boss3 second form. */
 		BossC2,
+		/** Destroyed Boss. */
+		BossExplosion
 	};
 
 	/**
@@ -123,6 +125,7 @@ public final class DrawManager {
 			spriteMap.put(SpriteType.BossB2, new boolean[12][8]);
 			spriteMap.put(SpriteType.BossC1, new boolean[12][8]);
 			spriteMap.put(SpriteType.BossC2, new boolean[12][8]);
+			spriteMap.put(SpriteType.BossExplosion, new boolean[13][7]);
 
 			fileManager.loadSprite(spriteMap);
 			logger.info("Finished loading the sprites.");
@@ -203,7 +206,7 @@ public final class DrawManager {
 		boolean[][] image = spriteMap.get(entity.getSpriteType());
 
 		backBufferGraphics.setColor(entity.getColor());
-		//보스 1,2,3 switch문으로 변경
+		//보스 1,2,3, bossExplosion
 		switch (entity.getSpriteType()){
 			case BossA1:
 			case BossA2:
@@ -229,6 +232,14 @@ public final class DrawManager {
 							backBufferGraphics.fillRect(positionX + i * 10, positionY
 									+ j * 10, 10, 10);
 				break;
+			case  BossExplosion:
+				for (int i = 0; i < image.length; i++)
+					for (int j = 0; j < image[i].length; j++)
+						if (image[i][j])
+							backBufferGraphics.fillRect(positionX + i * 10, positionY
+									+ j * 10, 10, 10);
+				break;
+
 			default:
 				for (int i = 0; i < image.length; i++)
 					for (int j = 0; j < image[i].length; j++)
@@ -237,20 +248,6 @@ public final class DrawManager {
 									+ j * 2, 1, 1);
 				break;
 		}
-		/*if(entity.getSpriteType() != SpriteType.BossA1 && entity.getSpriteType() != SpriteType.BossA2) {
-			for (int i = 0; i < image.length; i++)
-				for (int j = 0; j < image[i].length; j++)
-					if (image[i][j])
-						backBufferGraphics.drawRect(positionX + i * 2, positionY
-								+ j * 2, 1, 1);
-		}else{
-			for (int i = 0; i < image.length; i++)
-				for (int j = 0; j < image[i].length; j++)
-					if (image[i][j])
-						backBufferGraphics.fillRect(positionX + i * 10, positionY
-								+ j * 10, 10, 10);
-		}
-		*/
 	}
 
 	/**

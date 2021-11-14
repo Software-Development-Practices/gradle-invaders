@@ -70,6 +70,7 @@ public class EnemyShip extends Entity {
 				height = 8*10;
 		}
 
+
 		this.spriteType = spriteType;
 		this.animationCooldown = Core.getCooldown(500);
 		this.isDestroyed = false;
@@ -196,7 +197,20 @@ public class EnemyShip extends Entity {
 	 */
 	public final void destroy() {
 		this.isDestroyed = true;
-		this.spriteType = SpriteType.Explosion;
+		switch(this.spriteType){
+			case BossA1:
+			case BossA2:
+			case BossB2:
+			case BossB1:
+			case BossC1:
+			case BossC2:
+				this.spriteType = SpriteType.BossExplosion;
+				break;
+			default:
+				this.spriteType = SpriteType.Explosion;
+				break;
+		}
+
 	}
 
 	/**

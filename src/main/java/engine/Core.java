@@ -55,31 +55,30 @@ public final class Core {
 	private static final GameSettings SETTINGS_LEVEL_1 =
 			new GameSettings(5, 4, 60, 2000,0);
 	/** Difficulty settings for level 2. */
-	// 편의를 위해서 2레벨부터 보스 나오도록 해놨습니다.
-	/** Difficulty settings for Boss level 1. */
-	private static final GameSettings Boss_LEVEL_1 =
-			new GameSettings(5, 5, 50, 500,1);
-	/** Difficulty settings for Boss level 1. */
-	private static final GameSettings Boss_LEVEL_2 =
-			new GameSettings(5, 5, 50, 300,2);
-	/** Difficulty settings for Boss level 1. */
-	private static final GameSettings Boss_LEVEL_3 =
-			new GameSettings(5, 5, 50, 250,3);
 	private static final GameSettings SETTINGS_LEVEL_2 =
 			new GameSettings(5, 5, 50, 2500,0);
+	/** Difficulty settings for Boss level 1. */
+	private static final GameSettings Boss_LEVEL_1 =
+			new GameSettings(5, 5, 50, 2500,1);
 	/** Difficulty settings for level 3. */
 	private static final GameSettings SETTINGS_LEVEL_3 =
 			new GameSettings(6, 5, 40, 1500,0);
 	/** Difficulty settings for level 4. */
 	private static final GameSettings SETTINGS_LEVEL_4 =
 			new GameSettings(6, 6, 30, 1500,0);
+	/** Difficulty settings for Boss level 2. */
+	private static final GameSettings Boss_LEVEL_2 =
+			new GameSettings(5, 5, 50, 2500,2);
 	/** Difficulty settings for level 5. */
 	private static final GameSettings SETTINGS_LEVEL_5 =
 			new GameSettings(7, 6, 20, 1000,0);
 	/** Difficulty settings for level 6. */
 	private static final GameSettings SETTINGS_LEVEL_6 =
 			new GameSettings(7, 7, 10, 1000,0);
-	/** Difficulty settings for level 7. */
+	/** Difficulty settings for Boss level 3. */
+	private static final GameSettings Boss_LEVEL_3 =
+			new GameSettings(5, 5, 50, 2500,3);
+		/** Difficulty settings for level 7. */
 	private static final GameSettings SETTINGS_LEVEL_7 =
 			new GameSettings(8, 7, 2, 500,0);
 
@@ -139,15 +138,14 @@ public final class Core {
 
 		gameSettings = new ArrayList<GameSettings>();
 		gameSettings.add(SETTINGS_LEVEL_1);
-		//보스레벨 추가
-		gameSettings.add(Boss_LEVEL_1);
-		gameSettings.add(Boss_LEVEL_2);
-		gameSettings.add(Boss_LEVEL_3);
 		gameSettings.add(SETTINGS_LEVEL_2);
+		gameSettings.add(Boss_LEVEL_1);
 		gameSettings.add(SETTINGS_LEVEL_3);
 		gameSettings.add(SETTINGS_LEVEL_4);
+		gameSettings.add(Boss_LEVEL_2);
 		gameSettings.add(SETTINGS_LEVEL_5);
 		gameSettings.add(SETTINGS_LEVEL_6);
+		gameSettings.add(Boss_LEVEL_3);
 		gameSettings.add(SETTINGS_LEVEL_7);
 
 		GameState gameState;
