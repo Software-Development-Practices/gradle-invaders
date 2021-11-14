@@ -535,13 +535,45 @@ public final class DrawManager {
 		backBufferGraphics.setColor(Color.BLACK);
 		backBufferGraphics.fillRect(0, screen.getHeight() / 2 - rectHeight / 2, rectWidth, rectHeight);
 		backBufferGraphics.setColor(Color.GREEN);
+		//지금은 일단 stage2, 3, 4가 보스이므로 level 2, 3, 4로 설정했습니다. 추후 3스테이지마다로 바뀌면 수정
 		if (number >= 4)
 			if (!bonusLife) {
-				drawCenteredBigString(screen, "Level " + level,
-						screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+				switch (level) {
+					case 2:
+						drawCenteredBigString(screen, "BOSS STAGE 1",
+								screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+						break;
+					case 3:
+						drawCenteredBigString(screen, "BOSS STAGE 2",
+								screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+						break;
+					case 4:
+						drawCenteredBigString(screen, "BOSS STAGE 3",
+								screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+						break;
+					default:
+						drawCenteredBigString(screen, "Level " + level,
+					screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+				}
+
 			} else {
-				drawCenteredBigString(screen, "Level " + level + " - Bonus life!",
-						screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+				switch (level) {
+					case 2:
+						drawCenteredBigString(screen, "BOSS STAGE 1 - Bonus life!",
+								screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+						break;
+					case 3:
+						drawCenteredBigString(screen, "BOSS STAGE 2 - Bonus life!",
+								screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+						break;
+					case 4:
+						drawCenteredBigString(screen, "BOSS STAGE 3 - Bonus life!",
+								screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+						break;
+					default:
+						drawCenteredBigString(screen, "Level " + level +" - Bonus life!",
+								screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+				}
 			}
 		else if (number != 0)
 			drawCenteredBigString(screen, Integer.toString(number),
