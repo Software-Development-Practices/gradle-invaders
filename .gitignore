@@ -61,7 +61,6 @@ local.properties
 *.tlb
 *.tli
 *.tlh
-*.tmp
 *.vspscc
 .builds
 *.dotCover
@@ -170,8 +169,8 @@ pip-log.txt
 #############
 
 log*
-*.ttf
 .checkstyle
 /out/
 .idea
 /space-invaders.iml
+/.gradle/
