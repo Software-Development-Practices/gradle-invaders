@@ -173,5 +173,6 @@ log*
 *.ttf
 .checkstyle
 /out/
-.idea
+.idea/
 /space-invaders.iml
+.gradle/
