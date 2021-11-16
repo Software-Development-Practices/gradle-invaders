@@ -540,7 +540,7 @@ public final class DrawManager {
 		if (number >= 4)
 			if (!bonusLife) {
 				if (level % 3 == 0) {
-					drawCenteredBigString(screen, "BOSS STAGE "+level/3,
+					drawCenteredBigString(screen, "BONUS STAGE "+level/3,
 							screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
 				} else {
 					drawCenteredBigString(screen, "Level " + (level-level/3),
@@ -548,7 +548,7 @@ public final class DrawManager {
 				}
 			} else {
 				if (level % 3 == 0) {
-					drawCenteredBigString(screen, "BOSS STAGE "+level/3 +"- Bonus life!",
+					drawCenteredBigString(screen, "BONUS STAGE "+level/3 +"- Bonus life!",
 							screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
 				} else {
 					drawCenteredBigString(screen, "Level " + (level-level/3) +"- Bonus life!",
