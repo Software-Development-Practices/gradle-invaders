@@ -197,18 +197,10 @@ public class EnemyShip extends Entity {
 	 */
 	public final void destroy() {
 		this.isDestroyed = true;
-		switch(this.spriteType){
-			case BossA1:
-			case BossA2:
-			case BossB2:
-			case BossB1:
-			case BossC1:
-			case BossC2:
-				this.spriteType = SpriteType.BossExplosion;
-				break;
-			default:
-				this.spriteType = SpriteType.Explosion;
-				break;
+		if(this.width > 12*2){
+			this.spriteType = SpriteType.BossExplosion;
+		}else{
+			this.spriteType = SpriteType.Explosion;
 		}
 
 	}

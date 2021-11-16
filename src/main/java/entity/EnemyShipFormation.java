@@ -214,46 +214,25 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 				+ positionY + ")");
 		//보스 스테이지 일때 보스 하나만 나오도록 함
 
-		if (this.bossCheck==1){
+		if (this.bossCheck!=0){
+			//List<SpriteType> bossType = new ArrayList<SpriteType>();
+			//bossType.add(SpriteType.BossA1);
+			//bossType.add(SpriteType.BossB1);
+			//bossType.add(SpriteType.BossC1);
+			SpriteType[] bossType = {SpriteType.BossA1 , SpriteType.BossB1, SpriteType.BossC1};
+			int[] bossLife = {bossA_life , bossB_life, bossC_life};
 			List<EnemyShip> column = new ArrayList<EnemyShip>();
 			column.add(new EnemyShip(
-					positionX, positionY, SpriteType.BossA1));
+					positionX, positionY, bossType[bossCheck-1]));
 			this.shipCount = 1;
-			this.shooters.add(column.get(column.size() - 1));
+			this.shooters.add(column.get(0));
 			this.enemyShips.add(column);
 			this.shipWidth = this.enemyShips.get(0).get(0).getWidth();
 			this.shipHeight = this.enemyShips.get(0).get(0).getHeight();
 
 			this.width = this.shipWidth;
 			this.height =  this.shipHeight;
-			this.boss_life = bossA_life;
-		}else if(this.bossCheck == 2){
-			List<EnemyShip> column = new ArrayList<EnemyShip>();
-			column.add(new EnemyShip(
-					positionX, positionY, SpriteType.BossB1));
-			this.shipCount = 1;
-			this.shooters.add(column.get(column.size() - 1));
-			this.enemyShips.add(column);
-			this.shipWidth = this.enemyShips.get(0).get(0).getWidth();
-			this.shipHeight = this.enemyShips.get(0).get(0).getHeight();
-
-			this.width = this.shipWidth;
-			this.height =  this.shipHeight;
-			this.boss_life = bossB_life;
-		}
-		else if(this.bossCheck == 3){
-			List<EnemyShip> column = new ArrayList<EnemyShip>();
-			column.add(new EnemyShip(
-					positionX, positionY, SpriteType.BossC1));
-			this.shipCount = 1;
-			this.shooters.add(column.get(column.size() - 1));
-			this.enemyShips.add(column);
-			this.shipWidth = this.enemyShips.get(0).get(0).getWidth();
-			this.shipHeight = this.enemyShips.get(0).get(0).getHeight();
-
-			this.width = this.shipWidth;
-			this.height =  this.shipHeight;
-			this.boss_life = bossC_life;
+			this.boss_life = bossLife[bossCheck -1];
 		}
 		else {
 			// Each sub-list is a column on the formation.

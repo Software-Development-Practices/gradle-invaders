@@ -210,28 +210,10 @@ public final class DrawManager {
 		switch (entity.getSpriteType()){
 			case BossA1:
 			case BossA2:
-				for (int i = 0; i < image.length; i++)
-					for (int j = 0; j < image[i].length; j++)
-						if (image[i][j])
-							backBufferGraphics.fillRect(positionX + i * 10, positionY
-									+ j * 10, 10, 10);
-				break;
 			case BossB1:
 			case BossB2:
-				for (int i = 0; i < image.length; i++)
-					for (int j = 0; j < image[i].length; j++)
-						if (image[i][j])
-							backBufferGraphics.fillRect(positionX + i * 10, positionY
-									+ j * 10, 10, 10);
-				break;
 			case BossC1:
 			case BossC2:
-				for (int i = 0; i < image.length; i++)
-					for (int j = 0; j < image[i].length; j++)
-						if (image[i][j])
-							backBufferGraphics.fillRect(positionX + i * 10, positionY
-									+ j * 10, 10, 10);
-				break;
 			case  BossExplosion:
 				for (int i = 0; i < image.length; i++)
 					for (int j = 0; j < image[i].length; j++)
@@ -239,7 +221,6 @@ public final class DrawManager {
 							backBufferGraphics.fillRect(positionX + i * 10, positionY
 									+ j * 10, 10, 10);
 				break;
-
 			default:
 				for (int i = 0; i < image.length; i++)
 					for (int j = 0; j < image[i].length; j++)
