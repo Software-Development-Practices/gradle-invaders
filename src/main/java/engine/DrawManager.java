@@ -279,11 +279,11 @@ public final class DrawManager {
 	 * @param screen Screen to draw on. 그릴 수 있는 화면입니다.
 	 * @param lives  Current lives. 현재 목숨.
 	 */
-	public void drawLives(final Screen screen, final int lives) {
+	public void drawLives(final Screen screen, final int lives, GameSettings gameSettings) {
 		backBufferGraphics.setFont(fontRegular);
 		backBufferGraphics.setColor(Color.WHITE);
 		backBufferGraphics.drawString(Integer.toString(lives), 20, 25);
-		Ship dummyShip = new Ship(0, 0);
+		Ship dummyShip = new Ship(0, 0,gameSettings);
 		for (int i = 0; i < lives; i++)
 			drawEntity(dummyShip, 40 + 35 * i, 10);
 	}
@@ -518,7 +518,7 @@ public final class DrawManager {
 		if (number >= 4)
 			if (!bonusLife) {
 				if (level % 3 == 0) {
-					drawCenteredBigString(screen, "BOSS STAGE "+level/3,
+					drawCenteredBigString(screen, "BONUS STAGE "+level/3,
 							screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
 				} else {
 					drawCenteredBigString(screen, "Level " + (level-level/3),
@@ -526,7 +526,7 @@ public final class DrawManager {
 				}
 			} else {
 				if (level % 3 == 0) {
-					drawCenteredBigString(screen, "BOSS STAGE "+level/3 +"- Bonus life!",
+					drawCenteredBigString(screen, "BONUS STAGE "+level/3 +"- Bonus life!",
 							screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
 				} else {
 					drawCenteredBigString(screen, "Level " + (level-level/3) +"- Bonus life!",
