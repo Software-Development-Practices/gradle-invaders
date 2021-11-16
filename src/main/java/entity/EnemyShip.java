@@ -197,7 +197,7 @@ public class EnemyShip extends Entity {
 	 */
 	public final void destroy() {
 		this.isDestroyed = true;
-		if(this.width > 12*2){
+		if(this.width > 16*2){
 			this.spriteType = SpriteType.BossExplosion;
 		}else{
 			this.spriteType = SpriteType.Explosion;
