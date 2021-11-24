@@ -79,7 +79,21 @@ public final class DrawManager {
 		/** Bonus ship. */
 		EnemyShipSpecial,
 		/** Destroyed enemy ship. */
-		Explosion
+		Explosion,
+		/** boss1 first form. */
+		BossA1,
+		/** boss1 second form. */
+		BossA2,
+		/** boss2 first form. */
+		BossB1,
+		/** boss2 second form. */
+		BossB2,
+		/** boss3 first form. */
+		BossC1,
+		/** boss3 second form. */
+		BossC2,
+		/** Destroyed Boss. */
+		BossExplosion
 	};
 
 	/**
@@ -105,6 +119,13 @@ public final class DrawManager {
 			spriteMap.put(SpriteType.EnemyShipC2, new boolean[12][8]);
 			spriteMap.put(SpriteType.EnemyShipSpecial, new boolean[16][7]);
 			spriteMap.put(SpriteType.Explosion, new boolean[13][7]);
+			spriteMap.put(SpriteType.BossA1, new boolean[12][8]);
+			spriteMap.put(SpriteType.BossA2, new boolean[12][8]);
+			spriteMap.put(SpriteType.BossB1, new boolean[12][8]);
+			spriteMap.put(SpriteType.BossB2, new boolean[12][8]);
+			spriteMap.put(SpriteType.BossC1, new boolean[12][8]);
+			spriteMap.put(SpriteType.BossC2, new boolean[12][8]);
+			spriteMap.put(SpriteType.BossExplosion, new boolean[13][7]);
 
 			fileManager.loadSprite(spriteMap);
 			logger.info("Finished loading the sprites.");
@@ -185,10 +206,29 @@ public final class DrawManager {
 		boolean[][] image = spriteMap.get(entity.getSpriteType());
 
 		backBufferGraphics.setColor(entity.getColor());
-		for (int i = 0; i < image.length; i++)
-			for (int j = 0; j < image[i].length; j++)
-				if (image[i][j])
-					backBufferGraphics.drawRect(positionX + i * 2, positionY + j * 2, 1, 1);
+		//보스 1,2,3, bossExplosion
+		switch (entity.getSpriteType()){
+			case BossA1:
+			case BossA2:
+			case BossB1:
+			case BossB2:
+			case BossC1:
+			case BossC2:
+			case  BossExplosion:
+				for (int i = 0; i < image.length; i++)
+					for (int j = 0; j < image[i].length; j++)
+						if (image[i][j])
+							backBufferGraphics.fillRect(positionX + i * 10, positionY
+									+ j * 10, 10, 10);
+				break;
+			default:
+				for (int i = 0; i < image.length; i++)
+					for (int j = 0; j < image[i].length; j++)
+						if (image[i][j])
+							backBufferGraphics.drawRect(positionX + i * 2, positionY
+									+ j * 2, 1, 1);
+				break;
+		}
 	}
 
 	/**
@@ -239,11 +279,11 @@ public final class DrawManager {
 	 * @param screen Screen to draw on. 그릴 수 있는 화면입니다.
 	 * @param lives  Current lives. 현재 목숨.
 	 */
-	public void drawLives(final Screen screen, final int lives) {
+	public void drawLives(final Screen screen, final int lives, GameSettings gameSettings) {
 		backBufferGraphics.setFont(fontRegular);
 		backBufferGraphics.setColor(Color.WHITE);
 		backBufferGraphics.drawString(Integer.toString(lives), 20, 25);
-		Ship dummyShip = new Ship(0, 0);
+		Ship dummyShip = new Ship(0, 0,gameSettings);
 		for (int i = 0; i < lives; i++)
 			drawEntity(dummyShip, 40 + 35 * i, 10);
 	}
@@ -473,13 +513,26 @@ public final class DrawManager {
 		backBufferGraphics.setColor(Color.BLACK);
 		backBufferGraphics.fillRect(0, screen.getHeight() / 2 - rectHeight / 2, rectWidth, rectHeight);
 		backBufferGraphics.setColor(Color.GREEN);
+		//1 2 보스1(3) 3 4 보스2(6) 6 7 보스3(9)
+		//코드 짧게 바꿈
 		if (number >= 4)
 			if (!bonusLife) {
-				drawCenteredBigString(screen, "Level " + level,
-						screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+				if (level % 3 == 0) {
+					drawCenteredBigString(screen, "BONUS STAGE "+level/3,
+							screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+				} else {
+					drawCenteredBigString(screen, "Level " + (level-level/3),
+							screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+				}
 			} else {
-				drawCenteredBigString(screen, "Level " + level + " - Bonus life!",
-						screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+				if (level % 3 == 0) {
+					drawCenteredBigString(screen, "BONUS STAGE "+level/3 +"- Bonus life!",
+							screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+				} else {
+					drawCenteredBigString(screen, "Level " + (level-level/3) +"- Bonus life!",
+							screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
+				}
+
 			}
 		else if (number != 0)
 			drawCenteredBigString(screen, Integer.toString(number),
