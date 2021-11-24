@@ -71,6 +71,7 @@ public class CoreTest {
             BossCooldown.reset();
             assertFalse(BossCooldown.checkFinished());
             Thread.sleep(Boss_LEVELs.get(i).getShootingFrecuency());
+            TimeUnit.SECONDS.sleep((10));
             assertTrue(BossCooldown.checkFinished());
         }
 
