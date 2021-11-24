@@ -40,11 +40,9 @@ public class CoreTest {
         Cooldown animationCooldown = new Cooldown(2000);
         animationCooldown.reset();
         assertFalse(animationCooldown.checkFinished());
-//        Thread.sleep(1000);
-        TimeUnit.SECONDS.sleep((1));
+        Thread.sleep(1000);
         assertFalse(animationCooldown.checkFinished());
-//        Thread.sleep(1000);
-        TimeUnit.SECONDS.sleep((10));
+        Thread.sleep(1000);
         assertTrue(animationCooldown.checkFinished());
     }
 
@@ -71,7 +69,6 @@ public class CoreTest {
             BossCooldown.reset();
             assertFalse(BossCooldown.checkFinished());
             Thread.sleep(Boss_LEVELs.get(i).getShootingFrecuency());
-            TimeUnit.SECONDS.sleep((10));
             assertTrue(BossCooldown.checkFinished());
         }
 
