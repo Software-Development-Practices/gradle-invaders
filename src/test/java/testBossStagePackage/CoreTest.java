@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -39,9 +40,11 @@ public class CoreTest {
         Cooldown animationCooldown = new Cooldown(2000);
         animationCooldown.reset();
         assertFalse(animationCooldown.checkFinished());
-        Thread.sleep(1000);
+//        Thread.sleep(1000);
+        TimeUnit.SECONDS.sleep((1));
         assertFalse(animationCooldown.checkFinished());
-        Thread.sleep(1000);
+//        Thread.sleep(1000);
+        TimeUnit.SECONDS.sleep((1));
         assertTrue(animationCooldown.checkFinished());
     }
 
