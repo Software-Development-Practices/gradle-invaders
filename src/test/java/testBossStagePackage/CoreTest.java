@@ -44,7 +44,7 @@ public class CoreTest {
         TimeUnit.SECONDS.sleep((1));
         assertFalse(animationCooldown.checkFinished());
 //        Thread.sleep(1000);
-        TimeUnit.SECONDS.sleep((1));
+        TimeUnit.SECONDS.sleep((10));
         assertTrue(animationCooldown.checkFinished());
     }
 
