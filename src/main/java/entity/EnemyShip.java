@@ -41,6 +41,17 @@ public class EnemyShip extends Entity {
 	 * Values of the ship, in points, when destroyed. 파괴된 선박의 가치(포인트)입니다.
 	 */
 	private int pointValue;
+	/**
+	 * resize시 EnemyShip의 크기도 커지는데 타격범위도 키우기 위해 사용되는 변수들입니다.
+	 */
+	private static int modiWidth = 2;
+
+	/**
+	 * modiWidth 변수의 setter함수입니다.
+	 */
+	public static void setModiWidth(int wid) {
+		modiWidth = wid;
+	}
 
 	/**
 	 * Constructor, establishes the ship's properties. 생성자, 함선의 속성을 설정합니다.
@@ -53,23 +64,22 @@ public class EnemyShip extends Entity {
 	 *                   대응하는 이미지.
 	 */
 	public EnemyShip(final int positionX, final int positionY, final SpriteType spriteType) {
-		super(positionX, positionY, 12 * 2, 8 * 2, Color.WHITE);
+		super(positionX, positionY, 12 * modiWidth, 8 * modiWidth, Color.WHITE);
 		//보스 경우 너비랑 높이도 스프라이트 크기에 맞게 바꿔 줍니다.
-		switch(spriteType){
+		switch(spriteType) {
 			case BossA1:
 			case BossA2:
-				width = 12*10;
-				height = 8*10;
+				width = 12 * 10 * modiWidth;
+				height = 8 * 10 * modiWidth;
 			case BossB1:
 			case BossB2:
-				width = 12*10;
-				height = 8*10;
+				width = 12 * 10 * modiWidth;
+				height = 8 * 10 * modiWidth;
 			case BossC1:
 			case BossC2:
-				width = 12*10;
-				height = 8*10;
+				width = 12 * 10 * modiWidth;
+				height = 8 * 10 * modiWidth;
 		}
-
 
 		this.spriteType = spriteType;
 		this.animationCooldown = Core.getCooldown(500);
@@ -87,9 +97,9 @@ public class EnemyShip extends Entity {
 		case EnemyShipC1:
 		case EnemyShipC2:
 			this.pointValue = C_TYPE_POINTS;
-			break; 
-		//보스 포인트 설정.	
-		case BossA1: 
+			break;
+		//보스 포인트 설정.
+		case BossA1:
 		case BossA2:
 			this.pointValue = BossA_POINTS;
 			break;
@@ -112,7 +122,7 @@ public class EnemyShip extends Entity {
 	 * starting properties. 생성자, 알려진 시작 속성을 사용하여 특수 함선에 대한 함선 속성을 설정합니다.
 	 */
 	public EnemyShip() {
-		super(-32, 60, 16 * 2, 7 * 2, Color.RED);
+		super(-32, 60, 16 * modiWidth, 7 * modiWidth, Color.RED);
 
 		this.spriteType = SpriteType.EnemyShipSpecial;
 		this.isDestroyed = false;
@@ -197,12 +207,11 @@ public class EnemyShip extends Entity {
 	 */
 	public final void destroy() {
 		this.isDestroyed = true;
-		if(this.width > 16*2){
+		if(this.width > 16*modiWidth){
 			this.spriteType = SpriteType.BossExplosion;
 		}else{
 			this.spriteType = SpriteType.Explosion;
 		}
-
 	}
 
 	/**

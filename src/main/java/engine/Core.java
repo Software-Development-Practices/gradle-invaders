@@ -8,29 +8,38 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import screen.GameScreen;
-import screen.HighScoreScreen;
-import screen.ScoreScreen;
-import screen.Screen;
-import screen.TitleScreen;
+import entity.EnemyShip;
+import entity.EnemyShipFormation;
+import screen.*;
 
 /**
  * Implements core game logic. 핵심 게임 로직을 구현합니다.
  * 
- * @author <aN href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
+ * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
  * 
  */
-//test
 public final class Core {
 
 	/**
+	 * 화면 크기 변경을 위한 변수입니다.
+	 * (0: 기본 화면 / 1: 조금 더 큰 화면 / 2: 아주 큰 화면)
+	 */
+	private static int screenSizeMode = 0;
+
+	/**
+	 * 난이도 변경을 위한 변수입니다.
+	 * (0: Easy / 1: Normal / 2: Hard)
+	 */
+	private static int difficulty = 0;
+
+	/**d
 	 * Width of current screen. 현재 화면의 너비입니다.
 	 */
-	private static final int WIDTH = 448;
+	private static int WIDTH = 448;
 	/**
 	 * Height of current screen. 현재 화면의 높이입니다.
 	 */
-	private static final int HEIGHT = 520;
+	private static int HEIGHT = 520;
 	/**
 	 * Max fps of current screen. 현재 화면의 최대 fps.
 	 */
@@ -50,42 +59,16 @@ public final class Core {
 	//총 레벨수 추가
 	private static final int NUM_LEVELS = 10;
 
-	/* 레벨들의 난이도 설정 */
-	/** Difficulty settings for level 1. */
-	private static final GameSettings SETTINGS_LEVEL_1 =
-			new GameSettings(5, 4, 60, 2000,0);
-	/** Difficulty settings for level 2. */
-	private static final GameSettings SETTINGS_LEVEL_2 =
-			new GameSettings(5, 5, 50, 2500,0);
-	/** Difficulty settings for Boss level 1. */
-	private static final GameSettings Boss_LEVEL_1 =
-			new GameSettings(5, 5, 50, 2500,1);
-	/** Difficulty settings for level 3. */
-	private static final GameSettings SETTINGS_LEVEL_3 =
-			new GameSettings(6, 5, 40, 1500,0);
-	/** Difficulty settings for level 4. */
-	private static final GameSettings SETTINGS_LEVEL_4 =
-			new GameSettings(6, 6, 30, 1500,0);
-	/** Difficulty settings for Boss level 2. */
-	private static final GameSettings Boss_LEVEL_2 =
-			new GameSettings(5, 5, 50, 2500,2);
-	/** Difficulty settings for level 5. */
-	private static final GameSettings SETTINGS_LEVEL_5 =
-			new GameSettings(7, 6, 20, 1000,0);
-	/** Difficulty settings for level 6. */
-	private static final GameSettings SETTINGS_LEVEL_6 =
-			new GameSettings(7, 7, 10, 1000,0);
-	/** Difficulty settings for Boss level 3. */
-	private static final GameSettings Boss_LEVEL_3 =
-			new GameSettings(5, 5, 50, 2500,3);
-		/** Difficulty settings for level 7. */
-	private static final GameSettings SETTINGS_LEVEL_7 =
-			new GameSettings(8, 7, 2, 500,0);
-
 	/**
 	 * Frame to draw the screen on. 화면을 그릴 Frame 입니다.
+	 * (resize를 위해 Frame 변수를 두 개 만들어 사용합니다.)
 	 */
-	private static Frame frame;
+	private static Frame frame1;
+	/**
+	 * Frame to draw the screen on. 화면을 그릴 Frame 입니다.
+	 * (resize를 위해 Frame 변수를 두 개 만들어 사용합니다.)
+	 */
+	private static Frame frame2;
 	/**
 	 * Screen currently shown. 현재 보여지는 화면.
 	 */
@@ -131,35 +114,120 @@ public final class Core {
 			e.printStackTrace();
 		}
 
-		frame = new Frame(WIDTH, HEIGHT);
-		DrawManager.getInstance().setFrame(frame);
-		int width = frame.getWidth();
-		int height = frame.getHeight();
-
-		gameSettings = new ArrayList<GameSettings>();
-		gameSettings.add(SETTINGS_LEVEL_1);
-		gameSettings.add(SETTINGS_LEVEL_2);
-		gameSettings.add(Boss_LEVEL_1);
-		gameSettings.add(SETTINGS_LEVEL_3);
-		gameSettings.add(SETTINGS_LEVEL_4);
-		gameSettings.add(Boss_LEVEL_2);
-		gameSettings.add(SETTINGS_LEVEL_5);
-		gameSettings.add(SETTINGS_LEVEL_6);
-		gameSettings.add(Boss_LEVEL_3);
-		gameSettings.add(SETTINGS_LEVEL_7);
-
 		GameState gameState;
+		int width = 448, height= 520;
+		int modiSpeed, modiFreq;
+
+		/**
+		 * 처음에 frame을 만듦
+		 */
+		frame1 = new Frame(WIDTH, HEIGHT);
+		DrawManager.getInstance().setFrame(frame1);
+		width = frame1.getWidth();
+		height = frame1.getHeight();
 
 		int returnCode = 1;
 		do {
 			gameState = new GameState(1, 0, MAX_LIVES, 0, 0);
+
+			/**
+			 * SettingScreen에서 정한 화면 사이즈에 맞추어 WIDTH, HEIGHT가 변경됨.
+			 */
+			switch (screenSizeMode) {
+				case 1:
+					WIDTH = 550;
+					HEIGHT = 638;
+					DrawManager.setEntitySize(3,3,3,3);
+					EnemyShip.setModiWidth(3);	// EnemyShip의 타격범위 설정
+					EnemyShipFormation.setDistance(60);
+					break;
+				case 2:
+					WIDTH = 710;
+					HEIGHT = 824;
+					DrawManager.setEntitySize(4,4,4,4);
+					EnemyShip.setModiWidth(4);	// EnemyShip의 타격범위 설정
+					EnemyShipFormation.setDistance(80);
+					break;
+				default:
+					WIDTH = 448;
+					HEIGHT = 520;
+					DrawManager.setEntitySize(2,2,1,1);
+					EnemyShip.setModiWidth(2);	// EnemyShip의 타격범위 설정
+					EnemyShipFormation.setDistance(40);
+					break;
+			}
+
+			/**
+			 * 변경된 WIDTH, HEIGHT에 맞추어 화면을 새로띄움.
+			 */
+			frame2 = new Frame(WIDTH, HEIGHT);
+			DrawManager.getInstance().setFrame(frame2);
+			width = frame2.getWidth();
+			height = frame2.getHeight();
+
+			// 이전에 띄웠던 창인 frame1을 종료함.
+			frame1.dispose();
+
+			// 새로 띄운 창인 frame2를 frame1 변수로 이동시킴.
+			frame1 = frame2;
+
+			// 게임 난이도 초기화
+			gameSettings = new ArrayList<GameSettings>();
+
+			switch (difficulty) {
+				case 1:
+					modiSpeed = 5;
+					modiFreq = 250;
+					break;
+				case 2:
+					modiSpeed = 10;
+					modiFreq = 400;
+					break;
+				default:
+					modiSpeed = 0;
+					modiFreq = 0;
+					break;
+			}
+
+			/* 레벨들의 난이도 설정 */
+			/** Difficulty settings for level 1. */
+			GameSettings SETTINGS_LEVEL_1 = new GameSettings(5, 4, 60-modiSpeed, 2500-modiFreq, 0);
+			/** Difficulty settings for level 2. */
+			GameSettings SETTINGS_LEVEL_2 = new GameSettings(5, 5, 50-modiSpeed, 2500-modiFreq, 0);
+			/** Difficulty settings for Boss level 1. */
+			GameSettings Boss_LEVEL_1 = new GameSettings(5, 5, 50-modiSpeed, 2500-modiFreq,1);
+			/** Difficulty settings for level 3. */
+			GameSettings SETTINGS_LEVEL_3 = new GameSettings(6, 5, 40-modiSpeed, 1500-modiFreq, 0);
+			/** Difficulty settings for level 4. */
+			GameSettings SETTINGS_LEVEL_4 = new GameSettings(6, 6, 30-modiSpeed, 1500-modiFreq, 0);
+			/** Difficulty settings for Boss level 2. */
+			GameSettings Boss_LEVEL_2 = new GameSettings(5, 5, 50-modiSpeed, 2500-modiFreq,2);
+			/** Difficulty settings for level 5. */
+			GameSettings SETTINGS_LEVEL_5 = new GameSettings(7, 6, 20-modiSpeed, 1000-modiFreq, 0);
+			/** Difficulty settings for level 6. */
+			GameSettings SETTINGS_LEVEL_6 = new GameSettings(7, 7, 10-modiSpeed, 1000-modiFreq, 0);
+			/** Difficulty settings for Boss level 3. */
+			GameSettings Boss_LEVEL_3 = new GameSettings(5, 5, 50-modiSpeed, 2500-modiFreq,3);
+			/** Difficulty settings for level 7. */
+			GameSettings SETTINGS_LEVEL_7 = new GameSettings(8, 7, 2-modiSpeed, 500-modiFreq, 0);
+
+			gameSettings.add(SETTINGS_LEVEL_1);
+			gameSettings.add(SETTINGS_LEVEL_2);
+			gameSettings.add(Boss_LEVEL_3);
+			gameSettings.add(SETTINGS_LEVEL_3);
+			gameSettings.add(SETTINGS_LEVEL_4);
+			gameSettings.add(Boss_LEVEL_2);
+			gameSettings.add(SETTINGS_LEVEL_5);
+			gameSettings.add(SETTINGS_LEVEL_6);
+			gameSettings.add(Boss_LEVEL_3);
+			gameSettings.add(SETTINGS_LEVEL_7);
 
 			switch (returnCode) {
 			case 1:
 				// Main menu.
 				currentScreen = new TitleScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " title screen at " + FPS + " fps.");
-				returnCode = frame.setScreen(currentScreen);
+				returnCode = frame1.setScreen(currentScreen);
 				LOGGER.info("Closing title screen.");
 				break;
 			case 2:
@@ -172,7 +240,7 @@ public final class Core {
 					currentScreen = new GameScreen(gameState, gameSettings.get(gameState.getLevel() - 1), bonusLife,
 							width, height, FPS);
 					LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " game screen at " + FPS + " fps.");
-					frame.setScreen(currentScreen);
+					frame1.setScreen(currentScreen);
 					LOGGER.info("Closing game screen.");
 
 					gameState = ((GameScreen) currentScreen).getGameState();
@@ -187,16 +255,24 @@ public final class Core {
 						+ gameState.getBulletsShot() + " bullets shot and " + gameState.getShipsDestroyed()
 						+ " ships destroyed.");
 				currentScreen = new ScoreScreen(width, height, FPS, gameState);
-				returnCode = frame.setScreen(currentScreen);
+				returnCode = frame1.setScreen(currentScreen);
 				LOGGER.info("Closing score screen.");
 				break;
 			case 3:
 				// High scores.
 				currentScreen = new HighScoreScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " high score screen at " + FPS + " fps.");
-				returnCode = frame.setScreen(currentScreen);
+				returnCode = frame1.setScreen(currentScreen);
 				LOGGER.info("Closing high score screen.");
 				break;
+			case 4:
+				currentScreen = new SettingScreen(width, height, FPS);
+				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " setting screen at " + FPS + " fps.");
+
+				returnCode = frame1.setScreen(currentScreen);
+
+				break;
+
 			default:
 				break;
 			}
@@ -271,5 +347,19 @@ public final class Core {
 	 */
 	public static Cooldown getVariableCooldown(final int milliseconds, final int variance) {
 		return new Cooldown(milliseconds, variance);
+	}
+
+	/**
+	 * screen 사이즈 모드 int 값에 대한 setter 함수입니다.
+	 */
+	public static void setScreenSizeMode(int mode) {
+		screenSizeMode = mode;
+	}
+
+	/**
+	 * difficulty 모드 int 값에 대한 setter 함수입니다.
+	 */
+	public static void setDifficulty(int mode) {
+		difficulty = mode;
 	}
 }

@@ -76,7 +76,7 @@ public class TitleScreen extends Screen {
 	 * Shifts the focus to the next menu item. 포커스를 다음 메뉴 항목으로 이동합니다.
 	 */
 	private void nextMenuItem() {
-		if (this.returnCode == 3)
+		if (this.returnCode == 4)
 			this.returnCode = 0;
 		else if (this.returnCode == 0)
 			this.returnCode = 2;
@@ -89,7 +89,7 @@ public class TitleScreen extends Screen {
 	 */
 	private void previousMenuItem() {
 		if (this.returnCode == 0)
-			this.returnCode = 3;
+			this.returnCode = 4;
 		else if (this.returnCode == 2)
 			this.returnCode = 0;
 		else
@@ -102,7 +102,7 @@ public class TitleScreen extends Screen {
 	private void draw() {
 		drawManager.initDrawing(this);
 
-		drawManager.drawTitle(this);
+		drawManager.drawTitle(this,"Invaders",3);
 		drawManager.drawMenu(this, this.returnCode);
 
 		drawManager.completeDrawing(this);

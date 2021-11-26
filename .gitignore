@@ -171,6 +171,6 @@ pip-log.txt
 log*
 .checkstyle
 /out/
-.idea
+/.idea/
 /space-invaders.iml
 /.gradle/
