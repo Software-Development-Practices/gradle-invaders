@@ -126,20 +126,59 @@ public final class DrawManager {
          * Destroyed enemy ship.
          */
         Explosion,
-        /** boss1 first form. */
+        /**
+         * boss1 first form.
+         */
         BossA1,
-        /** boss1 second form. */
+        /**
+         * boss1 second form.
+         */
         BossA2,
-        /** boss2 first form. */
+        /**
+         * boss2 first form.
+         */
         BossB1,
-        /** boss2 second form. */
+        /**
+         * boss2 second form.
+         */
         BossB2,
-        /** boss3 first form. */
+        /**
+         * boss3 first form.
+         */
         BossC1,
-        /** boss3 second form. */
+        /**
+         * boss3 second form.
+         */
         BossC2,
-        /** Destroyed Boss. */
-        BossExplosion
+        /**
+         * Destroyed Boss.
+         */
+        BossExplosion,
+
+        /**
+         * Destroyed First enemy ship - first form.
+         */
+        DestroyedEnemyShipA1,
+        /**
+         * Destroyed First enemy ship - second form.
+         */
+        DestroyedEnemyShipA2,
+        /**
+         * Destroyed Second enemy ship - first form.
+         */
+        DestroyedEnemyShipB1,
+        /**
+         * Destroyed Second enemy ship - second form.
+         */
+        DestroyedEnemyShipB2,
+        /**
+         * Destroyed Third enemy ship - first form.
+         */
+        DestroyedEnemyShipC1,
+        /**
+         * Destroyed Third enemy ship - second form.
+         */
+        DestroyedEnemyShipC2,
     }
 
     /**
@@ -172,28 +211,34 @@ public final class DrawManager {
         logger = Core.getLogger();
         logger.info("Started loading resources.");
 
-		try {
-			spriteMap = new LinkedHashMap<SpriteType, boolean[][]>();
+        try {
+            spriteMap = new LinkedHashMap<SpriteType, boolean[][]>();
 
-			spriteMap.put(SpriteType.Ship, new boolean[13][8]);
-			spriteMap.put(SpriteType.ShipDestroyed, new boolean[13][8]);
-			spriteMap.put(SpriteType.Bullet, new boolean[3][5]);
-			spriteMap.put(SpriteType.EnemyBullet, new boolean[3][5]);
-			spriteMap.put(SpriteType.EnemyShipA1, new boolean[12][8]);
-			spriteMap.put(SpriteType.EnemyShipA2, new boolean[12][8]);
-			spriteMap.put(SpriteType.EnemyShipB1, new boolean[12][8]);
-			spriteMap.put(SpriteType.EnemyShipB2, new boolean[12][8]);
-			spriteMap.put(SpriteType.EnemyShipC1, new boolean[12][8]);
-			spriteMap.put(SpriteType.EnemyShipC2, new boolean[12][8]);
-			spriteMap.put(SpriteType.EnemyShipSpecial, new boolean[16][7]);
-			spriteMap.put(SpriteType.Explosion, new boolean[13][7]);
-			spriteMap.put(SpriteType.BossA1, new boolean[12][8]);
-			spriteMap.put(SpriteType.BossA2, new boolean[12][8]);
-			spriteMap.put(SpriteType.BossB1, new boolean[12][8]);
-			spriteMap.put(SpriteType.BossB2, new boolean[12][8]);
-			spriteMap.put(SpriteType.BossC1, new boolean[12][8]);
-			spriteMap.put(SpriteType.BossC2, new boolean[12][8]);
-			spriteMap.put(SpriteType.BossExplosion, new boolean[13][7]);
+            spriteMap.put(SpriteType.Ship, new boolean[13][8]);
+            spriteMap.put(SpriteType.ShipDestroyed, new boolean[13][8]);
+            spriteMap.put(SpriteType.Bullet, new boolean[3][5]);
+            spriteMap.put(SpriteType.EnemyBullet, new boolean[3][5]);
+            spriteMap.put(SpriteType.EnemyShipA1, new boolean[12][8]);
+            spriteMap.put(SpriteType.EnemyShipA2, new boolean[12][8]);
+            spriteMap.put(SpriteType.EnemyShipB1, new boolean[12][8]);
+            spriteMap.put(SpriteType.EnemyShipB2, new boolean[12][8]);
+            spriteMap.put(SpriteType.EnemyShipC1, new boolean[12][8]);
+            spriteMap.put(SpriteType.EnemyShipC2, new boolean[12][8]);
+            spriteMap.put(SpriteType.DestroyedEnemyShipA1, new boolean[12][8]);
+            spriteMap.put(SpriteType.DestroyedEnemyShipA2, new boolean[12][8]);
+            spriteMap.put(SpriteType.DestroyedEnemyShipB1, new boolean[12][8]);
+            spriteMap.put(SpriteType.DestroyedEnemyShipB2, new boolean[12][8]);
+            spriteMap.put(SpriteType.DestroyedEnemyShipC1, new boolean[12][8]);
+            spriteMap.put(SpriteType.DestroyedEnemyShipC2, new boolean[12][8]);
+            spriteMap.put(SpriteType.EnemyShipSpecial, new boolean[16][7]);
+            spriteMap.put(SpriteType.Explosion, new boolean[13][7]);
+            spriteMap.put(SpriteType.BossA1, new boolean[12][8]);
+            spriteMap.put(SpriteType.BossA2, new boolean[12][8]);
+            spriteMap.put(SpriteType.BossB1, new boolean[12][8]);
+            spriteMap.put(SpriteType.BossB2, new boolean[12][8]);
+            spriteMap.put(SpriteType.BossC1, new boolean[12][8]);
+            spriteMap.put(SpriteType.BossC2, new boolean[12][8]);
+            spriteMap.put(SpriteType.BossExplosion, new boolean[13][7]);
 
             fileManager.loadSprite(spriteMap);
             logger.info("Finished loading the sprites.");
@@ -275,19 +320,39 @@ public final class DrawManager {
 
         backBufferGraphics.setColor(entity.getColor());
         //보스 1,2,3, bossExplosion
-        switch (entity.getSpriteType()){
+        switch (entity.getSpriteType()) {
             case BossA1:
             case BossA2:
             case BossB1:
             case BossB2:
             case BossC1:
             case BossC2:
-            case  BossExplosion:
+            case BossExplosion:
                 for (int i = 0; i < image.length; i++)
                     for (int j = 0; j < image[i].length; j++)
                         if (image[i][j])
                             backBufferGraphics.fillRect(positionX + i * 10 * x, positionY
                                     + j * 10 * y, 10 * width, 10 * height);
+                break;
+            case DestroyedEnemyShipA1:
+            case DestroyedEnemyShipA2:
+            case DestroyedEnemyShipB1:
+            case DestroyedEnemyShipB2:
+            case DestroyedEnemyShipC1:
+            case DestroyedEnemyShipC2:
+                for (int i = 0; i < image.length; i++) {
+                    for (int j = 0; j < image[i].length; j++) {
+                        if (image[i][j]) {
+                            if (x == 2) {
+                                backBufferGraphics.drawRect(positionX + i * 3 - 5, positionY + j * 3 - 5, 1, 1);
+                            } else {
+                                logger.info(width + " sd");
+                                logger.info(height + "heigh");
+                                backBufferGraphics.fillRect(positionX + i * x * 2 - width * 5, positionY + j * y * 2 - height * 5, width, height);
+                            }
+                        }
+                    }
+                }
                 break;
             default:
                 for (int i = 0; i < image.length; i++) {
@@ -348,22 +413,22 @@ public final class DrawManager {
         backBufferGraphics.drawString(scoreString, screen.getWidth() - 60, 25);
     }
 
-	/**
-	 * Draws number of remaining lives on screen. 화면에 남은 목숨 수를 그립니다.
-	 *
-	 * @param screen Screen to draw on. 그릴 수 있는 화면입니다.
-	 * @param lives  Current lives. 현재 목숨.
-	 */
-	public void drawLives(final Screen screen, final int lives, GameSettings gameSettings) {
-		backBufferGraphics.setFont(fontRegular);
-		backBufferGraphics.setColor(Color.WHITE);
-		backBufferGraphics.drawString(Integer.toString(lives), 20, 25);
-		Ship dummyShip = new Ship(0, 0, gameSettings);
-		for (int i = 0; i < lives; i++)
+    /**
+     * Draws number of remaining lives on screen. 화면에 남은 목숨 수를 그립니다.
+     *
+     * @param screen Screen to draw on. 그릴 수 있는 화면입니다.
+     * @param lives  Current lives. 현재 목숨.
+     */
+    public void drawLives(final Screen screen, final int lives, GameSettings gameSettings) {
+        backBufferGraphics.setFont(fontRegular);
+        backBufferGraphics.setColor(Color.WHITE);
+        backBufferGraphics.drawString(Integer.toString(lives), 20, 25);
+        Ship dummyShip = new Ship(0, 0, gameSettings);
+        for (int i = 0; i < lives; i++)
             //            drawEntity(dummyShip, 40 + 35 * i, 10); //min (default)
 //            drawEntity(dummyShip, 40 + 45 * i, 10); // medium
             drawEntity(dummyShip, 40 + 60 * i, 7); //max
-	}
+    }
 
     /**
      * Draws a thick line from side to side of the screen. 화면의 좌우로 굵은 선을 그립니다.
@@ -627,27 +692,25 @@ public final class DrawManager {
         if (number >= 4) {
             if (!bonusLife) {
                 if (level % 3 == 0) {
-                    drawCenteredBigString(screen, "BONUS STAGE "+level/3,
+                    drawCenteredBigString(screen, "BONUS STAGE " + level / 3,
                             screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
                 } else {
-                    drawCenteredBigString(screen, "Level " + (level-level/3),
+                    drawCenteredBigString(screen, "Level " + (level - level / 3),
                             screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
                 }
             } else {
                 if (level % 3 == 0) {
-                    drawCenteredBigString(screen, "BONUS STAGE "+level/3 +"- Bonus life!",
+                    drawCenteredBigString(screen, "BONUS STAGE " + level / 3 + "- Bonus life!",
                             screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
                 } else {
-                    drawCenteredBigString(screen, "Level " + (level-level/3) +"- Bonus life!",
+                    drawCenteredBigString(screen, "Level " + (level - level / 3) + "- Bonus life!",
                             screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
                 }
             }
-        }
-        else if (number != 0) {
+        } else if (number != 0) {
             drawCenteredBigString(screen, Integer.toString(number),
                     screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
-        }
-        else {
+        } else {
             drawCenteredBigString(screen, "GO!", screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
         }
     }
@@ -700,13 +763,13 @@ public final class DrawManager {
             else backBufferGraphics.setColor(Color.DARK_GRAY);
             drawRegularString(screen, soundOptions[i],
                     screen.getWidth() / 2 - fontRegularMetrics.getWidths()[0] - fontRegularMetrics.getHeight() * 5 + fontRegularMetrics.getHeight() * i * 4,
-                    screen.getHeight() / 3 + fontBigMetrics.getHeight() * 4 );
+                    screen.getHeight() / 3 + fontBigMetrics.getHeight() * 4);
 
             if (difficultyOption == i) backBufferGraphics.setColor(Color.CYAN);
             else backBufferGraphics.setColor(Color.DARK_GRAY);
             drawRegularString(screen, difficultyOptions[i],
                     screen.getWidth() / 2 - fontRegularMetrics.getWidths()[0] - fontRegularMetrics.getHeight() * 5 + fontRegularMetrics.getHeight() * i * 4,
-                    screen.getHeight() / 3 + fontBigMetrics.getHeight() * 7 );
+                    screen.getHeight() / 3 + fontBigMetrics.getHeight() * 7);
         }
 
     }
