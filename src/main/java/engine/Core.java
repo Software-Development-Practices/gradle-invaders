@@ -56,7 +56,8 @@ public final class Core {
 	/**
 	 * Total number of levels. 총 레벨 수.
 	 */
-	private static final int NUM_LEVELS = 7;
+	//총 레벨수 추가
+	private static final int NUM_LEVELS = 10;
 
 	/**
 	 * Frame to draw the screen on. 화면을 그릴 Frame 입니다.
@@ -190,26 +191,35 @@ public final class Core {
 
 			/* 레벨들의 난이도 설정 */
 			/** Difficulty settings for level 1. */
-			GameSettings SETTINGS_LEVEL_1 = new GameSettings(5, 4, 60-modiSpeed, 2500-modiFreq);
+			GameSettings SETTINGS_LEVEL_1 = new GameSettings(5, 4, 60-modiSpeed, 2500-modiFreq, 0);
 			/** Difficulty settings for level 2. */
-			GameSettings SETTINGS_LEVEL_2 = new GameSettings(5, 5, 50-modiSpeed, 2500-modiFreq);
+			GameSettings SETTINGS_LEVEL_2 = new GameSettings(5, 5, 50-modiSpeed, 2500-modiFreq, 0);
+			/** Difficulty settings for Boss level 1. */
+			GameSettings Boss_LEVEL_1 = new GameSettings(5, 5, 50-modiSpeed, 2500-modiFreq,1);
 			/** Difficulty settings for level 3. */
-			GameSettings SETTINGS_LEVEL_3 = new GameSettings(6, 5, 40-modiSpeed, 1500-modiFreq);
+			GameSettings SETTINGS_LEVEL_3 = new GameSettings(6, 5, 40-modiSpeed, 1500-modiFreq, 0);
 			/** Difficulty settings for level 4. */
-			GameSettings SETTINGS_LEVEL_4 = new GameSettings(6, 6, 30-modiSpeed, 1500-modiFreq);
+			GameSettings SETTINGS_LEVEL_4 = new GameSettings(6, 6, 30-modiSpeed, 1500-modiFreq, 0);
+			/** Difficulty settings for Boss level 2. */
+			GameSettings Boss_LEVEL_2 = new GameSettings(5, 5, 50-modiSpeed, 2500-modiFreq,2);
 			/** Difficulty settings for level 5. */
-			GameSettings SETTINGS_LEVEL_5 = new GameSettings(7, 6, 20-modiSpeed, 1000-modiFreq);
+			GameSettings SETTINGS_LEVEL_5 = new GameSettings(7, 6, 20-modiSpeed, 1000-modiFreq, 0);
 			/** Difficulty settings for level 6. */
-			GameSettings SETTINGS_LEVEL_6 = new GameSettings(7, 7, 10-modiSpeed, 1000-modiFreq);
+			GameSettings SETTINGS_LEVEL_6 = new GameSettings(7, 7, 10-modiSpeed, 1000-modiFreq, 0);
+			/** Difficulty settings for Boss level 3. */
+			GameSettings Boss_LEVEL_3 = new GameSettings(5, 5, 50-modiSpeed, 2500-modiFreq,3);
 			/** Difficulty settings for level 7. */
-			GameSettings SETTINGS_LEVEL_7 = new GameSettings(8, 7, 2-modiSpeed, 500-modiFreq);
+			GameSettings SETTINGS_LEVEL_7 = new GameSettings(8, 7, 2-modiSpeed, 500-modiFreq, 0);
 
 			gameSettings.add(SETTINGS_LEVEL_1);
 			gameSettings.add(SETTINGS_LEVEL_2);
+			gameSettings.add(Boss_LEVEL_3);
 			gameSettings.add(SETTINGS_LEVEL_3);
 			gameSettings.add(SETTINGS_LEVEL_4);
+			gameSettings.add(Boss_LEVEL_2);
 			gameSettings.add(SETTINGS_LEVEL_5);
 			gameSettings.add(SETTINGS_LEVEL_6);
+			gameSettings.add(Boss_LEVEL_3);
 			gameSettings.add(SETTINGS_LEVEL_7);
 
 			switch (returnCode) {

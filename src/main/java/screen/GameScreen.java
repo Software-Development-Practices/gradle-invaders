@@ -156,7 +156,7 @@ public class GameScreen extends Screen {
 
 		enemyShipFormation = new EnemyShipFormation(this.gameSettings);
 		enemyShipFormation.attach(this);
-		this.ship = new Ship(this.width / 2, this.height - 30);
+		this.ship = new Ship(this.width / 2, this.height - 30, this.gameSettings);
 		// Appears each 10-30 seconds.
 		this.enemyShipSpecialCooldown = Core.getVariableCooldown(BONUS_SHIP_INTERVAL, BONUS_SHIP_VARIANCE);
 		this.enemyShipSpecialCooldown.reset();
@@ -266,7 +266,7 @@ public class GameScreen extends Screen {
 
 		// Interface.
 		drawManager.drawScore(this, this.score);
-		drawManager.drawLives(this, this.lives);
+		drawManager.drawLives(this, this.lives,this.gameSettings);
 		drawManager.drawHorizontalLine(this, SEPARATION_LINE_HEIGHT - 1);
 
 		// Countdown to game start.
