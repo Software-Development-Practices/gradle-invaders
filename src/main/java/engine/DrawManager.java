@@ -162,7 +162,13 @@ public final class DrawManager {
         height = height_para;
     }
 
-    ;
+    /**
+     * ^^
+     * @return x-axis for bullet
+     */
+    public static int getXAxis(){
+        return x;
+    }
 
     /**
      * Private constructor. private 생성자
