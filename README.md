@@ -20,6 +20,20 @@
 - 브랜치 네이밍 컨벤션
   - SETB-{issue number}/{branch name}-{work feature}
 
+### Code Review Convention
+
+1. 궁금한 것
+🤔(:thinking:)
+2. 제안 (수정 제안)
+🤝 (악수)
+3. 칭찬?
+👍 (+1)
+좋아요
+4. 논의
+💬 (말풍선)
+5. 이게 뭐람(오타, 버그 가능성)
+🤷‍♂️ 🤷‍♀️ (어깨를 으쓱하는 남자, 여자)
+
 ## Todo
 
 ### general -- new
