@@ -1,10 +1,15 @@
 package entity;
 
 import java.awt.Color;
+import java.util.Random;
 
 import engine.Cooldown;
 import engine.Core;
 import engine.DrawManager.SpriteType;
+import engine.Frame;
+
+import javax.swing.*;
+
 
 /**
  * Implements a enemy ship, to be destroyed by the player. 플레이어가 파괴할 적 함선을
@@ -45,7 +50,7 @@ public class EnemyShip extends Entity {
 	 * resize시 EnemyShip의 크기도 커지는데 타격범위도 키우기 위해 사용되는 변수들입니다.
 	 */
 	private static int modiWidth = 2;
-
+	private static Frame frame;
 	/**
 	 * modiWidth 변수의 setter함수입니다.
 	 */
@@ -129,6 +134,8 @@ public class EnemyShip extends Entity {
 		this.pointValue = BONUS_TYPE_POINTS;
 	}
 
+
+
 	/**
 	 * Getter for the score bonus if this ship is destroyed. 이 함선이 파괴되면 점수 보너스를 얻을 수
 	 * 있습니다.
@@ -202,6 +209,8 @@ public class EnemyShip extends Entity {
 		}
 	}
 
+	public static void setFrame(Frame f) {frame = f;}
+
 	/**
 	 * Destroys the ship, causing an explosion. 함선을 파괴하여 폭발을 일으킵니다.
 	 */
@@ -209,17 +218,22 @@ public class EnemyShip extends Entity {
 		this.isDestroyed = true;
 		if(this.width > 16*modiWidth){
 			this.spriteType = SpriteType.BossExplosion;
+			this.frame.run();
 		}else{
 			this.spriteType = SpriteType.Explosion;
+			this.frame.run();
 		}
+		this.update();
 	}
 
 	/**
 	 * Checks if the ship has been destroyed. 함선이 파괴되었는지 확인합니다.
 	 * 
 	 * @return True if the ship has been destroyed.
+	 * @return True if the ship has been destroyed.
 	 */
 	public final boolean isDestroyed() {
 		return this.isDestroyed;
 	}
+
 }
