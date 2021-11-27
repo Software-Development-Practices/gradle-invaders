@@ -226,6 +226,7 @@ public final class Core {
 			gameSettings.add(SETTINGS_LEVEL_6);
 			gameSettings.add(Boss_LEVEL_3);
 			gameSettings.add(SETTINGS_LEVEL_7);
+			//^^ frame 전달
 			EnemyShip.setFrame(frame1);
 			EnemyShipFormation.setFrame(frame1);
 

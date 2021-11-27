@@ -301,8 +301,8 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	 * Updates the position of the ships. 선박의 위치를 업데이트합니다.
 	 */
 	public final void update() {
-		this.positionX = INIT_POS_X + frame.getxpoint();
-		this.positionY = INIT_POS_Y + frame.getypoint();
+		this.positionX = INIT_POS_X;
+		this.positionY = INIT_POS_Y;
 		if (this.shootingCooldown == null) {
 			this.shootingCooldown = Core.getVariableCooldown(shootingInterval, shootingVariance);
 		}
@@ -372,10 +372,9 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 				for (EnemyShip ship : column) {
 					if (ship != null && ship.isDestroyed()) {
 						destroyed.add(ship);
+						ship.run();
 						this.logger.info("Removed enemy " + column.indexOf(ship) + " from column "
 								+ this.enemyShips.indexOf(column));
-						this.logger.info("D"+destroyed);
-
 					}
 				}
 				column.removeAll(destroyed);
@@ -467,8 +466,8 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 					else {
 						column.get(i).destroy();
 						this.logger.info("Destroyed ship in (" + this.enemyShips.indexOf(column) + "," + i + ")");
-						this.update();
 					}
+					this.update();
 
 				}
 

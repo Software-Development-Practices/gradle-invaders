@@ -80,11 +80,18 @@ public class Frame extends JFrame{
 		return this.height;
 	}
 
-
+	/**
+	 * ^^
+	 * @return frame의 x위치 반환
+	 */
 	public int getxpoint(){
 		return this.getX();
 	}
 
+	/**
+	 *^^
+	 * @return frame의 y위치 반환
+	 */
 	public int getypoint(){
 		return this.getY();
 	}

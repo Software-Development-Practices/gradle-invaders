@@ -10,7 +10,9 @@ import engine.DrawManager.SpriteType;
  * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
  * 
  */
-public class Entity {
+public class
+
+Entity {
 
 	/**
 	 * Position in the x-axis of the upper left corner of the entity. 엔터티 왼쪽 위 모서리의

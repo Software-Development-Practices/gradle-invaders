@@ -128,7 +128,6 @@ public class EnemyShip extends Entity {
 	 */
 	public EnemyShip() {
 		super(-32, 60, 16 * modiWidth, 7 * modiWidth, Color.RED);
-
 		this.spriteType = SpriteType.EnemyShipSpecial;
 		this.isDestroyed = false;
 		this.pointValue = BONUS_TYPE_POINTS;
@@ -209,21 +208,22 @@ public class EnemyShip extends Entity {
 		}
 	}
 
+	/**
+	 *
+	 * @param f frame
+	 */
 	public static void setFrame(Frame f) {frame = f;}
 
+	/**
+	 * 진동 thread
+	 * 4가지 경우 1)왼쪽 아래 2) 왼쪽 위 3)오른쪽 아래 4) 오른쪽 위
+	 * ^^
+	 */
 	public void run() {
 		int x_0 = frame.getX();
 		int y_0 = frame.getY();
 		int count = 0;
 		while (true) {
-//			try {
-//				Thread.sleep(0);
-//			}
-//
-//			catch(InputMismatchException | InterruptedException e) {
-//
-//				return;
-//			}
 			if(count%4==0){
 				frame.setLocation(x_0-3, y_0-3);
 			}
@@ -240,24 +240,22 @@ public class EnemyShip extends Entity {
 			frame.setLocation(x_0, y_0);
 			count++;
 
-			if (count > 100) {
+			if (count > 50) {
 				return;
 			}
 		}
 	}
 	/**
 	 * Destroys the ship, causing an explosion. 함선을 파괴하여 폭발을 일으킵니다.
+	 * 폭발을 일으킬 때 진동도 같이 줍니다.^^
 	 */
 	public final void destroy() {
 		this.isDestroyed = true;
-		this.update();
 
 		if(this.width > 16*modiWidth){
 			this.spriteType = SpriteType.BossExplosion;
-			this.run();
-		}else{
+		}else {
 			this.spriteType = SpriteType.Explosion;
-			this.run();
 		}
 
 	}
