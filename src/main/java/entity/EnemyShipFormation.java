@@ -279,6 +279,10 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 		}
 	}
 
+	public void clean(){
+		this.cleanUp();
+	}
+
 	/**
 	 * Associates the formation to a given screen. 포메이션을 주어진 화면에 연결합니다.
 	 * 

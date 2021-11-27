@@ -251,7 +251,7 @@ public class GameScreen extends Screen {
 	/**
 	 * Draws the elements associated with the screen. 화면과 관련된 요소를 그립니다.
 	 */
-	private void draw() {
+	public void draw() {
 		drawManager.initDrawing(this);
 
 		drawManager.drawEntity(this.ship, this.ship.getPositionX(), this.ship.getPositionY());
@@ -313,9 +313,18 @@ public class GameScreen extends Screen {
 				for (EnemyShip enemyShip : this.enemyShipFormation)
 					if (!enemyShip.isDestroyed() && checkCollision(bullet, enemyShip)) {
 						this.score += enemyShip.getPointValue();
-						enemyShip.vib();
 						this.shipsDestroyed++;
 						this.enemyShipFormation.destroy(enemyShip);
+						int count = 0;
+						while(count<=30){
+							enemyShip.vib(count);
+							count++;
+							enemyShipFormation.clean();
+							draw();
+						}
+
+
+
 						recyclable.add(bullet);
 					}
 				if (this.enemyShipSpecial != null && !this.enemyShipSpecial.isDestroyed()
@@ -324,7 +333,8 @@ public class GameScreen extends Screen {
 					this.score += this.enemyShipSpecial.getPointValue();
 					this.shipsDestroyed++;
 					this.enemyShipSpecial.destroy();
-					this.enemyShipSpecial.vib();
+//					this.enemyShipSpecial.vib();
+//					draw();
 
 					this.enemyShipSpecialExplosionCooldown.reset();
 					recyclable.add(bullet);
