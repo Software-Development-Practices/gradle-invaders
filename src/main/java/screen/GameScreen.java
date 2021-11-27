@@ -216,7 +216,6 @@ public class GameScreen extends Screen {
 				if (!this.enemyShipSpecial.isDestroyed())
 					this.enemyShipSpecial.move(2, 0);
 				else if (this.enemyShipSpecialExplosionCooldown.checkFinished())
-					this.run();
 					this.enemyShipSpecial = null;
 
 			}
