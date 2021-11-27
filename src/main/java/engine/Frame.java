@@ -80,48 +80,6 @@ public class Frame extends JFrame{
 		return this.height;
 	}
 
-//
-//	private Thread th; //진동하는 스레드
-//	public void vibrating() throws InterruptedException {
-//		th=new Thread(this); //진동하는 스레드 객체 생성
-//		th.start();//진동시작
-//	}
-
-	public void run() {
-		Random r = new Random();
-		int x_0 = getX();
-		int y_0 = getY();
-		int count = 0;
-		while (true) {
-//			try {
-//				Thread.sleep(0);
-//			}
-//
-//			catch(InputMismatchException | InterruptedException e) {
-//
-//				return;
-//			}
-			if(count%4==0){
-				setLocation(x_0-3, y_0-3);
-			}
-			else if(count%4==1){
-				setLocation(x_0-3, y_0+3);
-			}
-			else if(count%4==2){
-				setLocation(x_0+3, y_0-3);
-			}
-			else if(count%4==3){
-				setLocation(x_0+3, y_0+3);
-
-			}
-			setLocation(x_0, y_0);
-			count++;
-
-			if (count > 100) {
-				return;
-			}
-		}
-	}
 
 	public int getxpoint(){
 		return this.getX();

@@ -211,19 +211,55 @@ public class EnemyShip extends Entity {
 
 	public static void setFrame(Frame f) {frame = f;}
 
+	public void run() {
+		int x_0 = frame.getX();
+		int y_0 = frame.getY();
+		int count = 0;
+		while (true) {
+//			try {
+//				Thread.sleep(0);
+//			}
+//
+//			catch(InputMismatchException | InterruptedException e) {
+//
+//				return;
+//			}
+			if(count%4==0){
+				frame.setLocation(x_0-3, y_0-3);
+			}
+			else if(count%4==1){
+				frame.setLocation(x_0-3, y_0+3);
+			}
+			else if(count%4==2){
+				frame.setLocation(x_0+3, y_0-3);
+			}
+			else if(count%4==3){
+				frame.setLocation(x_0+3, y_0+3);
+
+			}
+			frame.setLocation(x_0, y_0);
+			count++;
+
+			if (count > 100) {
+				return;
+			}
+		}
+	}
 	/**
 	 * Destroys the ship, causing an explosion. 함선을 파괴하여 폭발을 일으킵니다.
 	 */
 	public final void destroy() {
 		this.isDestroyed = true;
+		this.update();
+
 		if(this.width > 16*modiWidth){
 			this.spriteType = SpriteType.BossExplosion;
-			this.frame.run();
+			this.run();
 		}else{
 			this.spriteType = SpriteType.Explosion;
-			this.frame.run();
+			this.run();
 		}
-		this.update();
+
 	}
 
 	/**

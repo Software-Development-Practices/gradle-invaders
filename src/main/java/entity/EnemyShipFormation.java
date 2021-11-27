@@ -374,6 +374,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 						destroyed.add(ship);
 						this.logger.info("Removed enemy " + column.indexOf(ship) + " from column "
 								+ this.enemyShips.indexOf(column));
+						this.logger.info("D"+destroyed);
 
 					}
 				}
