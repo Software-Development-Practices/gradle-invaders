@@ -14,7 +14,8 @@ import screen.*;
 
 /**
  * Implements core game logic. 핵심 게임 로직을 구현합니다.
- * 
+ * Implements core game logic. 핵심 게임 로직을 구현합니다.
+ *
  * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
  * 
  */
@@ -122,6 +123,8 @@ public final class Core {
 		 * 처음에 frame을 만듦
 		 */
 		frame1 = new Frame(WIDTH, HEIGHT);
+		EnemyShipFormation.setFrame(frame1);
+
 		DrawManager.getInstance().setFrame(frame1);
 		width = frame1.getWidth();
 		height = frame1.getHeight();
@@ -187,7 +190,10 @@ public final class Core {
 					modiSpeed = 0;
 					modiFreq = 0;
 					break;
+
+
 			}
+
 
 			/* 레벨들의 난이도 설정 */
 			/** Difficulty settings for level 1. */
@@ -221,6 +227,9 @@ public final class Core {
 			gameSettings.add(SETTINGS_LEVEL_6);
 			gameSettings.add(Boss_LEVEL_3);
 			gameSettings.add(SETTINGS_LEVEL_7);
+			//^^ frame 전달
+			EnemyShip.setFrame(frame1);
+			EnemyShipFormation.setFrame(frame1);
 
 			switch (returnCode) {
 			case 1:
@@ -239,6 +248,7 @@ public final class Core {
 
 					currentScreen = new GameScreen(gameState, gameSettings.get(gameState.getLevel() - 1), bonusLife,
 							width, height, FPS);
+					//^^
 					LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " game screen at " + FPS + " fps.");
 					frame1.setScreen(currentScreen);
 					LOGGER.info("Closing game screen.");
@@ -250,6 +260,7 @@ public final class Core {
 
 				} while (gameState.getLivesRemaining() > 0 && gameState.getLevel() <= NUM_LEVELS);
 
+
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " score screen at " + FPS + " fps, with a score of "
 						+ gameState.getScore() + ", " + gameState.getLivesRemaining() + " lives remaining, "
 						+ gameState.getBulletsShot() + " bullets shot and " + gameState.getShipsDestroyed()
@@ -260,6 +271,7 @@ public final class Core {
 				break;
 			case 3:
 				// High scores.
+				currentScreen = new HighScoreScreen(width, height, FPS);
 				currentScreen = new HighScoreScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " high score screen at " + FPS + " fps.");
 				returnCode = frame1.setScreen(currentScreen);

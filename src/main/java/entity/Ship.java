@@ -57,7 +57,7 @@ public class Ship extends Entity {
 		}else{
 			this.shootingCooldown = Core.getCooldown(50);
 		}
-		this.destructionCooldown = Core.getCooldown(1000);
+		this.destructionCooldown = Core.getCooldown(1);
 	}
 
 	/**
