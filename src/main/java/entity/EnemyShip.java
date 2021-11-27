@@ -7,6 +7,7 @@ import engine.Cooldown;
 import engine.Core;
 import engine.DrawManager.SpriteType;
 import engine.Frame;
+import screen.Screen;
 
 import javax.swing.*;
 
@@ -18,7 +19,7 @@ import javax.swing.*;
  * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
  * 
  */
-public class EnemyShip extends Entity {
+public class EnemyShip extends Entity{
 
 	/** Point value of a type A enemy. */
 	private static final int A_TYPE_POINTS = 10;
@@ -51,6 +52,7 @@ public class EnemyShip extends Entity {
 	 */
 	private static int modiWidth = 2;
 	private static Frame frame;
+
 	/**
 	 * modiWidth 변수의 setter함수입니다.
 	 */
@@ -213,13 +215,14 @@ public class EnemyShip extends Entity {
 	 * @param f frame
 	 */
 	public static void setFrame(Frame f) {frame = f;}
-
+	
 	/**
 	 * 진동 thread
 	 * 4가지 경우 1)왼쪽 아래 2) 왼쪽 위 3)오른쪽 아래 4) 오른쪽 위
 	 * ^^
 	 */
-	public void run() {
+	public void vib(){
+
 		int x_0 = frame.getX();
 		int y_0 = frame.getY();
 		int count = 0;
@@ -240,7 +243,8 @@ public class EnemyShip extends Entity {
 			frame.setLocation(x_0, y_0);
 			count++;
 
-			if (count > 50) {
+
+			if (count > 30) {
 				return;
 			}
 		}

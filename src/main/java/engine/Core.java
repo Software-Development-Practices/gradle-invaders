@@ -124,6 +124,7 @@ public final class Core {
 		 */
 		frame1 = new Frame(WIDTH, HEIGHT);
 		EnemyShipFormation.setFrame(frame1);
+
 		DrawManager.getInstance().setFrame(frame1);
 		width = frame1.getWidth();
 		height = frame1.getHeight();

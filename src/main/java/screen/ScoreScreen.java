@@ -118,7 +118,7 @@ public class ScoreScreen extends Screen {
 	 * Updates the elements on screen and checks for events. 화면의 요소를 업데이트하고 이벤트를
 	 * 확인합니다.
 	 */
-	protected final void update() {
+	public final void update() {
 		super.update();
 
 		draw();
