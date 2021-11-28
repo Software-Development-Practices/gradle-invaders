@@ -362,7 +362,4 @@ public final class Core {
 	public static void setDifficulty(int mode) {
 		difficulty = mode;
 	}
-
-
-
 }

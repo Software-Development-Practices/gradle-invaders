@@ -176,6 +176,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	private final int bossB_life = 10;
 	private final int bossC_life = 20;
 
+
 	/**
 	 * Directions the formation can move. 포메이션이 움직일 수 있는 방향.
 	 */
@@ -217,6 +218,8 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 		SpriteType spriteType;
 		this.bossCheck = gameSettings.getBossCheck();
 
+
+
 		this.logger.info("Initializing " + nShipsWide + "x" + nShipsHigh + " ship formation in (" + positionX + ","
 				+ positionY + ")");
 		//보스 스테이지 일때 보스 하나만 나오도록 함
@@ -242,6 +245,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 			this.boss_life = bossLife[bossCheck -1];
 		}
 		else {
+
 			// Each sub-list is a column on the formation.
 			for (int i = 0; i < this.nShipsWide; i++)
 				this.enemyShips.add(new ArrayList<EnemyShip>());
@@ -466,11 +470,12 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 						}
 					}
 					else {
-
+						//리스트 column 각 자리에 들어가있는 EnemyShip의 get,setHP를 통해
 						int hp = column.get(i).getHP() ;
 						hp -- ;
 						column.get(i).setHP(hp);
 						if(hp == 0){
+							this.shipCount--;
 							column.get(i).destroy();
 							this.logger.info("Destroyed ship in (" + this.enemyShips.indexOf(column) + "," + i + ")");
 						}
@@ -506,10 +511,10 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 			if(this.boss_life==0) this.shipCount=0;
 		}
 
-		else {
-			this.shipCount--;
+		//else {
+		//	this.shipCount--;
 
-		}
+		//}
 	}
 
 	/**
