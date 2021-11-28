@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -219,6 +220,10 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 
 		this.logger.info("Initializing " + nShipsWide + "x" + nShipsHigh + " ship formation in (" + positionX + ","
 				+ positionY + ")");
+
+		// 몬스터에 따라 다르게 적용될 색깔 값을 위한 색상 변수 초기화
+		Color selectedColor = Color.WHITE;
+
 		//보스 스테이지 일때 보스 하나만 나오도록 함
 
 		if (this.bossCheck!=0){
@@ -230,7 +235,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 			int[] bossLife = {bossA_life , bossB_life, bossC_life};
 			List<EnemyShip> column = new ArrayList<EnemyShip>();
 			column.add(new EnemyShip(
-					positionX, positionY, bossType[bossCheck-1]));
+					positionX, positionY, bossType[bossCheck-1], selectedColor));
 			this.shipCount = 1;
 			this.shooters.add(column.get(0));
 			this.enemyShips.add(column);
@@ -255,10 +260,26 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 					else
 						spriteType = SpriteType.EnemyShipA1;
 
+					// 몬스터 타입에 따라 색깔이 다르게 적용될 수 있게 switch 문을 사용.
+					switch (spriteType) {
+						case EnemyShipA1:
+						case EnemyShipA2:
+							selectedColor = Color.RED;
+							break;
+						case EnemyShipB1:
+						case EnemyShipB2:
+							selectedColor = Color.YELLOW;
+							break;
+						case EnemyShipC1:
+						case EnemyShipC2:
+							selectedColor = Color.GREEN;
+							break;
+					}
+
 					column.add(new EnemyShip((SEPARATION_DISTANCE
 							* this.enemyShips.indexOf(column))
 							+ positionX, (SEPARATION_DISTANCE * i)
-							+ positionY, spriteType));
+							+ positionY, spriteType, selectedColor));
 					this.shipCount++;
 				}
 			}

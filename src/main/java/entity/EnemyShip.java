@@ -62,9 +62,10 @@ public class EnemyShip extends Entity {
 	 *                   위치입니다.
 	 * @param spriteType Sprite type, image corresponding to the ship. 스프라이트 타입, 함선에
 	 *                   대응하는 이미지.
+	 * @param selectedColor 적 함선의 종류에 따라 색깔을 다르게 하기 위해 받는 색상 값입니다.
 	 */
-	public EnemyShip(final int positionX, final int positionY, final SpriteType spriteType) {
-		super(positionX, positionY, 12 * modiWidth, 8 * modiWidth, Color.WHITE);
+	public EnemyShip(final int positionX, final int positionY, final SpriteType spriteType, final Color selectedColor) {
+		super(positionX, positionY, 12 * modiWidth, 8 * modiWidth, selectedColor);
 		//보스 경우 너비랑 높이도 스프라이트 크기에 맞게 바꿔 줍니다.
 		switch(spriteType) {
 			case BossA1:
@@ -86,34 +87,34 @@ public class EnemyShip extends Entity {
 		this.isDestroyed = false;
 
 		switch (this.spriteType) {
-		case EnemyShipA1:
-		case EnemyShipA2:
-			this.pointValue = A_TYPE_POINTS;
-			break;
-		case EnemyShipB1:
-		case EnemyShipB2:
-			this.pointValue = B_TYPE_POINTS;
-			break;
-		case EnemyShipC1:
-		case EnemyShipC2:
-			this.pointValue = C_TYPE_POINTS;
-			break;
-		//보스 포인트 설정.
-		case BossA1:
-		case BossA2:
-			this.pointValue = BossA_POINTS;
-			break;
-		case BossB1:
-		case BossB2:
-			this.pointValue = BossB_POINTS;
-			break;
-		case BossC1:
-		case BossC2:
-			this.pointValue = BossC_POINTS;
-			break;
-		default:
-			this.pointValue = 0;
-			break;
+			case EnemyShipA1:
+			case EnemyShipA2:
+				this.pointValue = A_TYPE_POINTS;
+				break;
+			case EnemyShipB1:
+			case EnemyShipB2:
+				this.pointValue = B_TYPE_POINTS;
+				break;
+			case EnemyShipC1:
+			case EnemyShipC2:
+				this.pointValue = C_TYPE_POINTS;
+				break;
+			//보스 포인트 설정.
+			case BossA1:
+			case BossA2:
+				this.pointValue = BossA_POINTS;
+				break;
+			case BossB1:
+			case BossB2:
+				this.pointValue = BossB_POINTS;
+				break;
+			case BossC1:
+			case BossC2:
+				this.pointValue = BossC_POINTS;
+				break;
+			default:
+				this.pointValue = 0;
+				break;
 		}
 	}
 
