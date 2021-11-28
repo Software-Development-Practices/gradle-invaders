@@ -247,13 +247,19 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 				this.enemyShips.add(new ArrayList<EnemyShip>());
 			for (List<EnemyShip> column : this.enemyShips) {
 				for (int i = 0; i < this.nShipsHigh; i++) {
-					if (i / (float) this.nShipsHigh < PROPORTION_C)
+					if (i / (float) this.nShipsHigh < PROPORTION_C){
 						spriteType = SpriteType.EnemyShipC1;
+						 ;
+					}
 					else if (i / (float) this.nShipsHigh < PROPORTION_B
-							+ PROPORTION_C)
+							+ PROPORTION_C){
 						spriteType = SpriteType.EnemyShipB1;
-					else
+
+					}
+					else {
 						spriteType = SpriteType.EnemyShipA1;
+
+					}
 
 					column.add(new EnemyShip((SEPARATION_DISTANCE
 							* this.enemyShips.indexOf(column))
@@ -460,8 +466,15 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 						}
 					}
 					else {
-						column.get(i).destroy();
-						this.logger.info("Destroyed ship in (" + this.enemyShips.indexOf(column) + "," + i + ")");
+
+						int hp = column.get(i).getHP() ;
+						hp -- ;
+						column.get(i).setHP(hp);
+						if(hp == 0){
+							column.get(i).destroy();
+							this.logger.info("Destroyed ship in (" + this.enemyShips.indexOf(column) + "," + i + ")");
+						}
+
 					}
 
 				}

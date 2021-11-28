@@ -45,6 +45,10 @@ public class EnemyShip extends Entity {
 	 * resize시 EnemyShip의 크기도 커지는데 타격범위도 키우기 위해 사용되는 변수들입니다.
 	 */
 	private static int modiWidth = 2;
+	/**
+	 * 일반 몬스터 타입별 HP 설정
+	 */
+	private int HP = 1 ;
 
 	/**
 	 * modiWidth 변수의 setter함수입니다.
@@ -85,18 +89,22 @@ public class EnemyShip extends Entity {
 		this.animationCooldown = Core.getCooldown(500);
 		this.isDestroyed = false;
 
+
 		switch (this.spriteType) {
 		case EnemyShipA1:
 		case EnemyShipA2:
 			this.pointValue = A_TYPE_POINTS;
+			this.HP = 3 ;
 			break;
 		case EnemyShipB1:
 		case EnemyShipB2:
 			this.pointValue = B_TYPE_POINTS;
+			this.HP = 2 ;
 			break;
 		case EnemyShipC1:
 		case EnemyShipC2:
 			this.pointValue = C_TYPE_POINTS;
+			this.HP = 1 ;
 			break;
 		//보스 포인트 설정.
 		case BossA1:
@@ -221,5 +229,21 @@ public class EnemyShip extends Entity {
 	 */
 	public final boolean isDestroyed() {
 		return this.isDestroyed;
+	}
+
+	/**
+	 *
+	 * @return 타입별 HP를 반환 합니다.
+	 */
+	public int getHP(){
+		return this.HP ;
+	}
+
+	/**
+	 *
+	 * @param hp 남은 HP에 대한 HP setter 함수 입니다.
+	 */
+	public void setHP(int hp){
+		this.HP = hp ;
 	}
 }
