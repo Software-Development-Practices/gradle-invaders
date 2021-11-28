@@ -89,7 +89,7 @@ public class EnemyShip extends Entity {
 		this.animationCooldown = Core.getCooldown(500);
 		this.isDestroyed = false;
 
-
+		//일반 몬스터 타입별 HP추가
 		switch (this.spriteType) {
 		case EnemyShipA1:
 		case EnemyShipA2:

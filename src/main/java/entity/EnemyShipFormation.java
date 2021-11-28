@@ -1,10 +1,7 @@
 package entity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.Random ;
 import java.util.logging.Logger;
 
 import screen.Screen;
@@ -45,11 +42,12 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	/**
 	 * Proportion of C-type ships. C형 함선의 비율.
 	 */
-	private static final double PROPORTION_C = 0.2;
+	// difficaulty마다 비율 다르게 하기 위해 final 삭제
+	private static double PROPORTION_C = 0.2;
 	/**
 	 * Proportion of B-type ships. B형 함선의 비율.
 	 */
-	private static final double PROPORTION_B = 0.4;
+	private static double PROPORTION_B = 0.4;
 	/**
 	 * Lateral speed of the formation. 포메이션의 측면 속도.
 	 */
@@ -175,6 +173,8 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	private final int bossA_life = 5;
 	private final int bossB_life = 10;
 	private final int bossC_life = 20;
+	/** setting 된 difficulty 입니다. */
+	private int difficulty ;
 
 
 	/**
@@ -217,6 +217,8 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 		this.shooters = new ArrayList<EnemyShip>();
 		SpriteType spriteType;
 		this.bossCheck = gameSettings.getBossCheck();
+		//Core에서 setting된 difficaulty를 가져옴.
+		this.difficulty = Core.getDifficulty() ;
 
 
 
@@ -245,7 +247,30 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 			this.boss_life = bossLife[bossCheck -1];
 		}
 		else {
+			Random rd = new Random();
+			//difficaulty에 따라서 타입별 proportion 값을 다르게 해줌 (난이도 높일 수록 A타입과 B타입 비중 높도록)
+			switch (difficulty){
 
+				case 1:{
+					// B : 0.4~0.6 (.99 이유 -> 최대 비율이 되는 경우의수 늘려주기 위함)
+					PROPORTION_B = (int)((Math.random()*2.99)+4)/(10.0) ;
+					//확률 반반
+					//PROPORTION_B = rd.nextInt(2) +4 ;
+					// C : 0.1 , A : 0.3~0.5
+					PROPORTION_C = 0.1 ;
+					break ;
+				}
+				case 2:{
+					// B : 0.4~0.5
+					PROPORTION_B = (int)((Math.random()*1.99)+4)/(10.0) ;
+					// C : 0 or 0.1 , A : 0.4~0.6
+					PROPORTION_C = (int)(Math.random()*1.99)/(10.0);
+					break ;
+				}
+				default:
+					break ;
+
+			}
 			// Each sub-list is a column on the formation.
 			for (int i = 0; i < this.nShipsWide; i++)
 				this.enemyShips.add(new ArrayList<EnemyShip>());
@@ -470,11 +495,12 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 						}
 					}
 					else {
-						//리스트 column 각 자리에 들어가있는 EnemyShip의 get,setHP를 통해
+						//리스트 column 각 자리에 들어가있는 EnemyShip의 get,setHP를 통해 hp기능 구현
 						int hp = column.get(i).getHP() ;
 						hp -- ;
 						column.get(i).setHP(hp);
 						if(hp == 0){
+							//기존에 일반 몬스터 경우 맞은 즉시 shipCount가 줄었던 것을 hp고려하여 줄도록 변경
 							this.shipCount--;
 							column.get(i).destroy();
 							this.logger.info("Destroyed ship in (" + this.enemyShips.indexOf(column) + "," + i + ")");
@@ -510,11 +536,6 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 		if(bossCheck!=0) {
 			if(this.boss_life==0) this.shipCount=0;
 		}
-
-		//else {
-		//	this.shipCount--;
-
-		//}
 	}
 
 	/**

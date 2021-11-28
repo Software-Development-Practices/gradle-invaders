@@ -362,4 +362,11 @@ public final class Core {
 	public static void setDifficulty(int mode) {
 		difficulty = mode;
 	}
+	/**
+	 *
+	 * @return setting 된 difficulty를 반환하는 getter 함수입니다.
+	 */
+	public static int getDifficulty() {
+		return difficulty;
+	}
 }
