@@ -60,6 +60,7 @@ public final class Core {
 	//총 레벨수 추가
 	private static final int NUM_LEVELS = 10;
 
+
 	/**
 	 * Frame to draw the screen on. 화면을 그릴 Frame 입니다.
 	 * (resize를 위해 Frame 변수를 두 개 만들어 사용합니다.)

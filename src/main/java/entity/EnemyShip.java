@@ -7,7 +7,6 @@ import engine.Cooldown;
 import engine.Core;
 import engine.DrawManager.SpriteType;
 import engine.Frame;
-import screen.Screen;
 
 import javax.swing.*;
 
@@ -52,7 +51,6 @@ public class EnemyShip extends Entity{
 	 */
 	private static int modiWidth = 2;
 	private static Frame frame;
-
 	/**
 	 * modiWidth 변수의 setter함수입니다.
 	 */
@@ -215,18 +213,16 @@ public class EnemyShip extends Entity{
 	 * @param f frame
 	 */
 	public static void setFrame(Frame f) {frame = f;}
-	
+
 	/**
 	 * 진동 thread
 	 * 4가지 경우 1)왼쪽 아래 2) 왼쪽 위 3)오른쪽 아래 4) 오른쪽 위
 	 * ^^
 	 */
-	public void vib(){
+	private int x_0 = frame.getX();
+	private int y_0 = frame.getY();
+	public void vib(int count){
 
-		int x_0 = frame.getX();
-		int y_0 = frame.getY();
-		int count = 0;
-		while (true) {
 			if(count%4==0){
 				frame.setLocation(x_0-3, y_0-3);
 			}
@@ -238,17 +234,11 @@ public class EnemyShip extends Entity{
 			}
 			else if(count%4==3){
 				frame.setLocation(x_0+3, y_0+3);
-
 			}
 			frame.setLocation(x_0, y_0);
-			count++;
-
-
-			if (count > 30) {
-				return;
-			}
-		}
+		return;
 	}
+
 	/**
 	 * Destroys the ship, causing an explosion. 함선을 파괴하여 폭발을 일으킵니다.
 	 * 폭발을 일으킬 때 진동도 같이 줍니다.^^
