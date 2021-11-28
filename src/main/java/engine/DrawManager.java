@@ -179,6 +179,9 @@ public final class DrawManager {
          * Destroyed Third enemy ship - second form.
          */
         DestroyedEnemyShipC2,
+
+
+        DestroyedEnemyShipSpecial
     }
 
     /**
@@ -239,6 +242,8 @@ public final class DrawManager {
             spriteMap.put(SpriteType.BossC1, new boolean[12][8]);
             spriteMap.put(SpriteType.BossC2, new boolean[12][8]);
             spriteMap.put(SpriteType.BossExplosion, new boolean[13][7]);
+            spriteMap.put(SpriteType.DestroyedEnemyShipSpecial, new boolean[16][7]);
+
 
             fileManager.loadSprite(spriteMap);
             logger.info("Finished loading the sprites.");
@@ -340,6 +345,7 @@ public final class DrawManager {
             case DestroyedEnemyShipB2:
             case DestroyedEnemyShipC1:
             case DestroyedEnemyShipC2:
+            case DestroyedEnemyShipSpecial:
                 for (int i = 0; i < image.length; i++) {
                     for (int j = 0; j < image[i].length; j++) {
                         if (image[i][j]) {

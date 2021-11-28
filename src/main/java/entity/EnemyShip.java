@@ -1,15 +1,10 @@
 package entity;
 
 import java.awt.Color;
-import java.util.Random;
 
 import engine.Cooldown;
 import engine.Core;
 import engine.DrawManager.SpriteType;
-import engine.Frame;
-
-import javax.swing.*;
-
 
 /**
  * Implements a enemy ship, to be destroyed by the player. 플레이어가 파괴할 적 함선을
@@ -18,7 +13,7 @@ import javax.swing.*;
  * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
  *
  */
-public class EnemyShip extends Entity{
+public class EnemyShip extends Entity {
 
 	/** Point value of a type A enemy. */
 	private static final int A_TYPE_POINTS = 10;
@@ -50,7 +45,7 @@ public class EnemyShip extends Entity{
 	 * resize시 EnemyShip의 크기도 커지는데 타격범위도 키우기 위해 사용되는 변수들입니다.
 	 */
 	private static int modiWidth = 2;
-	private static Frame frame;
+
 	/**
 	 * modiWidth 변수의 setter함수입니다.
 	 */
@@ -128,12 +123,11 @@ public class EnemyShip extends Entity{
 	 */
 	public EnemyShip() {
 		super(-32, 60, 16 * modiWidth, 7 * modiWidth, Color.RED);
+
 		this.spriteType = SpriteType.EnemyShipSpecial;
 		this.isDestroyed = false;
 		this.pointValue = BONUS_TYPE_POINTS;
 	}
-
-
 
 	/**
 	 * Getter for the score bonus if this ship is destroyed. 이 함선이 파괴되면 점수 보너스를 얻을 수
@@ -209,46 +203,12 @@ public class EnemyShip extends Entity{
 	}
 
 	/**
-	 *
-	 * @param f frame
-	 */
-	public static void setFrame(Frame f) {frame = f;}
-
-	/**
-	 * 진동 thread
-	 * 4가지 경우 1)왼쪽 아래 2) 왼쪽 위 3)오른쪽 아래 4) 오른쪽 위
-	 * ^^
-	 */
-	private int x_0 = frame.getX();
-	private int y_0 = frame.getY();
-	public void vib(int count){
-
-			if(count%4==0){
-				frame.setLocation(x_0-3, y_0-3);
-			}
-			else if(count%4==1){
-				frame.setLocation(x_0-3, y_0+3);
-			}
-			else if(count%4==2){
-				frame.setLocation(x_0+3, y_0-3);
-			}
-			else if(count%4==3){
-				frame.setLocation(x_0+3, y_0+3);
-			}
-			frame.setLocation(x_0, y_0);
-		return;
-	}
-
-	/**
 	 * Destroys the ship, causing an explosion. 함선을 파괴하여 폭발을 일으킵니다.
-	 * 폭발을 일으킬 때 진동도 같이 줍니다.^^
 	 */
 	public final void destroy() {
 		this.isDestroyed = true;
-
 		if(this.width > 16*modiWidth){
 			this.spriteType = SpriteType.BossExplosion;
-
 		}else{
 			switch (this.spriteType){
 				case EnemyShipA1:
@@ -269,21 +229,21 @@ public class EnemyShip extends Entity{
 				case EnemyShipC2:
 					this.spriteType = SpriteType.DestroyedEnemyShipC2;
 					break;
+				case EnemyShipSpecial:
+					this.spriteType = SpriteType.DestroyedEnemyShipSpecial;
+					break;
 				default:
 					break;
 			}
 		}
-
 	}
 
 	/**
 	 * Checks if the ship has been destroyed. 함선이 파괴되었는지 확인합니다.
 	 *
 	 * @return True if the ship has been destroyed.
-	 * @return True if the ship has been destroyed.
 	 */
 	public final boolean isDestroyed() {
 		return this.isDestroyed;
 	}
-
 }

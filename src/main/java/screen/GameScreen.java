@@ -188,7 +188,7 @@ public class GameScreen extends Screen {
 	 * Updates the elements on screen and checks for events. 화면의 요소를 업데이트하고 이벤트를
 	 * 확인합니다.
 	 */
-	public final void update() {
+	protected final void update() {
 		super.update();
 
 		if (this.inputDelay.checkFinished() && !this.levelFinished) {
@@ -251,7 +251,7 @@ public class GameScreen extends Screen {
 	/**
 	 * Draws the elements associated with the screen. 화면과 관련된 요소를 그립니다.
 	 */
-	public void draw() {
+	private void draw() {
 		drawManager.initDrawing(this);
 
 		drawManager.drawEntity(this.ship, this.ship.getPositionX(), this.ship.getPositionY());
@@ -297,7 +297,7 @@ public class GameScreen extends Screen {
 	/**
 	 * Manages collisions between bullets and ships. 총알과 선박 간의 충돌을 관리합니다.
 	 */
-	private void manageCollisions(){
+	private void manageCollisions() {
 		Set<Bullet> recyclable = new HashSet<Bullet>();
 		for (Bullet bullet : this.bullets)
 			if (bullet.getSpeed() > 0) {
@@ -316,26 +316,22 @@ public class GameScreen extends Screen {
 						this.shipsDestroyed++;
 						this.enemyShipFormation.destroy(enemyShip);
 						int count = 0;
-						while(count<=30){
-							enemyShip.vib(count);
+						while(count<=50){
+							Core.vib(count);
 							count++;
-							enemyShipFormation.clean();
-							draw();
 						}
-
-
-
 						recyclable.add(bullet);
 					}
 				if (this.enemyShipSpecial != null && !this.enemyShipSpecial.isDestroyed()
 						&& checkCollision(bullet, this.enemyShipSpecial)) {
-
 					this.score += this.enemyShipSpecial.getPointValue();
 					this.shipsDestroyed++;
 					this.enemyShipSpecial.destroy();
-//					this.enemyShipSpecial.vib();
-//					draw();
-
+					int count = 0;
+					while(count<=50){
+						Core.vib(count);
+						count++;
+					}
 					this.enemyShipSpecialExplosionCooldown.reset();
 					recyclable.add(bullet);
 				}

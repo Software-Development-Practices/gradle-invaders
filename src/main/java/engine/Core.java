@@ -14,8 +14,7 @@ import screen.*;
 
 /**
  * Implements core game logic. 핵심 게임 로직을 구현합니다.
- * Implements core game logic. 핵심 게임 로직을 구현합니다.
- *
+ * 
  * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
  * 
  */
@@ -60,7 +59,6 @@ public final class Core {
 	//총 레벨수 추가
 	private static final int NUM_LEVELS = 10;
 
-
 	/**
 	 * Frame to draw the screen on. 화면을 그릴 Frame 입니다.
 	 * (resize를 위해 Frame 변수를 두 개 만들어 사용합니다.)
@@ -79,6 +77,8 @@ public final class Core {
 	 * Difficulty settings list. 난이도 설정 목록.
 	 */
 	private static List<GameSettings> gameSettings;
+	private static int x_0;
+	private static int y_0;
 	/**
 	 * Application logger. 애플리케이션 로거.
 	 */
@@ -124,8 +124,6 @@ public final class Core {
 		 * 처음에 frame을 만듦
 		 */
 		frame1 = new Frame(WIDTH, HEIGHT);
-		EnemyShipFormation.setFrame(frame1);
-
 		DrawManager.getInstance().setFrame(frame1);
 		width = frame1.getWidth();
 		height = frame1.getHeight();
@@ -177,6 +175,8 @@ public final class Core {
 
 			// 게임 난이도 초기화
 			gameSettings = new ArrayList<GameSettings>();
+			x_0 = frame1.getX();
+			y_0 = frame1.getY();
 
 			switch (difficulty) {
 				case 1:
@@ -191,10 +191,7 @@ public final class Core {
 					modiSpeed = 0;
 					modiFreq = 0;
 					break;
-
-
 			}
-
 
 			/* 레벨들의 난이도 설정 */
 			/** Difficulty settings for level 1. */
@@ -228,9 +225,6 @@ public final class Core {
 			gameSettings.add(SETTINGS_LEVEL_6);
 			gameSettings.add(Boss_LEVEL_3);
 			gameSettings.add(SETTINGS_LEVEL_7);
-			//^^ frame 전달
-			EnemyShip.setFrame(frame1);
-			EnemyShipFormation.setFrame(frame1);
 
 			switch (returnCode) {
 			case 1:
@@ -249,7 +243,6 @@ public final class Core {
 
 					currentScreen = new GameScreen(gameState, gameSettings.get(gameState.getLevel() - 1), bonusLife,
 							width, height, FPS);
-					//^^
 					LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " game screen at " + FPS + " fps.");
 					frame1.setScreen(currentScreen);
 					LOGGER.info("Closing game screen.");
@@ -261,7 +254,6 @@ public final class Core {
 
 				} while (gameState.getLivesRemaining() > 0 && gameState.getLevel() <= NUM_LEVELS);
 
-
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " score screen at " + FPS + " fps, with a score of "
 						+ gameState.getScore() + ", " + gameState.getLivesRemaining() + " lives remaining, "
 						+ gameState.getBulletsShot() + " bullets shot and " + gameState.getShipsDestroyed()
@@ -272,7 +264,6 @@ public final class Core {
 				break;
 			case 3:
 				// High scores.
-				currentScreen = new HighScoreScreen(width, height, FPS);
 				currentScreen = new HighScoreScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " high score screen at " + FPS + " fps.");
 				returnCode = frame1.setScreen(currentScreen);
@@ -302,6 +293,22 @@ public final class Core {
 	 */
 	private Core() {
 
+	}
+	public static void vib(int count){
+
+		if(count%4==0){
+			frame1.setLocation(x_0-3, y_0-3);
+		}
+		else if(count%4==1){
+			frame1.setLocation(x_0-3, y_0+3);
+		}
+		else if(count%4==2){
+			frame1.setLocation(x_0+3, y_0-3);
+		}
+		else if(count%4==3){
+			frame1.setLocation(x_0+3, y_0+3);
+		}
+		frame1.setLocation(x_0, y_0);
 	}
 
 	/**
