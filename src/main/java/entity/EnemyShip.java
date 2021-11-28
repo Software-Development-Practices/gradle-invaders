@@ -229,6 +229,9 @@ public class EnemyShip extends Entity {
 				case EnemyShipC2:
 					this.spriteType = SpriteType.DestroyedEnemyShipC2;
 					break;
+				case EnemyShipSpecial:
+					this.spriteType = SpriteType.DestroyedEnemyShipSpecial;
+					break;
 				default:
 					break;
 			}
