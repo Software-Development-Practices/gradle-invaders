@@ -1,14 +1,9 @@
 package engine;
 
 import java.awt.Insets;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.InputMismatchException;
-import java.util.Random;
 
 import javax.swing.JFrame;
 
-import screen.GameScreen;
 import screen.Screen;
 
 /**
@@ -18,12 +13,12 @@ import screen.Screen;
  * 
  */
 @SuppressWarnings("serial")
-public class Frame extends JFrame{
+public class Frame extends JFrame {
 
 	/** Frame width. */
-	private final int width;
+	private int width;
 	/** Frame height. */
-	private final int height;
+	private int height;
 	/** Screen currently shown. */
 	private Screen currentScreen;
 
@@ -80,4 +75,3 @@ public class Frame extends JFrame{
 		return this.height;
 	}
 }
-

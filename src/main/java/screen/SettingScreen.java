@@ -56,7 +56,7 @@ public class SettingScreen extends Screen {
      * Updates the elements on screen and checks for events. 화면의 요소를 업데이트하고 이벤트를
      * 확인합니다.
      */
-    public final void update() {
+    protected final void update() {
         super.update();
         draw();
         if (this.selectionCooldown.checkFinished() && this.inputDelay.checkFinished()) {

@@ -7,9 +7,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import engine.*;
 import screen.Screen;
+import engine.Cooldown;
+import engine.Core;
+import engine.DrawManager;
 import engine.DrawManager.SpriteType;
+import engine.GameSettings;
 
 /**
  * Groups enemy ships into a formation that moves together. 적 함선을 함께 이동하는 대형으로
@@ -20,8 +23,6 @@ import engine.DrawManager.SpriteType;
  */
 public class EnemyShipFormation implements Iterable<EnemyShip> {
 
-	private static Frame frame;
-	public static void setFrame(Frame f){frame = f;}
 	/**
 	 * Initial position in the x-axis. x축의 초기 위치입니다.
 	 */
@@ -175,8 +176,6 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	private final int bossB_life = 10;
 	private final int bossC_life = 20;
 
-
-
 	/**
 	 * Directions the formation can move. 포메이션이 움직일 수 있는 방향.
 	 */
@@ -275,12 +274,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 
 			for (List<EnemyShip> column : this.enemyShips)
 				this.shooters.add(column.get(column.size() - 1));
-			this.update();
 		}
-	}
-
-	public void clean(){
-		this.cleanUp();
 	}
 
 	/**
@@ -305,10 +299,9 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	 * Updates the position of the ships. 선박의 위치를 업데이트합니다.
 	 */
 	public final void update() {
-		this.positionX = INIT_POS_X;
-		this.positionY = INIT_POS_Y;
 		if (this.shootingCooldown == null) {
 			this.shootingCooldown = Core.getVariableCooldown(shootingInterval, shootingVariance);
+			this.shootingCooldown.reset();
 		}
 
 		cleanUp();
@@ -470,7 +463,6 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 						column.get(i).destroy();
 						this.logger.info("Destroyed ship in (" + this.enemyShips.indexOf(column) + "," + i + ")");
 					}
-					this.update();
 
 				}
 
@@ -551,5 +543,4 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	public final boolean isEmpty() {
 		return this.shipCount <= 0;
 	}
-
 }

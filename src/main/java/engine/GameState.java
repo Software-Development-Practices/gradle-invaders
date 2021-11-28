@@ -23,7 +23,8 @@ public class GameState {
 
 	/**
 	 * Constructor.
-	 *  @param level          Current game level.
+	 * 
+	 * @param level          Current game level.
 	 * @param score          Current score.
 	 * @param livesRemaining Lives currently remaining.
 	 * @param bulletsShot    Bullets shot until now.
