@@ -19,7 +19,8 @@ public class Ship extends Entity {
     /**
      * Time between shots. 샷 사이의 시간.
      */
-    private static final int SHOOTING_INTERVAL = 750;
+    // 몬스터들의 체력이 늘어나면서 난이도 조정을 위해 SHOOTING_INTERVAL을 10 내렸습니다.(황벨)
+    private static final int SHOOTING_INTERVAL = 740;
     /**
      * Speed of the bullets shot by the ship. 함선이 발사하는 총알의 속도.
      */
