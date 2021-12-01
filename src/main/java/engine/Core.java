@@ -77,6 +77,8 @@ public final class Core {
 	 * Difficulty settings list. 난이도 설정 목록.
 	 */
 	private static List<GameSettings> gameSettings;
+	private static int x_0;
+	private static int y_0;
 	/**
 	 * Application logger. 애플리케이션 로거.
 	 */
@@ -173,6 +175,8 @@ public final class Core {
 
 			// 게임 난이도 초기화
 			gameSettings = new ArrayList<GameSettings>();
+			x_0 = frame1.getX();
+			y_0 = frame1.getY();
 
 			switch (difficulty) {
 				case 1:
@@ -289,6 +293,22 @@ public final class Core {
 	 */
 	private Core() {
 
+	}
+	public static void vib(int count){
+
+		if(count%4==0){
+			frame1.setLocation(x_0-3, y_0-3);
+		}
+		else if(count%4==1){
+			frame1.setLocation(x_0-3, y_0+3);
+		}
+		else if(count%4==2){
+			frame1.setLocation(x_0+3, y_0-3);
+		}
+		else if(count%4==3){
+			frame1.setLocation(x_0+3, y_0+3);
+		}
+		frame1.setLocation(x_0, y_0);
 	}
 
 	/**

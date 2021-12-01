@@ -9,9 +9,9 @@ import engine.DrawManager.SpriteType;
 /**
  * Implements a enemy ship, to be destroyed by the player. 플레이어가 파괴할 적 함선을
  * 구현합니다.
- * 
+ *
  * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
- * 
+ *
  */
 public class EnemyShip extends Entity {
 
@@ -55,7 +55,7 @@ public class EnemyShip extends Entity {
 
 	/**
 	 * Constructor, establishes the ship's properties. 생성자, 함선의 속성을 설정합니다.
-	 * 
+	 *
 	 * @param positionX  Initial position of the ship in the X axis. X축에서 함선의 초기
 	 *                   위치입니다.
 	 * @param positionY  Initial position of the ship in the Y axis. Y축에서 함선의 초기
@@ -132,7 +132,7 @@ public class EnemyShip extends Entity {
 	/**
 	 * Getter for the score bonus if this ship is destroyed. 이 함선이 파괴되면 점수 보너스를 얻을 수
 	 * 있습니다.
-	 * 
+	 *
 	 * @return Value of the ship.
 	 */
 	public final int getPointValue() {
@@ -141,7 +141,7 @@ public class EnemyShip extends Entity {
 
 	/**
 	 * Moves the ship the specified distance. 함선을 지정된 거리만큼 이동합니다.
-	 * 
+	 *
 	 * @param distanceX Distance to move in the X axis. X축에서 이동할 거리입니다.
 	 * @param distanceY Distance to move in the Y axis. Y축에서 이동할 거리입니다.
 	 */
@@ -210,13 +210,37 @@ public class EnemyShip extends Entity {
 		if(this.width > 16*modiWidth){
 			this.spriteType = SpriteType.BossExplosion;
 		}else{
-			this.spriteType = SpriteType.Explosion;
+			switch (this.spriteType){
+				case EnemyShipA1:
+					this.spriteType = SpriteType.DestroyedEnemyShipA1;
+					break;
+				case EnemyShipA2:
+					this.spriteType = SpriteType.DestroyedEnemyShipA2;
+					break;
+				case EnemyShipB1:
+					this.spriteType = SpriteType.DestroyedEnemyShipB1;
+					break;
+				case EnemyShipB2:
+					this.spriteType = SpriteType.DestroyedEnemyShipB2;
+					break;
+				case EnemyShipC1:
+					this.spriteType = SpriteType.DestroyedEnemyShipC1;
+					break;
+				case EnemyShipC2:
+					this.spriteType = SpriteType.DestroyedEnemyShipC2;
+					break;
+				case EnemyShipSpecial:
+					this.spriteType = SpriteType.DestroyedEnemyShipSpecial;
+					break;
+				default:
+					break;
+			}
 		}
 	}
 
 	/**
 	 * Checks if the ship has been destroyed. 함선이 파괴되었는지 확인합니다.
-	 * 
+	 *
 	 * @return True if the ship has been destroyed.
 	 */
 	public final boolean isDestroyed() {

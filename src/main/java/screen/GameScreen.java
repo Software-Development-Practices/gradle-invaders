@@ -3,6 +3,7 @@ package screen;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import engine.Cooldown;
 import engine.Core;
@@ -54,6 +55,7 @@ public class GameScreen extends Screen {
 	 * Height of the interface separation line. 인터페이스 분리선의 높이입니다.
 	 */
 	private static final int SEPARATION_LINE_HEIGHT = 40;
+	private final int bossCheck;
 
 	/**
 	 * Current game difficulty settings. 현재 게임 난이도 설정.
@@ -145,6 +147,7 @@ public class GameScreen extends Screen {
 			this.lives++;
 		this.bulletsShot = gameState.getBulletsShot();
 		this.shipsDestroyed = gameState.getShipsDestroyed();
+		this.bossCheck = gameSettings.getBossCheck();
 	}
 
 	/**
@@ -315,6 +318,14 @@ public class GameScreen extends Screen {
 						this.score += enemyShip.getPointValue();
 						this.shipsDestroyed++;
 						this.enemyShipFormation.destroy(enemyShip);
+
+						if(enemyShip.isDestroyed()) {
+							int count = 0;
+							while (count <= 50) {
+								Core.vib(count);
+								count++;
+							}
+						}
 						recyclable.add(bullet);
 					}
 				if (this.enemyShipSpecial != null && !this.enemyShipSpecial.isDestroyed()
@@ -322,6 +333,11 @@ public class GameScreen extends Screen {
 					this.score += this.enemyShipSpecial.getPointValue();
 					this.shipsDestroyed++;
 					this.enemyShipSpecial.destroy();
+					int count = 0;
+					while(count<=50){
+						Core.vib(count);
+						count++;
+					}
 					this.enemyShipSpecialExplosionCooldown.reset();
 					recyclable.add(bullet);
 				}
