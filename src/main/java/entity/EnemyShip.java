@@ -9,9 +9,9 @@ import engine.DrawManager.SpriteType;
 /**
  * Implements a enemy ship, to be destroyed by the player. 플레이어가 파괴할 적 함선을
  * 구현합니다.
- * 
+ *
  * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
- * 
+ *
  */
 public class EnemyShip extends Entity {
 
@@ -45,6 +45,10 @@ public class EnemyShip extends Entity {
 	 * resize시 EnemyShip의 크기도 커지는데 타격범위도 키우기 위해 사용되는 변수들입니다.
 	 */
 	private static int modiWidth = 2;
+	/**
+	 * 일반 몬스터 타입별 HP 설정
+	 */
+	private int HP = 1 ;
 
 	/**
 	 * modiWidth 변수의 setter함수입니다.
@@ -55,16 +59,17 @@ public class EnemyShip extends Entity {
 
 	/**
 	 * Constructor, establishes the ship's properties. 생성자, 함선의 속성을 설정합니다.
-	 * 
+	 *
 	 * @param positionX  Initial position of the ship in the X axis. X축에서 함선의 초기
 	 *                   위치입니다.
 	 * @param positionY  Initial position of the ship in the Y axis. Y축에서 함선의 초기
 	 *                   위치입니다.
 	 * @param spriteType Sprite type, image corresponding to the ship. 스프라이트 타입, 함선에
 	 *                   대응하는 이미지.
+	 * @param selectedColor 적 함선의 종류에 따라 색깔을 다르게 하기 위해 받는 색상 값입니다.
 	 */
-	public EnemyShip(final int positionX, final int positionY, final SpriteType spriteType) {
-		super(positionX, positionY, 12 * modiWidth, 8 * modiWidth, Color.WHITE);
+	public EnemyShip(final int positionX, final int positionY, final SpriteType spriteType, final Color selectedColor) {
+		super(positionX, positionY, 12 * modiWidth, 8 * modiWidth, selectedColor);
 		//보스 경우 너비랑 높이도 스프라이트 크기에 맞게 바꿔 줍니다.
 		switch(spriteType) {
 			case BossA1:
@@ -85,35 +90,39 @@ public class EnemyShip extends Entity {
 		this.animationCooldown = Core.getCooldown(500);
 		this.isDestroyed = false;
 
+		//일반 몬스터 타입별 HP추가
 		switch (this.spriteType) {
-		case EnemyShipA1:
-		case EnemyShipA2:
-			this.pointValue = A_TYPE_POINTS;
-			break;
-		case EnemyShipB1:
-		case EnemyShipB2:
-			this.pointValue = B_TYPE_POINTS;
-			break;
-		case EnemyShipC1:
-		case EnemyShipC2:
-			this.pointValue = C_TYPE_POINTS;
-			break;
-		//보스 포인트 설정.
-		case BossA1:
-		case BossA2:
-			this.pointValue = BossA_POINTS;
-			break;
-		case BossB1:
-		case BossB2:
-			this.pointValue = BossB_POINTS;
-			break;
-		case BossC1:
-		case BossC2:
-			this.pointValue = BossC_POINTS;
-			break;
-		default:
-			this.pointValue = 0;
-			break;
+			case EnemyShipA1:
+			case EnemyShipA2:
+				this.pointValue = A_TYPE_POINTS;
+				this.HP = 3 ;
+				break;
+			case EnemyShipB1:
+			case EnemyShipB2:
+				this.pointValue = B_TYPE_POINTS;
+				this.HP = 2 ;
+				break;
+			case EnemyShipC1:
+			case EnemyShipC2:
+				this.pointValue = C_TYPE_POINTS;
+				this.HP = 1 ;
+				break;
+			//보스 포인트 설정.
+			case BossA1:
+			case BossA2:
+				this.pointValue = BossA_POINTS;
+				break;
+			case BossB1:
+			case BossB2:
+				this.pointValue = BossB_POINTS;
+				break;
+			case BossC1:
+			case BossC2:
+				this.pointValue = BossC_POINTS;
+				break;
+			default:
+				this.pointValue = 0;
+				break;
 		}
 	}
 
@@ -132,7 +141,7 @@ public class EnemyShip extends Entity {
 	/**
 	 * Getter for the score bonus if this ship is destroyed. 이 함선이 파괴되면 점수 보너스를 얻을 수
 	 * 있습니다.
-	 * 
+	 *
 	 * @return Value of the ship.
 	 */
 	public final int getPointValue() {
@@ -141,7 +150,7 @@ public class EnemyShip extends Entity {
 
 	/**
 	 * Moves the ship the specified distance. 함선을 지정된 거리만큼 이동합니다.
-	 * 
+	 *
 	 * @param distanceX Distance to move in the X axis. X축에서 이동할 거리입니다.
 	 * @param distanceY Distance to move in the Y axis. Y축에서 이동할 거리입니다.
 	 */
@@ -210,16 +219,56 @@ public class EnemyShip extends Entity {
 		if(this.width > 16*modiWidth){
 			this.spriteType = SpriteType.BossExplosion;
 		}else{
-			this.spriteType = SpriteType.Explosion;
+			switch (this.spriteType){
+				case EnemyShipA1:
+					this.spriteType = SpriteType.DestroyedEnemyShipA1;
+					break;
+				case EnemyShipA2:
+					this.spriteType = SpriteType.DestroyedEnemyShipA2;
+					break;
+				case EnemyShipB1:
+					this.spriteType = SpriteType.DestroyedEnemyShipB1;
+					break;
+				case EnemyShipB2:
+					this.spriteType = SpriteType.DestroyedEnemyShipB2;
+					break;
+				case EnemyShipC1:
+					this.spriteType = SpriteType.DestroyedEnemyShipC1;
+					break;
+				case EnemyShipC2:
+					this.spriteType = SpriteType.DestroyedEnemyShipC2;
+					break;
+				case EnemyShipSpecial:
+					this.spriteType = SpriteType.DestroyedEnemyShipSpecial;
+					break;
+				default:
+					break;
+			}
 		}
 	}
 
 	/**
 	 * Checks if the ship has been destroyed. 함선이 파괴되었는지 확인합니다.
-	 * 
+	 *
 	 * @return True if the ship has been destroyed.
 	 */
 	public final boolean isDestroyed() {
 		return this.isDestroyed;
+	}
+
+	/**
+	 *
+	 * @return 타입별 HP를 반환 합니다.
+	 */
+	public int getHP(){
+		return this.HP ;
+	}
+
+	/**
+	 *
+	 * @param hp 남은 HP에 대한 HP setter 함수 입니다.
+	 */
+	public void setHP(int hp){
+		this.HP = hp ;
 	}
 }
