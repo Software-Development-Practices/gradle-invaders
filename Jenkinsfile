@@ -20,16 +20,18 @@ pipeline {
                 '''
                 }
         }
-        try {
-            stage('Test') {
-                steps {
-                    sh '''
-                    ./gradlew test
-                    '''
+        script {
+            try {
+                stage('Test') {
+                    steps {
+                        sh '''
+                        ./gradlew test
+                        '''
+                    }
                 }
+            } catch (error) {
+                echo 'Test Failed'
             }
-        } catch (error) {
-            echo 'Test Failed'
         }
     }
 }
