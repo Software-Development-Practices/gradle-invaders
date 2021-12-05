@@ -15,7 +15,6 @@ pipeline {
     tools {
         gradle 'gradle 7.1'
     }
-    notifySlack('STARTED', '#0000FF')
 
     stages {
         stage('Checkout') {
@@ -25,12 +24,13 @@ pipeline {
             }
         }
         stage('Build') {
-                steps {
-                    sh '''
+            steps {
+                notifySlack('STARTED', '#0000FF')
+                sh '''
                 chmod +x gradlew
                 ./gradlew build -x test
                 '''
-                }
+            }
         }
         stage('Test') {
             steps {
