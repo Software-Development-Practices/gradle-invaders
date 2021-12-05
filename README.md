@@ -1,5 +1,7 @@
 # Space Invaders
 
+테스트용 수정사항
+
 ## Convention
 
 ### Commit Convention
@@ -15,6 +17,7 @@
     - docs: 문서 작업
     - PR: PR 생성할 때 붙여주는 헤더
     - test : 페어 끼리 git 작업할때, integration test
+
 ### Branch Convention
 
 - 브랜치 네이밍 컨벤션
@@ -23,16 +26,16 @@
 ### Code Review Convention
 
 1. 궁금한 것
-🤔(:thinking:)
+   🤔(:thinking:)
 2. 제안 (수정 제안)
-🤝 (악수)
+   🤝 (악수)
 3. 칭찬?
-👍 (+1)
-좋아요
+   👍 (+1)
+   좋아요
 4. 논의
-💬 (말풍선)
+   💬 (말풍선)
 5. 이게 뭐람(오타, 버그 가능성)
-🤷‍♂️ 🤷‍♀️ (어깨를 으쓱하는 남자, 여자)
+   🤷‍♂️ 🤷‍♀️ (어깨를 으쓱하는 남자, 여자)
 
 ## Todo
 
