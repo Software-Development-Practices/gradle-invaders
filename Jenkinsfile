@@ -47,7 +47,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('SonarQube-Server') {
-                    '''
+                    sh '''
                     ./gradlew sonarqube \
                     -Dsonar.projectKey=jenkins \
                     -Dsonar.host.url=http://34.64.148.169:9000 \
