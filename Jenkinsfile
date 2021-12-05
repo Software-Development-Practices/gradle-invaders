@@ -1,3 +1,10 @@
+
+void notifySlack(String status, String color)  {
+    slackSend(
+        color: color, message: status + ' : ' + "${env.JOB_NAME} [${env.BUILD_NUMBER}] (${env.BUILD_URL})"
+    )
+}
+
 pipeline {
     agent any
 
@@ -17,12 +24,13 @@ pipeline {
             }
         }
         stage('Build') {
-                steps {
-                    sh '''
+            steps {
+                notifySlack('STARTED', '#0000FF')
+                sh '''
                 chmod +x gradlew
                 ./gradlew build -x test
                 '''
-                }
+            }
         }
         stage('Test') {
             steps {
@@ -38,6 +46,16 @@ pipeline {
     }
 
     post {
+        success {
+            notifySlack('SUCCESS', '#00FF00')
+        }
+        unstable {
+            notifySlack('UNSTABLE', '#FFFF00')
+        }
+        failure {
+            notifySlack('FAILED', '#FF0000')
+        }
+
         always {
             script {
                 def summary = junit testResults: '**/build/test-results/**/*.xml', skipMarkingBuildUnstable: true,
@@ -57,11 +75,11 @@ pipeline {
                     channel: '#ci-테스트-알림',
                     color: '#007D00',
                     message: """
-                    *Test Summary* - ${summary.totalCount}
+*Test Summary* - ${summary.totalCount}
 
-                    Failures: ${summary.failCount}
-                    Skipped: ${summary.skipCount}
-                    Passed: ${summary.passCount}
+Failures: ${summary.failCount}
+Skipped: ${summary.skipCount}
+Passed: ${summary.passCount}
                     """
                 )
             }
