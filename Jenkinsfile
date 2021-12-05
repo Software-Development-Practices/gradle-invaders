@@ -75,16 +75,12 @@ pipeline {
                             reportName: 'Junit Report'
                 ])
 
-                def causes = currentBuild.rawBuild.getCauses()
-
                 slackSend(
                     channel: '#ci-테스트-알림',
                     color: '#007D00',
                     message: """
-                    ${summary}
-
                     BUILD #${currentBuild.number}
-                    causes: ${causes}
+                    causes: ${currentBuild.rawBuild.getCauses()}
 
                     *Test Summary* - ${summary.totalCount},
                     Failures: ${summary.failCount}
