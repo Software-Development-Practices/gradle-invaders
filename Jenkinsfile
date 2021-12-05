@@ -59,19 +59,11 @@ pipeline {
         }
 
         always {
+            archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
             script {
                 def summary = junit testResults: '**/build/test-results/**/*.xml', skipMarkingBuildUnstable: true,
                                 skipPublishingChecks: true,
                                 healthScaleFactor: 1.0
-
-                publishHTML(target: [
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: false,
-                            keepAll: true,
-                            reportDir: 'build/reports/tests/test',
-                            reportFiles: 'index.html',
-                            reportName: 'Junit Report'
-                ])
 
                 slackSend(
                     channel: '#ci-테스트-알림',
