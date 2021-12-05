@@ -15,6 +15,7 @@
     - docs: 문서 작업
     - PR: PR 생성할 때 붙여주는 헤더
     - test : 페어 끼리 git 작업할때, integration test
+
 ### Branch Convention
 
 - 브랜치 네이밍 컨벤션
@@ -23,35 +24,35 @@
 ### Code Review Convention
 
 1. 궁금한 것
-🤔(:thinking:)
+   🤔(:thinking:)
 2. 제안 (수정 제안)
-🤝 (악수)
+   🤝 (악수)
 3. 칭찬?
-👍 (+1)
-좋아요
+   👍 (+1)
+   좋아요
 4. 논의
-💬 (말풍선)
+   💬 (말풍선)
 5. 이게 뭐람(오타, 버그 가능성)
-🤷‍♂️ 🤷‍♀️ (어깨를 으쓱하는 남자, 여자)
+   🤷‍♂️ 🤷‍♀️ (어깨를 으쓱하는 남자, 여자)
 
 ## Todo
 
 ### general -- new
 
-1. Add dying effect
-   - virbration effect, etc
-2. Add SFX & BGM
-   - dynamic sound effect, etc
-3. Display HP Color
-   - identifying enemy's hp state, bullet count, etc
-4. Add Pause function
-   - pausing game by pressing ESC key, etc
-5. Add Setting function
-   - screen resizing, game speed selecting, etc
-6. Add various monsters
-   - diversifying monster patterns, boss monsters, etc
-7. Add Game Summary
-   - game rule, manual, etc
+- [x] Add dying effect
+      virbration effect, etc
+- [x] Add SFX & BGM
+      dynamic sound effect, etc
+- [x] Display HP Color
+      identifying enemy's hp state, bullet count, etc
+- [ ] Add Pause function
+      pausing game by pressing ESC key, etc
+- [x] Add Setting function
+      screen resizing, game speed selecting, etc
+- [x] Add various monsters
+      diversifying monster patterns, boss monsters, etc
+- [ ] Add Game Summary
+      game rule, manual, etc
 
 ### old
 
