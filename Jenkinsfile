@@ -1,5 +1,5 @@
 
-void notifySlack(String status, String color)  {
+void notifySlack(String status, String color )  {
     slackSend(
         color: color, message: status + ' : ' + "${env.JOB_NAME} [${env.BUILD_NUMBER}] (${env.BUILD_URL})"
     )
@@ -65,11 +65,21 @@ pipeline {
                         echo "Status: ${qg.status}"
                         if (qg.status != 'OK') {
                             echo "NOT OK Status: ${qg.status}"
-                            notifySlack('SonarQube Status Not OK', '#FF0000')
+                            slackSend(
+                                channel: '#ci-테스트-알림',
+                                color: '#FF0000',
+                                message: 'SonarQube Status Not OK'
+                            )
+
                             error "Pipeline aborted due to quality gate failure: ${qg.status}"
                         } else {
                             echo "OK Status: ${qg.status}"
-                            notifySlack('SonarQube Status OK', '#00FF00')
+
+                            slackSend(
+                                channel: '#ci-테스트-알림',
+                                color: '#00FF00',
+                                message: 'SonarQube Status OK'
+                            )
                         }
                         echo 'End~~~~'
                     }
