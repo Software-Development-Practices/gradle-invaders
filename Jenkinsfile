@@ -65,11 +65,11 @@ pipeline {
                         echo "Status: ${qg.status}"
                         if (qg.status != 'OK') {
                             echo "NOT OK Status: ${qg.status}"
-                            updateGitlabCommitStatus(name: 'SonarQube Quality Gate', state: 'failed')
+                            notifySlack('SonarQube Status Not OK', '#FF0000')
                             error "Pipeline aborted due to quality gate failure: ${qg.status}"
                         } else {
                             echo "OK Status: ${qg.status}"
-                            updateGitlabCommitStatus(name: 'SonarQube Quality Gate', state: 'success')
+                            notifySlack('SonarQube Status OK', '#00FF00')
                         }
                         echo 'End~~~~'
                     }
