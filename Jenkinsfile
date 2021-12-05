@@ -5,8 +5,6 @@ void notifySlack(String status, String color)  {
     )
 }
 
-def causes = currentBuild.rawBuild.getCauses()
-
 pipeline {
     agent any
 
@@ -64,6 +62,8 @@ pipeline {
                 def summary = junit testResults: '**/build/test-results/**/*.xml', skipMarkingBuildUnstable: true,
                                 skipPublishingChecks: true,
                                 healthScaleFactor: 1.0
+
+                def causes = currentBuild.rawBuild.getCauses()
 
                 slackSend(
                     channel: '#ci-테스트-알림',
