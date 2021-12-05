@@ -36,7 +36,7 @@ pipeline {
             }
         }
         stage('JUnit Test') {
-            steps { junit '**/build/test-results/test/*.xml' }
+            steps { junit '**/build/test-results/**/*.xml' }
         }
     }
 }
