@@ -54,4 +54,17 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            script {
+                def summary = junit testResults: '**/build/test-results/**/*.xml'
+                slackSend (
+                    channel: '#ci-테스트-알림',
+                    color: '#007D00',
+                    message: "\n *Test Summary* - ${summary.totalCount}, Failures: ${summary.failCount}, Skipped: ${summary.skipCount}, Passed: ${summary.passCount}"
+                )
+            }
+        }
+    }
 }
