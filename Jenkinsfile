@@ -1,8 +1,12 @@
 pipeline {
     agent any
 
+    options {
+        ansiColor('xterm')
+    }
+
     tools {
-        gradle 'gradle'
+        gradle 'gradle 7.1'
     }
 
     stages {
@@ -13,11 +17,38 @@ pipeline {
             }
         }
         stage('Build') {
-            steps {
-                sh '''
+                steps {
+                    sh '''
                 chmod +x gradlew
-                ./gradlew build
+                ./gradlew build -x test
                 '''
+                }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    try {
+                        sh './gradlew test'
+                    } catch (error) {
+                        echo 'Test Failed'
+                    } finally {
+                        step(
+                            [
+                                $class: 'JUnitResultArchiver',
+                                testResults: '**/build/test-results/**/*.xml',
+                                healthScaleFactor: 1.0
+                            ]
+                        )
+                        publishHTML(target: [
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: true,
+                            reportDir: 'build/reports/tests/test',
+                            reportFiles: 'index.html',
+                            reportName: 'Junit Report'
+                        ])
+                    }
+                }
             }
         }
     }
