@@ -13,12 +13,23 @@ pipeline {
             }
         }
         stage('Build') {
-            steps {
-                sh '''
+                steps {
+                    sh '''
                 chmod +x gradlew
-                ./gradlew build
+                ./gradlew build -x test
                 '''
+                }
+        }
+        try {
+            stage('Test') {
+                steps {
+                    sh '''
+                    ./gradlew test
+                    '''
+                }
             }
+        } catch (error) {
+            echo 'Test Failed'
         }
     }
 }
