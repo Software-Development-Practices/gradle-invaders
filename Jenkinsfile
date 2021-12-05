@@ -1,3 +1,10 @@
+void notifySlack(String status, String color)  {
+    slackSend(
+        color: color, message: status + ' : ' + "${env.JOB_NAME} [${env.BUILD_NUMBER}] (${env.BUILD_URL})"
+    )
+}
+
+/* groovylint-disable-next-line CompileStatic */
 pipeline {
     agent any
 
@@ -70,7 +77,7 @@ pipeline {
 
                 def causes = currentBuild.rawBuild.getCauses()
 
-                slackSend (
+                slackSend(
                     channel: '#ci-테스트-알림',
                     color: '#007D00',
                     message: """
