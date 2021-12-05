@@ -31,12 +31,25 @@ pipeline {
                         sh './gradlew test'
                     } catch (error) {
                         echo 'Test Failed'
+                    } finally {
+                        step(
+                            [
+                                $class: 'JUnitResultArchiver',
+                                testResults: '**/build/test-results/**/*.xml',
+                                healthScaleFactor: 1.0
+                            ]
+                        )
+                        publishHTML(target: [
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: true,
+                            reportDir: 'coverage',
+                            reportFiles: 'index.html',
+                            reportName: 'Junit Report'
+                        ])
                     }
                 }
             }
-        }
-        stage('JUnit Test') {
-            steps { junit '**/build/test-results/**/*.xml' }
         }
     }
 }
