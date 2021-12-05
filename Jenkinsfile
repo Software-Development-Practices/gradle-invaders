@@ -8,6 +8,7 @@ pipeline {
     tools {
         gradle 'gradle 7.1'
     }
+    notifySlack('STARTED', '#0000FF')
 
     stages {
         stage('Checkout') {
@@ -31,24 +32,6 @@ pipeline {
                         sh './gradlew test'
                     } catch (error) {
                         echo 'Test Failed'
-                    } finally {
-                        step(
-                            [
-                                $class: 'JUnitResultArchiver',
-                                testResults: '**/build/test-results/**/*.xml',
-                                skipMarkingBuildUnstable: true,
-                                skipPublishingChecks: true,
-                                healthScaleFactor: 1.0
-                            ]
-                        )
-                        publishHTML(target: [
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: false,
-                            keepAll: true,
-                            reportDir: 'build/reports/tests/test',
-                            reportFiles: 'index.html',
-                            reportName: 'Junit Report'
-                        ])
                     }
                 }
             }
@@ -56,13 +39,51 @@ pipeline {
     }
 
     post {
+        success {
+            notifySlack('SUCCESS', '#00FF00')
+        }
+        unstable {
+            notifySlack('UNSTABLE', '#FFFF00')
+        }
+        failure {
+            notifySlack('FAILED', '#FF0000')
+        }
+
         always {
             script {
-                def summary = junit testResults: '**/build/test-results/**/*.xml'
+                def summary = junit(
+                    $class: 'JUnitResultArchiver',
+                    testResults: '**/build/test-results/**/*.xml',
+                    skipMarkingBuildUnstable: true,
+                    skipPublishingChecks: true,
+                    healthScaleFactor: 1.0
+                )
+
+                publishHTML(target: [
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: true,
+                            reportDir: 'build/reports/tests/test',
+                            reportFiles: 'index.html',
+                            reportName: 'Junit Report'
+                ])
+
+                def causes = currentBuild.rawBuild.getCauses()
+
                 slackSend (
                     channel: '#ci-테스트-알림',
                     color: '#007D00',
-                    message: "\n *Test Summary* - ${summary.totalCount}, Failures: ${summary.failCount}, Skipped: ${summary.skipCount}, Passed: ${summary.passCount}"
+                    message: """
+                    ${summary}
+
+                    BUILD #${currentBuild.number}
+                    causes: ${causes}
+
+                    *Test Summary* - ${summary.totalCount},
+                    Failures: ${summary.failCount}
+                    Skipped: ${summary.skipCount}
+                    Passed: ${summary.passCount}
+                    """
                 )
             }
         }
