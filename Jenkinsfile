@@ -36,6 +36,7 @@ pipeline {
                             [
                                 $class: 'JUnitResultArchiver',
                                 testResults: '**/build/test-results/**/*.xml',
+                                skipMarkingBuildUnstable: true,
                                 skipPublishingChecks: true,
                                 healthScaleFactor: 1.0
                             ]
