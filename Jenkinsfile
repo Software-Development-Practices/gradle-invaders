@@ -43,6 +43,39 @@ pipeline {
                 }
             }
         }
+
+        stage('SonarQube analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube-Server') {
+                    '''
+                    ./gradlew sonarqube \
+                    -Dsonar.projectKey=jenkins \
+                    -Dsonar.host.url=http://34.64.148.169:9000 \
+                    -Dsonar.login=2a553e7506c70332bd69f03407b1d3b53730e9b8
+                    '''
+                }
+            }
+        }
+        stage('SonarQube Quality Gate') {
+            steps {
+                timeout(time: 1, unit: 'MINUTES') {
+                    script {
+                        echo 'Start~~~~'
+                        def qg = waitForQualityGate()
+                        echo "Status: ${qg.status}"
+                        if (qg.status != 'OK') {
+                            echo "NOT OK Status: ${qg.status}"
+                            updateGitlabCommitStatus(name: 'SonarQube Quality Gate', state: 'failed')
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        } else {
+                            echo "OK Status: ${qg.status}"
+                            updateGitlabCommitStatus(name: 'SonarQube Quality Gate', state: 'success')
+                        }
+                        echo 'End~~~~'
+                    }
+                }
+            }
+        }
     }
 
     post {
