@@ -5,6 +5,8 @@ void notifySlack(String status, String color)  {
     )
 }
 
+def causes = currentBuild.rawBuild.getCauses()
+
 pipeline {
     agent any
 
@@ -62,19 +64,23 @@ pipeline {
                                 skipPublishingChecks: true,
                                 healthScaleFactor: 1.0
 
-                // publishHTML(target: [
-                //             allowMissing: false,
-                //             alwaysLinkToLastBuild: false,
-                //             keepAll: true,
-                //             reportDir: 'build/reports/tests/test',
-                //             reportFiles: 'index.html',
-                //             reportName: 'Junit Report'
-                //         ])
+                publishHTML target: [
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: true,
+                            reportDir: 'build/reports/tests/test',
+                            reportFiles: 'index.html',
+                            reportName: 'Junit Report'
+                            ]
 
-                slackSend (
+                slackSend(
                     channel: '#ci-테스트-알림',
                     color: '#007D00',
                     message: """
+_BUILD SUMMARY_
+
+cause: ${causes}
+
 *Test Summary* - ${summary.totalCount}
 
 Failures: ${summary.failCount}
