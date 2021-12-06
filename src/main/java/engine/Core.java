@@ -32,6 +32,14 @@ public final class Core {
 	 */
 	private static int difficulty = 0;
 
+
+	/**
+	 * 음악 볼륨 컨트롤을 위한 변수입니다.
+	 * (0: 0% / 1: 50% / 2: 100%)
+	 */
+	public static int musicVolume = 2;
+
+
 	/**d
 	 * Width of current screen. 현재 화면의 너비입니다.
 	 */
@@ -179,6 +187,7 @@ public final class Core {
 
 			// 게임 난이도 초기화
 			gameSettings = new ArrayList<GameSettings>();
+
 			x_0 = frame1.getX();
 			y_0 = frame1.getY();
 
@@ -234,7 +243,7 @@ public final class Core {
 			case 1:
 				// Main menu.
 				backGroundMusic = new Sound("./src/main/resources/music/mainBgm.wav");
-				backGroundMusic.playSoundLoop();
+				backGroundMusic.playSoundLoop(musicVolume);
 				currentScreen = new TitleScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " title screen at " + FPS + " fps.");
 				returnCode = frame1.setScreen(currentScreen);
@@ -245,7 +254,7 @@ public final class Core {
 				// Game & score.
 
 				backGroundMusic = new Sound("./src/main/resources/music/gameScreenBgm.wav");
-				backGroundMusic.playSoundLoop();
+				backGroundMusic.playSoundLoop(musicVolume);
 				do {
 					// One extra live every few levels.
 					boolean bonusLife = gameState.getLevel() % EXTRA_LIFE_FRECUENCY == 0
@@ -276,7 +285,7 @@ public final class Core {
 			case 3:
 				// High scores.
 				backGroundMusic = new Sound("./src/main/resources/music/scoreScreenBgm.wav");
-				backGroundMusic.playSoundLoop();
+				backGroundMusic.playSoundLoop(musicVolume);
 				currentScreen = new HighScoreScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " high score screen at " + FPS + " fps.");
 				returnCode = frame1.setScreen(currentScreen);
@@ -285,7 +294,7 @@ public final class Core {
 				break;
 			case 4:
 				backGroundMusic = new Sound("./src/main/resources/music/settingScreenBgm.wav");
-				backGroundMusic.playSoundLoop();
+				backGroundMusic.playSoundLoop(musicVolume);
 				currentScreen = new SettingScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " setting screen at " + FPS + " fps.");
 
@@ -391,6 +400,17 @@ public final class Core {
 	public static void setScreenSizeMode(int mode) {
 		screenSizeMode = mode;
 	}
+
+
+	/**
+	 * PARK
+	 * music volume int 값에 대한 setter 함수입니다.
+	 */
+	public static void setMusicVolume(int mode) {
+		musicVolume = mode;
+	}
+
+
 
 	/**
 	 * difficulty 모드 int 값에 대한 setter 함수입니다.
