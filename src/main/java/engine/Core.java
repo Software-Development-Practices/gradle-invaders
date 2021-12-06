@@ -270,12 +270,18 @@ public final class Core {
 				LOGGER.info("Closing high score screen.");
 				break;
 			case 4:
+				currentScreen = new SummaryScreen(width, height, FPS);
+				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " setting screen at " + FPS + " fps.");
+				returnCode = frame1.setScreen(currentScreen);
+				break;
+			case 5:
 				currentScreen = new SettingScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " setting screen at " + FPS + " fps.");
 
 				returnCode = frame1.setScreen(currentScreen);
 
 				break;
+
 
 			default:
 				break;
