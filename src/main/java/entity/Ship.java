@@ -8,6 +8,7 @@ import engine.Core;
 import engine.DrawManager;
 import engine.DrawManager.SpriteType;
 import engine.GameSettings;
+import engine.Sound;
 
 /**
  * Implements a ship, to be controlled by the player. 플레이어가 제어할 함선을 구현합니다.
@@ -43,6 +44,10 @@ public class Ship extends Entity {
      */
     private Cooldown destructionCooldown;
 
+
+	private static Sound shootSound;
+
+
     /**
      * Constructor, establishes the ship's properties. 생성자, 선박의 속성을 설정합니다.
      *
@@ -77,6 +82,7 @@ public class Ship extends Entity {
         this.positionX -= SPEED;
     }
 
+
     /**
      * Shoots a bullet upwards. 총알을 위로 쏩니다.
      *
@@ -87,6 +93,8 @@ public class Ship extends Entity {
     public final boolean shoot(final Set<Bullet> bullets) {
         if (this.shootingCooldown.checkFinished()) {
             this.shootingCooldown.reset();
+            shootSound = new Sound("./src/main/resources/music/shoot.wav");
+            shootSound.playOnce();
             if (DrawManager.getXAxis() == 2) {
                 // normal size
                 bullets.add(BulletPool.getBullet(positionX + this.width / 2, positionY, BULLET_SPEED));
