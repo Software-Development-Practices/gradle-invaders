@@ -14,9 +14,9 @@ import screen.*;
 
 /**
  * Implements core game logic. 핵심 게임 로직을 구현합니다.
- * 
+ *
  * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
- * 
+ *
  */
 public final class Core {
 
@@ -77,6 +77,8 @@ public final class Core {
 	 * Difficulty settings list. 난이도 설정 목록.
 	 */
 	private static List<GameSettings> gameSettings;
+	private static int x_0;
+	private static int y_0;
 	/**
 	 * Application logger. 애플리케이션 로거.
 	 */
@@ -90,9 +92,13 @@ public final class Core {
 	 */
 	private static ConsoleHandler consoleHandler;
 
+
+	private static Sound backGroundMusic;
+
+
 	/**
 	 * Test implementation. 테스트 구현.
-	 * 
+	 *
 	 * @param args Program args, ignored. 프로그램 인수, 무시됨.
 	 */
 	public static void main(final String[] args) {
@@ -174,6 +180,9 @@ public final class Core {
 			// 게임 난이도 초기화
 			gameSettings = new ArrayList<GameSettings>();
 
+			x_0 = frame1.getX();
+			y_0 = frame1.getY();
+
 			switch (difficulty) {
 				case 1:
 					modiSpeed = 5;
@@ -225,13 +234,19 @@ public final class Core {
 			switch (returnCode) {
 			case 1:
 				// Main menu.
+				backGroundMusic = new Sound("./src/main/resources/music/mainBgm.wav");
+				backGroundMusic.playSoundLoop();
 				currentScreen = new TitleScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " title screen at " + FPS + " fps.");
 				returnCode = frame1.setScreen(currentScreen);
 				LOGGER.info("Closing title screen.");
+				backGroundMusic.pause();
 				break;
 			case 2:
 				// Game & score.
+
+				backGroundMusic = new Sound("./src/main/resources/music/gameScreenBgm.wav");
+				backGroundMusic.playSoundLoop();
 				do {
 					// One extra live every few levels.
 					boolean bonusLife = gameState.getLevel() % EXTRA_LIFE_FRECUENCY == 0
@@ -257,20 +272,26 @@ public final class Core {
 				currentScreen = new ScoreScreen(width, height, FPS, gameState);
 				returnCode = frame1.setScreen(currentScreen);
 				LOGGER.info("Closing score screen.");
+				backGroundMusic.pause();
 				break;
 			case 3:
 				// High scores.
+				backGroundMusic = new Sound("./src/main/resources/music/scoreScreenBgm.wav");
+				backGroundMusic.playSoundLoop();
 				currentScreen = new HighScoreScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " high score screen at " + FPS + " fps.");
 				returnCode = frame1.setScreen(currentScreen);
 				LOGGER.info("Closing high score screen.");
+				backGroundMusic.pause();
 				break;
 			case 4:
+				backGroundMusic = new Sound("./src/main/resources/music/settingScreenBgm.wav");
+				backGroundMusic.playSoundLoop();
 				currentScreen = new SettingScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " setting screen at " + FPS + " fps.");
 
 				returnCode = frame1.setScreen(currentScreen);
-
+				backGroundMusic.pause();
 				break;
 
 			default:
@@ -290,10 +311,26 @@ public final class Core {
 	private Core() {
 
 	}
+	public static void vib(int count){
+
+		if(count%4==0){
+			frame1.setLocation(x_0-3, y_0-3);
+		}
+		else if(count%4==1){
+			frame1.setLocation(x_0-3, y_0+3);
+		}
+		else if(count%4==2){
+			frame1.setLocation(x_0+3, y_0-3);
+		}
+		else if(count%4==3){
+			frame1.setLocation(x_0+3, y_0+3);
+		}
+		frame1.setLocation(x_0, y_0);
+	}
 
 	/**
 	 * Controls access to the logger. logger에 대한 액세스를 제어합니다.
-	 * 
+	 *
 	 * @return Application logger.
 	 */
 	public static Logger getLogger() {
@@ -302,7 +339,7 @@ public final class Core {
 
 	/**
 	 * Controls access to the drawing manager. drawing manager에 대한 액세스를 제어합니다.
-	 * 
+	 *
 	 * @return Application draw manager.
 	 */
 	public static DrawManager getDrawManager() {
@@ -311,7 +348,7 @@ public final class Core {
 
 	/**
 	 * Controls access to the input manager. input manager에 대한 액세스를 제어합니다.
-	 * 
+	 *
 	 * @return Application input manager.
 	 */
 	public static InputManager getInputManager() {
@@ -320,7 +357,7 @@ public final class Core {
 
 	/**
 	 * Controls access to the file manager. input manager에 대한 액세스를 제어합니다.
-	 * 
+	 *
 	 * @return Application file manager.
 	 */
 	public static FileManager getFileManager() {
@@ -329,7 +366,7 @@ public final class Core {
 
 	/**
 	 * Controls creation of new cooldowns. 새로운 재사용 대기시간 생성을 제어합니다.
-	 * 
+	 *
 	 * @param milliseconds Duration of the cooldown.
 	 * @return A new cooldown.
 	 */
@@ -340,7 +377,7 @@ public final class Core {
 	/**
 	 * Controls creation of new cooldowns with variance. variance가 있는 새로운 재사용 대기시간
 	 * 생성을 제어합니다.
-	 * 
+	 *
 	 * @param milliseconds Duration of the cooldown. 재사용 대기시간.
 	 * @param variance     Variation in the cooldown duration. 재사용 대기시간의 variance.
 	 * @return A new cooldown with variance.
@@ -361,5 +398,12 @@ public final class Core {
 	 */
 	public static void setDifficulty(int mode) {
 		difficulty = mode;
+	}
+	/**
+	 *
+	 * @return setting 된 difficulty를 반환하는 getter 함수입니다.
+	 */
+	public static int getDifficulty() {
+		return difficulty;
 	}
 }
