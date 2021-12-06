@@ -94,7 +94,7 @@ public class Ship extends Entity {
         if (this.shootingCooldown.checkFinished()) {
             this.shootingCooldown.reset();
             shootSound = new Sound("./src/main/resources/music/shoot.wav");
-            shootSound.playOnce();
+            shootSound.playOnce(Core.musicVolume);
             if (DrawManager.getXAxis() == 2) {
                 // normal size
                 bullets.add(BulletPool.getBullet(positionX + this.width / 2, positionY, BULLET_SPEED));

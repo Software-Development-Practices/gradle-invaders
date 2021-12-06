@@ -3,6 +3,7 @@ package engine;
 import java.io.File;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 /**
  * ^^
@@ -14,6 +15,7 @@ public class Sound {
 
     /**
      * ^^
+     *
      * @param path filepath
      */
     public Sound(String path) {
@@ -29,16 +31,22 @@ public class Sound {
      * ^^
      * infinite loop for music ! like bgm
      */
-    public void playSoundLoop() {
-        try{
+    public void playSoundLoop(int mode) {
+        try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(this.file));
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            FloatControl gainControl =
+                    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            if (mode == 0) {
+                return;
+            } else if (mode == 1) {
+                gainControl.setValue(-10.0f);
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            } else if (mode == 2) {
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            }
 
-            //Thread.sleep(clip.getMicrosecondLength()/1000);
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.err.println("Put the music.wav file in the sound folder if you want to play background music, only optional!");
         }
 
@@ -49,15 +57,21 @@ public class Sound {
      * ^^
      * music play just once
      */
-    public void playOnce(){
-        try{
+    public void playOnce(int mode) {
+        try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(this.file));
-            clip.start();
-
-            //Thread.sleep(clip.getMicrosecondLength()/1000);
-        }
-        catch(Exception e) {
+            FloatControl gainControl =
+                    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            if (mode == 0) {
+                return;
+            } else if (mode == 1) {
+                gainControl.setValue(-10.0f);
+                clip.start();
+            } else if (mode == 2) {
+                clip.start();
+            }
+        } catch (Exception e) {
             System.err.println("Put the music.wav file in the sound folder if you want to play background music, only optional!");
         }
     }
@@ -67,7 +81,7 @@ public class Sound {
      * ^^
      * music stop like change screen
      */
-    public void pause(){
+    public void pause() {
         clip.stop();
         clip.close();
     }
