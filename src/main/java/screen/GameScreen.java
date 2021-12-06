@@ -1,9 +1,11 @@
 package screen;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
+
 
 import engine.Cooldown;
 import engine.Core;
@@ -15,6 +17,8 @@ import entity.EnemyShip;
 import entity.EnemyShipFormation;
 import entity.Entity;
 import entity.Ship;
+
+import javax.swing.*;
 
 /**
  * Implements the game screen, where the action happens. 액션이 발생하는 게임 화면을 구현합니다.
@@ -193,48 +197,67 @@ public class GameScreen extends Screen {
 	 */
 	protected final void update() {
 		super.update();
+		if (inputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
+			// Pause drawManager 메소드들을 통해 게임 스크린 위에 pause창 그려주는 방식으로 했습니다.
+			//메소드는 따로 만든것은 없습니다.
+			this.logger.info("press pause");
+            boolean isPause = true ;
+			while(isPause){
+				drawManager.initDrawing(this);
+				drawManager.drawTitle(this,"Pause",3);
+				drawManager.drawCenteredBigString(this,"press \"R\" to resume",this.getHeight() / 3 * 2);
+				drawManager.completeDrawing(this);
+				if(inputManager.isKeyDown(KeyEvent.VK_R)){
+                    isPause = false ;
+                }
 
+			}
+		}
 		if (this.inputDelay.checkFinished() && !this.levelFinished) {
 
-			if (!this.ship.isDestroyed()) {
-				boolean moveRight = inputManager.isKeyDown(KeyEvent.VK_RIGHT) || inputManager.isKeyDown(KeyEvent.VK_D);
-				boolean moveLeft = inputManager.isKeyDown(KeyEvent.VK_LEFT) || inputManager.isKeyDown(KeyEvent.VK_A);
 
-				boolean isRightBorder = this.ship.getPositionX() + this.ship.getWidth()
-						+ this.ship.getSpeed() > this.width - 1;
-				boolean isLeftBorder = this.ship.getPositionX() - this.ship.getSpeed() < 1;
+				if (!this.ship.isDestroyed()) {
+					boolean moveRight = inputManager.isKeyDown(KeyEvent.VK_RIGHT) || inputManager.isKeyDown(KeyEvent.VK_D);
+					boolean moveLeft = inputManager.isKeyDown(KeyEvent.VK_LEFT) || inputManager.isKeyDown(KeyEvent.VK_A);
 
-				if (moveRight && !isRightBorder) {
-					this.ship.moveRight();
+					boolean isRightBorder = this.ship.getPositionX() + this.ship.getWidth()
+							+ this.ship.getSpeed() > this.width - 1;
+					boolean isLeftBorder = this.ship.getPositionX() - this.ship.getSpeed() < 1;
+
+					if (moveRight && !isRightBorder) {
+						this.ship.moveRight();
+					}
+					if (moveLeft && !isLeftBorder) {
+						this.ship.moveLeft();
+					}
+					if (inputManager.isKeyDown(KeyEvent.VK_SPACE))
+						if (this.ship.shoot(this.bullets))
+							this.bulletsShot++;
 				}
-				if (moveLeft && !isLeftBorder) {
-					this.ship.moveLeft();
-				}
-				if (inputManager.isKeyDown(KeyEvent.VK_SPACE))
-					if (this.ship.shoot(this.bullets))
-						this.bulletsShot++;
-			}
 
-			if (this.enemyShipSpecial != null) {
-				if (!this.enemyShipSpecial.isDestroyed())
-					this.enemyShipSpecial.move(2, 0);
-				else if (this.enemyShipSpecialExplosionCooldown.checkFinished())
+				if (this.enemyShipSpecial != null) {
+					if (!this.enemyShipSpecial.isDestroyed())
+						this.enemyShipSpecial.move(2, 0);
+					else if (this.enemyShipSpecialExplosionCooldown.checkFinished())
+						this.enemyShipSpecial = null;
+
+				}
+				if (this.enemyShipSpecial == null && this.enemyShipSpecialCooldown.checkFinished()) {
+					this.enemyShipSpecial = new EnemyShip();
+					this.enemyShipSpecialCooldown.reset();
+					this.logger.info("A special ship appears");
+				}
+				if (this.enemyShipSpecial != null && this.enemyShipSpecial.getPositionX() > this.width) {
 					this.enemyShipSpecial = null;
+					this.logger.info("The special ship has escaped");
+				}
 
-			}
-			if (this.enemyShipSpecial == null && this.enemyShipSpecialCooldown.checkFinished()) {
-				this.enemyShipSpecial = new EnemyShip();
-				this.enemyShipSpecialCooldown.reset();
-				this.logger.info("A special ship appears");
-			}
-			if (this.enemyShipSpecial != null && this.enemyShipSpecial.getPositionX() > this.width) {
-				this.enemyShipSpecial = null;
-				this.logger.info("The special ship has escaped");
-			}
+				this.ship.update();
+				this.enemyShipFormation.update();
+				this.enemyShipFormation.shoot(this.bullets);
 
-			this.ship.update();
-			this.enemyShipFormation.update();
-			this.enemyShipFormation.shoot(this.bullets);
+
+
 		}
 
 		manageCollisions();

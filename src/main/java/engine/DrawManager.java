@@ -17,6 +17,8 @@ import screen.Screen;
 import entity.Entity;
 import entity.Ship;
 
+import javax.swing.*;
+
 /**
  * Manages screen drawing. 화면 그리기를 관리합니다.
  *

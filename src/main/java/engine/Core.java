@@ -276,7 +276,6 @@ public final class Core {
 				returnCode = frame1.setScreen(currentScreen);
 
 				break;
-
 			default:
 				break;
 			}
