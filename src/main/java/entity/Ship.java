@@ -110,7 +110,7 @@ public class Ship extends Entity {
     }
 
     /**
-     * Updates status of the ship. 선박의 상태를 업데이트합니다.
+     * Updates status of the ship.  선박의 상태를 업데이트합니다.
      */
     public final void update() {
         if (!this.destructionCooldown.checkFinished())
