@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'org.sonarqube' version '3.0'
 }
 
 group 'org.example'
@@ -13,7 +14,6 @@ jar {
     manifest {
         attributes 'Main-Class': 'engine.Core'
     }
-
 }
 
 dependencies {
@@ -24,6 +24,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    // ignoreFailures = true
     reports {
         junitXml.enabled(true)
     }

@@ -45,6 +45,7 @@ public class EnemyShip extends Entity {
 	 * resize시 EnemyShip의 크기도 커지는데 타격범위도 키우기 위해 사용되는 변수들입니다.
 	 */
 	private static int modiWidth = 2;
+
 	/**
 	 * 일반 몬스터 타입별 HP 설정
 	 */
@@ -68,6 +69,7 @@ public class EnemyShip extends Entity {
 	 *                   대응하는 이미지.
 	 * @param selectedColor 적 함선의 종류에 따라 색깔을 다르게 하기 위해 받는 색상 값입니다.
 	 */
+
 	public EnemyShip(final int positionX, final int positionY, final SpriteType spriteType, final Color selectedColor) {
 		super(positionX, positionY, 12 * modiWidth, 8 * modiWidth, selectedColor);
 		//보스 경우 너비랑 높이도 스프라이트 크기에 맞게 바꿔 줍니다.
@@ -92,6 +94,7 @@ public class EnemyShip extends Entity {
 
 		//일반 몬스터 타입별 HP추가
 		switch (this.spriteType) {
+
 			case EnemyShipA1:
 			case EnemyShipA2:
 				this.pointValue = A_TYPE_POINTS;
