@@ -94,7 +94,7 @@ public final class Core {
 
 
 	private static Sound backGroundMusic;
-
+	public static String bgmFilePath;
 
 	/**
 	 * Test implementation. 테스트 구현.
@@ -233,7 +233,8 @@ public final class Core {
 			switch (returnCode) {
 			case 1:
 				// Main menu.
-				backGroundMusic = new Sound("./src/main/resources/music/mainBgm.wav");
+				bgmFilePath = "./src/main/resources/music/mainBgm.wav";
+				backGroundMusic = new Sound(bgmFilePath);
 				backGroundMusic.playSoundLoop();
 				currentScreen = new TitleScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " title screen at " + FPS + " fps.");
@@ -243,8 +244,8 @@ public final class Core {
 				break;
 			case 2:
 				// Game & score.
-
-				backGroundMusic = new Sound("./src/main/resources/music/gameScreenBgm.wav");
+				bgmFilePath = "./src/main/resources/music/gameScreenBgm.wav";
+				backGroundMusic = new Sound(bgmFilePath);
 				backGroundMusic.playSoundLoop();
 				do {
 					// One extra live every few levels.
@@ -275,7 +276,8 @@ public final class Core {
 				break;
 			case 3:
 				// High scores.
-				backGroundMusic = new Sound("./src/main/resources/music/scoreScreenBgm.wav");
+				bgmFilePath = "./src/main/resources/music/scoreScreenBgm.wav";
+				backGroundMusic = new Sound(bgmFilePath);
 				backGroundMusic.playSoundLoop();
 				currentScreen = new HighScoreScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " high score screen at " + FPS + " fps.");
@@ -284,7 +286,8 @@ public final class Core {
 				backGroundMusic.pause();
 				break;
 			case 4:
-				backGroundMusic = new Sound("./src/main/resources/music/settingScreenBgm.wav");
+				bgmFilePath = "./src/main/resources/music/settingScreenBgm.wav";
+				backGroundMusic = new Sound(bgmFilePath);
 				backGroundMusic.playSoundLoop();
 				currentScreen = new SettingScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " setting screen at " + FPS + " fps.");
