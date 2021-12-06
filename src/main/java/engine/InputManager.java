@@ -5,9 +5,9 @@ import java.awt.event.KeyListener;
 
 /**
  * Manages keyboard input for the provided screen. 제공된 화면에 대한 키보드 입력을 관리합니다.
- * 
+ *
  * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
- * 
+ *
  */
 public final class InputManager implements KeyListener {
 
@@ -31,9 +31,16 @@ public final class InputManager implements KeyListener {
 		keys = new boolean[NUM_KEYS];
 	}
 
+	//키보드 입력 여부
+	private boolean isPressed=false;
+
+	//키보드 누를 때마다 갱신
+	private long starttime=0;
+
+
 	/**
 	 * Returns shared instance of InputManager. InputManager의 공유된 인스턴스를 반환합니다.
-	 * 
+	 *
 	 * @return Shared instance of InputManager.
 	 */
 	protected static InputManager getInstance() {
@@ -45,7 +52,7 @@ public final class InputManager implements KeyListener {
 	/**
 	 * Returns true if the provided key is currently pressed. 제공된 키가 현재 눌러져 있으면
 	 * true를 반환합니다.
-	 * 
+	 *
 	 * @param keyCode Key number to check. 확인할 키 번호입니다.
 	 * @return Key state.
 	 */
@@ -54,19 +61,34 @@ public final class InputManager implements KeyListener {
 	}
 
 	/**
+	 *
+	 * @return 키보드가 입력되었는지 여부를 반환합니다.
+	 */
+	public boolean isActive() {
+		if(System.currentTimeMillis()>10000+starttime) {
+			isPressed = false;
+			starttime = System.currentTimeMillis();
+		}
+		return isPressed;
+	}
+
+	/**
 	 * Changes the state of the key to pressed. 키의 상태를 눌린 상태로 변경합니다.
-	 * 
+	 *
 	 * @param key Key pressed.
 	 */
 	@Override
 	public void keyPressed(final KeyEvent key) {
-		if (key.getKeyCode() >= 0 && key.getKeyCode() < NUM_KEYS)
+		if (key.getKeyCode() >= 0 && key.getKeyCode() < NUM_KEYS) {
 			keys[key.getKeyCode()] = true;
+			isPressed = true;
+			starttime = System.currentTimeMillis();
+		}
 	}
 
 	/**
 	 * Changes the state of the key to not pressed. 키를 누르지 않은 상태로 변경합니다.
-	 * 
+	 *
 	 * @param key Key released.
 	 */
 	@Override
@@ -77,7 +99,7 @@ public final class InputManager implements KeyListener {
 
 	/**
 	 * Does nothing.
-	 * 
+	 *
 	 * @param key Key typed.
 	 */
 	@Override
