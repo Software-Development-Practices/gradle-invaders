@@ -1,6 +1,7 @@
 package engine;
 
 import java.io.File;
+import java.nio.channels.Channel;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
@@ -10,8 +11,8 @@ import javax.sound.sampled.FloatControl;
  * Sound control SFX & BGM
  */
 public class Sound {
+    public Clip clip;
     File file;
-    Clip clip;
 
     /**
      * ^^
