@@ -20,7 +20,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    def branch = env.CHANGE_BRANCH ? env.CHANGE_BRANCH : env.GIT_BRANCH
+                    def branch = env.CHANGE_BRANCH ? env.CHANGE_BRANCH : 'develop'
                     git branch: "${branch}", credentialsId: 'minsoo',
                     url: 'https://github.com/Software-Development-Practices/gradle-invaders.git'
                 }
