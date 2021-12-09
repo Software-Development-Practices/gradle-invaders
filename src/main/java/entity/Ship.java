@@ -45,7 +45,7 @@ public class Ship extends Entity {
     private Cooldown destructionCooldown;
 
 
-	private static Sound shootSound;
+	private Sound shootSound;
 
 
     /**
