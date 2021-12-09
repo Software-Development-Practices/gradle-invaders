@@ -1,6 +1,7 @@
 package engine;
 
 import java.io.File;
+import java.nio.channels.Channel;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
@@ -10,8 +11,8 @@ import javax.sound.sampled.FloatControl;
  * Sound control SFX & BGM
  */
 public class Sound {
+    public Clip clip;
     File file;
-    Clip clip;
 
     /**
      * ^^
@@ -31,14 +32,14 @@ public class Sound {
      * ^^
      * infinite loop for music ! like bgm
      */
-    public void playSoundLoop(int mode) {
+    public boolean playSoundLoop(int mode) {
         try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(this.file));
             FloatControl gainControl =
                     (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             if (mode == 0) {
-                return;
+                return false;
             } else if (mode == 1) {
                 gainControl.setValue(-10.0f);
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -48,8 +49,9 @@ public class Sound {
 
         } catch (Exception e) {
             System.err.println("Put the music.wav file in the sound folder if you want to play background music, only optional!");
+            return false;
         }
-
+        return true;
     }
 
 

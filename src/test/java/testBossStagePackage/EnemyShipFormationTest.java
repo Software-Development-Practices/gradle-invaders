@@ -30,7 +30,7 @@ public class EnemyShipFormationTest {
     private List<EnemyShip> shooters;
     EnemyShip shooter;
     Set<Bullet> bullets;
-    final int SHOOTING_INTERVAL = 750;
+    final int SHOOTING_INTERVAL = 740;
 
 
     @Before
@@ -67,7 +67,7 @@ public class EnemyShipFormationTest {
                 new GameSettings(5, 4, 60, 2000, 0);
         GameSettings Boss_LEVEL_1 =
                 new GameSettings(5, 5, 50, 2500,1);
-        final int SHOOTING_INTERVAL = 750;
+        final int SHOOTING_INTERVAL = 740;
         try {
             Ship ship = new Ship(440 / 2, 520 - 30, SETTINGS_LEVEL_1);
             Field field = ship.getClass().getDeclaredField("shootingCooldown");
