@@ -252,7 +252,6 @@ public final class Core {
 				break;
 			case 2:
 				// Game & score.
-
 				backGroundMusic = new Sound("./src/main/resources/music/gameScreenBgm.wav");
 				backGroundMusic.playSoundLoop(musicVolume);
 				do {
