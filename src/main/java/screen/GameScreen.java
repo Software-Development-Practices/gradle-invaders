@@ -1,8 +1,11 @@
 package screen;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
+
 
 import engine.Cooldown;
 import engine.Core;
@@ -15,11 +18,13 @@ import entity.EnemyShipFormation;
 import entity.Entity;
 import entity.Ship;
 
+import javax.swing.*;
+
 /**
  * Implements the game screen, where the action happens. 액션이 발생하는 게임 화면을 구현합니다.
- * 
+ *
  * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
- * 
+ *
  */
 public class GameScreen extends Screen {
 
@@ -54,6 +59,7 @@ public class GameScreen extends Screen {
 	 * Height of the interface separation line. 인터페이스 분리선의 높이입니다.
 	 */
 	private static final int SEPARATION_LINE_HEIGHT = 40;
+	private final int bossCheck;
 
 	/**
 	 * Current game difficulty settings. 현재 게임 난이도 설정.
@@ -122,10 +128,10 @@ public class GameScreen extends Screen {
 
 	/**
 	 * Constructor, establishes the properties of the screen. 생성자, 화면의 속성을 설정합니다.
-	 * 
+	 *
 	 * @param gameState    Current game state. 현재 게임 상태입니다.
 	 * @param gameSettings Current game settings. 현재 게임 설정.
-	 * @param bonnusLife   Checks if a bonus life is awarded this level. 이 레벨에서 보너스
+	 * @param bonusLife   Checks if a bonus life is awarded this level. 이 레벨에서 보너스
 	 *                     생명이 주어지는지 확인합니다.
 	 * @param width        Screen width. 화면 너비.
 	 * @param height       Screen height. 화면 높이.
@@ -133,7 +139,7 @@ public class GameScreen extends Screen {
 	 *                     초당 프레임 수, 게임이 실행되는 프레임 속도입니다.
 	 */
 	public GameScreen(final GameState gameState, final GameSettings gameSettings, final boolean bonusLife,
-			final int width, final int height, final int fps) {
+					  final int width, final int height, final int fps) {
 		super(width, height, fps);
 
 		this.gameSettings = gameSettings;
@@ -145,6 +151,7 @@ public class GameScreen extends Screen {
 			this.lives++;
 		this.bulletsShot = gameState.getBulletsShot();
 		this.shipsDestroyed = gameState.getShipsDestroyed();
+		this.bossCheck = gameSettings.getBossCheck();
 	}
 
 	/**
@@ -156,7 +163,7 @@ public class GameScreen extends Screen {
 
 		enemyShipFormation = new EnemyShipFormation(this.gameSettings);
 		enemyShipFormation.attach(this);
-		this.ship = new Ship(this.width / 2, this.height - 30);
+		this.ship = new Ship(this.width / 2, this.height - 30, this.gameSettings);
 		// Appears each 10-30 seconds.
 		this.enemyShipSpecialCooldown = Core.getVariableCooldown(BONUS_SHIP_INTERVAL, BONUS_SHIP_VARIANCE);
 		this.enemyShipSpecialCooldown.reset();
@@ -172,7 +179,7 @@ public class GameScreen extends Screen {
 
 	/**
 	 * Starts the action. 작업을 시작합니다.
-	 * 
+	 *
 	 * @return Next screen code.
 	 */
 	public final int run() {
@@ -184,14 +191,32 @@ public class GameScreen extends Screen {
 		return this.returnCode;
 	}
 
+
+
 	/**
 	 * Updates the elements on screen and checks for events. 화면의 요소를 업데이트하고 이벤트를
 	 * 확인합니다.
 	 */
 	protected final void update() {
 		super.update();
+		if (inputManager.isKeyDown(KeyEvent.VK_ESCAPE) || inputManager.isActive()==false) {
+			// Pause drawManager 메소드들을 통해 게임 스크린 위에 pause창 그려주는 방식으로 했습니다.
+			//메소드는 따로 만든것은 없습니다.
+			this.logger.info("press pause");
+			boolean isPause = true ;
+			while(isPause){
+				drawManager.initDrawing(this);
+				drawManager.drawTitle(this,"Pause",3);
+				drawManager.drawCenteredBigString(this,"press \"R\" to resume",this.getHeight() / 3 * 2);
+				drawManager.completeDrawing(this);
+				if(inputManager.isKeyDown(KeyEvent.VK_R)){
+					isPause = false ;
+				}
 
+			}
+		}
 		if (this.inputDelay.checkFinished() && !this.levelFinished) {
+
 
 			if (!this.ship.isDestroyed()) {
 				boolean moveRight = inputManager.isKeyDown(KeyEvent.VK_RIGHT) || inputManager.isKeyDown(KeyEvent.VK_D);
@@ -232,6 +257,9 @@ public class GameScreen extends Screen {
 			this.ship.update();
 			this.enemyShipFormation.update();
 			this.enemyShipFormation.shoot(this.bullets);
+
+
+
 		}
 
 		manageCollisions();
@@ -266,7 +294,7 @@ public class GameScreen extends Screen {
 
 		// Interface.
 		drawManager.drawScore(this, this.score);
-		drawManager.drawLives(this, this.lives);
+		drawManager.drawLives(this, this.lives,this.gameSettings);
 		drawManager.drawHorizontalLine(this, SEPARATION_LINE_HEIGHT - 1);
 
 		// Countdown to game start.
@@ -315,6 +343,14 @@ public class GameScreen extends Screen {
 						this.score += enemyShip.getPointValue();
 						this.shipsDestroyed++;
 						this.enemyShipFormation.destroy(enemyShip);
+
+						if(enemyShip.isDestroyed()) {
+							int count = 0;
+							while (count <= 50) {
+								Core.vib(count);
+								count++;
+							}
+						}
 						recyclable.add(bullet);
 					}
 				if (this.enemyShipSpecial != null && !this.enemyShipSpecial.isDestroyed()
@@ -322,6 +358,11 @@ public class GameScreen extends Screen {
 					this.score += this.enemyShipSpecial.getPointValue();
 					this.shipsDestroyed++;
 					this.enemyShipSpecial.destroy();
+					int count = 0;
+					while(count<=50){
+						Core.vib(count);
+						count++;
+					}
 					this.enemyShipSpecialExplosionCooldown.reset();
 					recyclable.add(bullet);
 				}
@@ -332,7 +373,7 @@ public class GameScreen extends Screen {
 
 	/**
 	 * Checks if two entities are colliding. 두 엔터티가 충돌하는지 확인합니다.
-	 * 
+	 *
 	 * @param a First entity, the bullet. 첫 번째 엔티티, 총알.
 	 * @param b Second entity, the ship. 두 번째 엔티티, 배.
 	 * @return Result of the collision test. 충돌 테스트 결과를 반환.
@@ -356,7 +397,7 @@ public class GameScreen extends Screen {
 	/**
 	 * Returns a GameState object representing the status of the game. 게임의 상태를 나타내는
 	 * GameState 오브젝트를 반환합니다.
-	 * 
+	 *
 	 * @return Current game state.
 	 */
 	public final GameState getGameState() {

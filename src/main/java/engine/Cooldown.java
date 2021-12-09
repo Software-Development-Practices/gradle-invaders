@@ -33,7 +33,7 @@ public class Cooldown {
 	 * @param milliseconds Time until cooldown period is finished. 재사용 대기 시간이 끝날
 	 *                     때까지의 시간입니다.
 	 */
-	protected Cooldown(final int milliseconds) {
+	public Cooldown(final int milliseconds) {
 		this.milliseconds = milliseconds;
 		this.variance = 0;
 		this.duration = milliseconds;

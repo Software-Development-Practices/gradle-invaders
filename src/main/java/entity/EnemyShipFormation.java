@@ -1,10 +1,12 @@
 package entity;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.Random ;
 import java.util.logging.Logger;
 
 import screen.Screen;
@@ -34,15 +36,23 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	/**
 	 * Distance between ships. 선박 사이의 거리.
 	 */
-	private static final int SEPARATION_DISTANCE = 40;
+	private static int SEPARATION_DISTANCE = 40;
+
+	/**
+	 * 선박 사이의 거리에 대한 setter함수입니다.
+	 */
+	public static void setDistance(int distance) {
+		SEPARATION_DISTANCE = distance;
+	}
 	/**
 	 * Proportion of C-type ships. C형 함선의 비율.
 	 */
-	private static final double PROPORTION_C = 0.2;
+	// difficaulty마다 비율 다르게 하기 위해 final 삭제
+	private static double PROPORTION_C = 0.2;
 	/**
 	 * Proportion of B-type ships. B형 함선의 비율.
 	 */
-	private static final double PROPORTION_B = 0.4;
+	private static double PROPORTION_B = 0.4;
 	/**
 	 * Lateral speed of the formation. 포메이션의 측면 속도.
 	 */
@@ -82,6 +92,10 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	private Logger logger;
 	/** Screen to draw ships on. */
 	private Screen screen;
+
+	public List<List<EnemyShip>> getEnemyShips() {
+		return enemyShips;
+	}
 
 	/**
 	 * List of enemy ships forming the formation. 포메이션을 형성하는 적 함선의 List.
@@ -161,6 +175,17 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	 * Number of not destroyed ships. 파괴되지 않은 선박의 수.
 	 */
 	private int shipCount;
+	/** Checking Boss */
+	private int bossCheck ;
+	//보스별 총알 맞는 수
+	private int boss_life;
+	private final int bossA_life = 5;
+	private final int bossB_life = 10;
+	private final int bossC_life = 20;
+
+	/** setting 된 difficulty 입니다. */
+	private int difficulty ;
+
 
 	/**
 	 * Directions the formation can move. 포메이션이 움직일 수 있는 방향.
@@ -201,37 +226,116 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 		this.positionY = INIT_POS_Y;
 		this.shooters = new ArrayList<EnemyShip>();
 		SpriteType spriteType;
+		this.bossCheck = gameSettings.getBossCheck();
+		//Core에서 setting된 difficulty를 가져옴.
+		this.difficulty = Core.getDifficulty() ;
+
+
 
 		this.logger.info("Initializing " + nShipsWide + "x" + nShipsHigh + " ship formation in (" + positionX + ","
 				+ positionY + ")");
 
-		// Each sub-list is a column on the formation.
-		for (int i = 0; i < this.nShipsWide; i++)
-			this.enemyShips.add(new ArrayList<EnemyShip>());
+		// 몬스터에 따라 다르게 적용될 색깔 값을 위한 색상 변수 초기화
+		Color selectedColor = Color.WHITE;
 
-		for (List<EnemyShip> column : this.enemyShips) {
-			for (int i = 0; i < this.nShipsHigh; i++) {
-				if (i / (float) this.nShipsHigh < PROPORTION_C)
-					spriteType = SpriteType.EnemyShipC1;
-				else if (i / (float) this.nShipsHigh < PROPORTION_B + PROPORTION_C)
-					spriteType = SpriteType.EnemyShipB1;
-				else
-					spriteType = SpriteType.EnemyShipA1;
+		//보스 스테이지 일때 보스 하나만 나오도록 함
 
-				column.add(new EnemyShip((SEPARATION_DISTANCE * this.enemyShips.indexOf(column)) + positionX,
-						(SEPARATION_DISTANCE * i) + positionY, spriteType));
-				this.shipCount++;
-			}
+		if (this.bossCheck!=0){
+			//List<SpriteType> bossType = new ArrayList<SpriteType>();
+			//bossType.add(SpriteType.BossA1);
+			//bossType.add(SpriteType.BossB1);
+			//bossType.add(SpriteType.BossC1);
+			SpriteType[] bossType = {SpriteType.BossA1 , SpriteType.BossB1, SpriteType.BossC1};
+			int[] bossLife = {bossA_life , bossB_life, bossC_life};
+			List<EnemyShip> column = new ArrayList<EnemyShip>();
+			column.add(new EnemyShip(
+					positionX, positionY, bossType[bossCheck-1], selectedColor));
+			this.shipCount = 1;
+			this.shooters.add(column.get(0));
+			this.enemyShips.add(column);
+			this.shipWidth = this.enemyShips.get(0).get(0).getWidth();
+			this.shipHeight = this.enemyShips.get(0).get(0).getHeight();
+
+			this.width = this.shipWidth;
+			this.height =  this.shipHeight;
+			this.boss_life = bossLife[bossCheck -1];
 		}
+		else {
+			Random rd = new Random();
+			//difficaulty에 따라서 타입별 proportion 값을 다르게 해줌 (난이도 높일 수록 A타입과 B타입 비중 높도록)
+			switch (difficulty){
 
-		this.shipWidth = this.enemyShips.get(0).get(0).getWidth();
-		this.shipHeight = this.enemyShips.get(0).get(0).getHeight();
+				case 1:{
+					// B : 0.4~0.6 (.99 이유 -> 최대 비율이 되는 경우의수 늘려주기 위함)
+					PROPORTION_B = (int)((Math.random()*2.99)+4)/(10.0) ;
+					//확률 반반
+					//PROPORTION_B = rd.nextInt(2) +4 ;
+					// C : 0.1 , A : 0.3~0.5
+					PROPORTION_C = 0.1 ;
+					break ;
+				}
+				case 2:{
+					// B : 0.4~0.5
+					PROPORTION_B = (int)((Math.random()*1.99)+4)/(10.0) ;
+					// C : 0 or 0.1 , A : 0.4~0.6
+					PROPORTION_C = (int)(Math.random()*1.99)/(10.0);
+					break ;
+				}
+				default:
+					break ;
 
-		this.width = (this.nShipsWide - 1) * SEPARATION_DISTANCE + this.shipWidth;
-		this.height = (this.nShipsHigh - 1) * SEPARATION_DISTANCE + this.shipHeight;
+			}
+			// Each sub-list is a column on the formation.
+			for (int i = 0; i < this.nShipsWide; i++)
+				this.enemyShips.add(new ArrayList<EnemyShip>());
+			for (List<EnemyShip> column : this.enemyShips) {
+				for (int i = 0; i < this.nShipsHigh; i++) {
+					if (i / (float) this.nShipsHigh < PROPORTION_C){
+						spriteType = SpriteType.EnemyShipC1;
+					}
+					else if (i / (float) this.nShipsHigh < PROPORTION_B
+							+ PROPORTION_C){
+						spriteType = SpriteType.EnemyShipB1;
+					}
+					else {
+						spriteType = SpriteType.EnemyShipA1;
+					}
+					// 몬스터 타입에 따라 색깔이 다르게 적용될 수 있게 switch 문을 사용.
+					switch (spriteType) {
+						case EnemyShipA1:
+						case EnemyShipA2:
+							selectedColor = Color.RED;
+							break;
+						case EnemyShipB1:
+						case EnemyShipB2:
+							selectedColor = Color.YELLOW;
+							break;
+						case EnemyShipC1:
+						case EnemyShipC2:
+							selectedColor = Color.GREEN;
+							break;
+					}
 
-		for (List<EnemyShip> column : this.enemyShips)
-			this.shooters.add(column.get(column.size() - 1));
+					column.add(new EnemyShip((SEPARATION_DISTANCE
+							* this.enemyShips.indexOf(column))
+							+ positionX, (SEPARATION_DISTANCE * i)
+							+ positionY, spriteType, selectedColor));
+					this.shipCount++;
+				}
+			}
+
+
+			this.shipWidth = this.enemyShips.get(0).get(0).getWidth();
+			this.shipHeight = this.enemyShips.get(0).get(0).getHeight();
+
+			this.width = (this.nShipsWide - 1) * SEPARATION_DISTANCE
+					+ this.shipWidth;
+			this.height = (this.nShipsHigh - 1) * SEPARATION_DISTANCE
+					+ this.shipHeight;
+
+			for (List<EnemyShip> column : this.enemyShips)
+				this.shooters.add(column.get(column.size() - 1));
+		}
 	}
 
 	/**
@@ -409,9 +513,30 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 		for (List<EnemyShip> column : this.enemyShips)
 			for (int i = 0; i < column.size(); i++)
 				if (column.get(i).equals(destroyedShip)) {
-					column.get(i).destroy();
-					this.logger.info("Destroyed ship in (" + this.enemyShips.indexOf(column) + "," + i + ")");
+					if(bossCheck!=0) {
+						this.boss_life --;
+						if(this.boss_life==0) {
+							column.get(i).destroy();
+							this.logger.info("Destroyed ship in (" + this.enemyShips.indexOf(column) + "," + i + ")");
+						}
+					}
+					else {
+						//리스트 column 각 자리에 들어가있는 EnemyShip의 get,setHP를 통해 hp기능 구현
+						int hp = column.get(i).getHP() ;
+						hp -- ;
+						column.get(i).setHP(hp);
+						if(hp == 0){
+							//기존에 일반 몬스터 경우 맞은 즉시 shipCount가 줄었던 것을 hp고려하여 줄도록 변경
+							this.shipCount--;
+							column.get(i).destroy();
+							this.logger.info("Destroyed ship in (" + this.enemyShips.indexOf(column) + "," + i + ")");
+						}
+
+					}
+
 				}
+
+
 
 		// Updates the list of ships that can shoot the player.
 		if (this.shooters.contains(destroyedShip)) {
@@ -434,7 +559,9 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 			}
 		}
 
-		this.shipCount--;
+		if(bossCheck!=0) {
+			if(this.boss_life==0) this.shipCount=0;
+		}
 	}
 
 	/**
