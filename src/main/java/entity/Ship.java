@@ -93,7 +93,7 @@ public class Ship extends Entity {
     public final boolean shoot(final Set<Bullet> bullets) {
         if (this.shootingCooldown.checkFinished()) {
             this.shootingCooldown.reset();
-            shootSound = new Sound("src/main/resources/music/shoot.wav");
+            shootSound = new Sound("music/shoot.wav");
             shootSound.playOnce(Core.musicVolume);
             if (DrawManager.getXAxis() == 2) {
                 // normal size
