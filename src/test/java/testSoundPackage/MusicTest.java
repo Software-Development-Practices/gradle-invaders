@@ -37,8 +37,8 @@ public class MusicTest {
         Sound backGroundMusic;
         int musicVolume = 2;
         backGroundMusic = new Sound("./src/main/resources/music/mainBgm.wav");
-        backGroundMusic.playSoundLoop(musicVolume);
-        assertTrue(backGroundMusic.clip.isActive(), "false");
+
+        assertTrue(backGroundMusic.playSoundLoop(musicVolume), "false");
     }
 
     @DisplayName("멈췄을 때 음악도 멈추는지 테스트")

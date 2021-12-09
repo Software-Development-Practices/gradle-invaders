@@ -4,7 +4,6 @@ import engine.Cooldown;
 import engine.Core;
 
 import java.awt.event.KeyEvent;
-import java.util.logging.Logger;
 
 public class SettingScreen extends Screen {
     /**
@@ -87,8 +86,6 @@ public class SettingScreen extends Screen {
             }
 
         }
-
-
     }
 
     /**

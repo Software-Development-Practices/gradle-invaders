@@ -5,12 +5,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import screen.GameScreen;
 import screen.Screen;
 import screen.SettingScreen;
 import screen.TitleScreen;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class SettingTest {
@@ -21,24 +25,24 @@ public class SettingTest {
         System.out.println("before");
     }
 
-    @DisplayName("리턴코드로 4번이 들어오는지 테스트")
+    @DisplayName("세팅 기능 테스트")
     @Test
-    public void testReturnCoed() throws InterruptedException {
+    public void testSetting() throws IllegalAccessException, NoSuchFieldException, NoSuchMethodException, InvocationTargetException {
+        SettingScreen screen = new SettingScreen(448, 520, 60);
 
-    }
-
-    @DisplayName("각 글자 색깔이 알맞게 들어오는지 테스트")
-    @Test
-    public void testColors() {
-
-
-    }
-
-    @DisplayName("스페이스 눌렀을 때 리턴코드 1번(메인화면)으로 돌아가는지 테스트")
-    @Test
-    public void testSpaceBar() {
+        Field field = screen.getClass().getDeclaredField("activated");
+        field.setAccessible(true);
+        assertEquals(field.get(screen), 0);
 
 
+        Field field2 = screen.getClass().getDeclaredField("resizeOption");
+        field2.setAccessible(true);
+        assertEquals(field2.get(screen), 0);
+
+        Method method = screen.getClass().getDeclaredMethod("nextOptionItem");
+        method.setAccessible(true);
+        method.invoke(screen);
+        assertEquals(field2.get(screen), 1);
     }
 
     @After
