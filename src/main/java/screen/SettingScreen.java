@@ -4,7 +4,6 @@ import engine.Cooldown;
 import engine.Core;
 
 import java.awt.event.KeyEvent;
-import java.util.logging.Logger;
 
 public class SettingScreen extends Screen {
     /**
@@ -12,7 +11,7 @@ public class SettingScreen extends Screen {
      */
     private static final int SELECTION_TIME = 200;
     private static int resizeOption = 0;
-    private static int soundOption = 0;
+    private static int soundOption = 2;
     private static int difficultyOption = 0;
 
     /**
@@ -82,12 +81,11 @@ public class SettingScreen extends Screen {
                 this.returnCode = 1;
                 Core.setScreenSizeMode(resizeOption);
                 Core.setDifficulty(difficultyOption);
+                Core.setMusicVolume(soundOption);
                 this.isRunning = false;
             }
 
         }
-
-
     }
 
     /**

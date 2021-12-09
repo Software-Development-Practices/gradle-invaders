@@ -93,6 +93,10 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	/** Screen to draw ships on. */
 	private Screen screen;
 
+	public List<List<EnemyShip>> getEnemyShips() {
+		return enemyShips;
+	}
+
 	/**
 	 * List of enemy ships forming the formation. 포메이션을 형성하는 적 함선의 List.
 	 */

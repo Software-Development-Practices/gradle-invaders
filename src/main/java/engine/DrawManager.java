@@ -203,7 +203,6 @@ public final class DrawManager {
         width = width_para;
         height = height_para;
     }
-
     /**
      * ^^
      * @return x-axis for bullet
@@ -219,6 +218,7 @@ public final class DrawManager {
         fileManager = Core.getFileManager();
         logger = Core.getLogger();
         logger.info("Started loading resources.");
+
 
         try {
             spriteMap = new LinkedHashMap<SpriteType, boolean[][]>();
