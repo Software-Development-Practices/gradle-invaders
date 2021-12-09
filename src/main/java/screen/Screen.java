@@ -50,11 +50,11 @@ public class Screen {
 	/**
 	 * If the screen is running. 화면이 실행 중인 경우.
 	 */
-	protected boolean isRunning;
+	public boolean isRunning;
 	/**
 	 * What kind of screen goes next. 다음은 어떤 종류의 화면으로 갈지.
 	 */
-	protected int returnCode;
+	public int returnCode;
 
 	/**
 	 * Constructor, establishes the properties of the screen. 생성자, 화면의 속성을 설정합니다.

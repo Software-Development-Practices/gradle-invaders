@@ -70,6 +70,16 @@ public final class DrawManager {
     private static FontMetrics fontBigMetrics;
 
     /**
+     * Regular와 Big 사이의 적당한 크기의 폰트입니다.
+     */
+    private static Font fontMiddle;
+
+    /**
+     * Small sized font.
+     */
+    private static Font fontSmall;
+
+    /**
      * Sprite types mapped to their images. 이미지에 매핑된 스프라이트 유형입니다.
      */
     private static Map<SpriteType, boolean[][]> spriteMap;
@@ -203,7 +213,6 @@ public final class DrawManager {
         width = width_para;
         height = height_para;
     }
-
     /**
      * ^^
      * @return x-axis for bullet
@@ -219,6 +228,7 @@ public final class DrawManager {
         fileManager = Core.getFileManager();
         logger = Core.getLogger();
         logger.info("Started loading resources.");
+
 
         try {
             spriteMap = new LinkedHashMap<SpriteType, boolean[][]>();
@@ -255,7 +265,9 @@ public final class DrawManager {
             logger.info("Finished loading the sprites.");
 
             // Font loading.
+            fontSmall = fileManager.loadFont(12f);
             fontRegular = fileManager.loadFont(14f);
+            fontMiddle = fileManager.loadFont(19f);
             fontBig = fileManager.loadFont(24f);
             logger.info("Finished loading the fonts.");
 
@@ -478,8 +490,9 @@ public final class DrawManager {
      */
     public void drawMenu(final Screen screen, final int option) {
         String playString = "Play";
-        String settingString = "Setting";
         String highScoresString = "High scores";
+        String gameSummaryString = "Game Summary";
+        String settingString = "Setting";
         String exitString = "exit";
 
         if (option == 2)
@@ -497,12 +510,17 @@ public final class DrawManager {
             backBufferGraphics.setColor(Color.GREEN);
         else
             backBufferGraphics.setColor(Color.WHITE);
-        drawCenteredRegularString(screen, settingString, screen.getHeight() / 3 * 2 + fontRegularMetrics.getHeight() * 2);
+        drawCenteredRegularString(screen, gameSummaryString, screen.getHeight() / 3 * 2 + fontRegularMetrics.getHeight() * 2);
+        if (option == 5)
+            backBufferGraphics.setColor(Color.GREEN);
+        else
+            backBufferGraphics.setColor(Color.WHITE);
+        drawCenteredRegularString(screen, settingString, screen.getHeight() / 3 * 2 + fontRegularMetrics.getHeight() * 4);
         if (option == 0)
             backBufferGraphics.setColor(Color.GREEN);
         else
             backBufferGraphics.setColor(Color.WHITE);
-        drawCenteredRegularString(screen, exitString, screen.getHeight() / 3 * 2 + fontRegularMetrics.getHeight() * 4);
+        drawCenteredRegularString(screen, exitString, screen.getHeight() / 3 * 2 + fontRegularMetrics.getHeight() * 6);
     }
 
     /**
@@ -657,8 +675,34 @@ public final class DrawManager {
      */
     public void drawRegularString(final Screen screen, final String string, final int width, final int height) {
         backBufferGraphics.setFont(fontRegular);
-        backBufferGraphics.drawString(string, width,
-                height);
+        backBufferGraphics.drawString(string, width, height);
+    }
+
+    /**
+     * regular font보단 조금 크고 Big font보단 조금 작은 크기의 string을 그립니다.
+     *
+     * @param screen Screen to draw on. 그릴 화면입니다.
+     * @param string String to draw. 그릴 문자열입니다.
+     * @param width  Weight of the drawing. 그림의 넓이입니다.
+     * @param height Height of the drawing. 그림의 높이입니다.
+     */
+    public void drawMiddleString(final Screen screen, final String string, final int width, final int height) {
+        backBufferGraphics.setFont(fontMiddle);
+        backBufferGraphics.drawString(string, width, height);
+    }
+
+    /**
+     * Draws a string on regular font.
+     * small font로 string을 그립니다.
+     *
+     * @param screen Screen to draw on. 그릴 화면입니다.
+     * @param string String to draw. 그릴 문자열입니다.
+     * @param width  Weight of the drawing. 그림의 넓이입니다.
+     * @param height Height of the drawing. 그림의 높이입니다.
+     */
+    public void drawSmallString(final Screen screen, final String string, final int width, final int height) {
+        backBufferGraphics.setFont(fontSmall);
+        backBufferGraphics.drawString(string, width, height);
     }
 
 
@@ -786,4 +830,38 @@ public final class DrawManager {
 
     }
 
+    public void drawSummary(final Screen screen) {
+        String title1 = "Game Story";
+        String[] gameStory = {"One peaceful day, invaders from the IC 1101 galaxy", "began to invade Earth. You must hurry", "to board the spaceship and save the Earth.", "Will you join the great battle?"};
+        String title2 = "TIP";
+        String[] gameTip = {"Every 3rd stage, you enter the boss stage,", "and you get a life when you clear it."};
+        String title3 = "Control";
+        String[] gameControl = {"UP, DOWN, RIGHT, LEFT", "Space bar : bullet firing"};
+        String quitString = "Quit";
+
+        backBufferGraphics.setColor(Color.CYAN);
+        drawMiddleString(screen, title1, screen.getWidth() / 25, screen.getHeight() / 5);
+        for (int i = 0; i < 4; i++) {
+            backBufferGraphics.setColor(Color.WHITE);
+            drawSmallString(screen, gameStory[i], screen.getWidth() / 25, screen.getHeight() / 5 + 20 * (i+1));
+        }
+
+        backBufferGraphics.setColor(Color.CYAN);
+        drawMiddleString(screen, title2, screen.getWidth() / 25, screen.getHeight() / 2);
+        for (int i = 0; i < 2; i++) {
+            backBufferGraphics.setColor(Color.WHITE);
+            drawSmallString(screen, gameTip[i], screen.getWidth() / 25, screen.getHeight() / 2 + 20 * (i+1));
+        }
+
+        backBufferGraphics.setColor(Color.CYAN);
+        drawMiddleString(screen, title3, screen.getWidth() / 25, screen.getHeight() - 150);
+        for (int i = 0; i < 2; i++) {
+            backBufferGraphics.setColor(Color.WHITE);
+            drawSmallString(screen, gameControl[i], screen.getWidth() / 25, screen.getHeight() - 150 + 20 * (i+1));
+        }
+
+        backBufferGraphics.setColor(Color.RED);
+        drawRegularRect(screen);
+        drawCenteredRegularString(screen, quitString, screen.getHeight() - fontBigMetrics.getHeight());
+    }
 }
