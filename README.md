@@ -2,7 +2,6 @@
 
 ## Convention
 
-
 ### Commit Convention
 
 - task 하나 : 하나의 브랜치 = 1 : 1 로 작업을 한다.
@@ -46,13 +45,13 @@
       dynamic sound effect, etc
 - [x] Display HP Color
       identifying enemy's hp state, bullet count, etc
-- [ ] Add Pause function
+- [x] Add Pause function
       pausing game by pressing ESC key, etc
 - [x] Add Setting function
       screen resizing, game speed selecting, etc
 - [x] Add various monsters
       diversifying monster patterns, boss monsters, etc
-- [ ] Add Game Summary
+- [x] Add Game Summary
       game rule, manual, etc
 
 ### old
