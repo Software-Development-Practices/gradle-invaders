@@ -242,7 +242,7 @@ public final class Core {
 			switch (returnCode) {
 			case 1:
 				// Main menu.
-				backGroundMusic = new Sound("./src/main/resources/music/mainBgm.wav");
+				backGroundMusic = new Sound("src/main/resources/music/mainBgm.wav");
 				backGroundMusic.playSoundLoop(musicVolume);
 				currentScreen = new TitleScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " title screen at " + FPS + " fps.");
@@ -252,7 +252,7 @@ public final class Core {
 				break;
 			case 2:
 				// Game & score.
-				backGroundMusic = new Sound("./src/main/resources/music/gameScreenBgm.wav");
+				backGroundMusic = new Sound("src/main/resources/music/gameScreenBgm.wav");
 				backGroundMusic.playSoundLoop(musicVolume);
 				do {
 					// One extra live every few levels.
@@ -283,7 +283,7 @@ public final class Core {
 				break;
 			case 3:
 				// High scores.
-				backGroundMusic = new Sound("./src/main/resources/music/scoreScreenBgm.wav");
+				backGroundMusic = new Sound("src/main/resources/music/scoreScreenBgm.wav");
 				backGroundMusic.playSoundLoop(musicVolume);
 				currentScreen = new HighScoreScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " high score screen at " + FPS + " fps.");
@@ -297,7 +297,7 @@ public final class Core {
 				returnCode = frame1.setScreen(currentScreen);
 				break;
 			case 5:
-				backGroundMusic = new Sound("./src/main/resources/music/settingScreenBgm.wav");
+				backGroundMusic = new Sound("src/main/resources/music/settingScreenBgm.wav");
 				backGroundMusic.playSoundLoop(musicVolume);
 				currentScreen = new SettingScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " setting screen at " + FPS + " fps.");
