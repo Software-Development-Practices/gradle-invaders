@@ -474,7 +474,7 @@ public final class DrawManager {
     public void drawTitle(final Screen screen, String title, int yWeight) {
         String titleString = title;
         String instructionsString = "select with w+s / arrows, confirm with space";
-        if (title.equals("Invaders")) {
+        if (title.equals("InvadersTEST")) {
             backBufferGraphics.setColor(Color.GRAY);
             drawCenteredRegularString(screen, instructionsString, screen.getHeight() / 2);
         }
