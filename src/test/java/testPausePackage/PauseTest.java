@@ -7,12 +7,7 @@ import org.junit.Before;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import screen.GameScreen;
-import screen.Screen;
-import screen.SettingScreen;
-import screen.TitleScreen;
-
 import java.awt.event.KeyEvent;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -66,7 +61,6 @@ public class PauseTest {
 
         assertFalse(inputManager.isKeyDown(KeyEvent.VK_RIGHT), "false");
     }
-
 
     @After
     public void teardown() {
