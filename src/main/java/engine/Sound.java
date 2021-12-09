@@ -2,6 +2,7 @@ package engine;
 
 import java.io.File;
 import java.nio.channels.Channel;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
@@ -23,9 +24,6 @@ public class Sound {
         file = new File(path);
     }
 
-    public void setFile(File file) {
-        this.file = file;
-    }
 
 
     /**
@@ -35,7 +33,12 @@ public class Sound {
     public boolean playSoundLoop(int mode) {
         try {
             clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(this.file));
+
+            AudioInputStream audioStream;
+            audioStream =
+                    AudioSystem.getAudioInputStream(
+                            file.getAbsoluteFile());
+            clip.open(audioStream);
             FloatControl gainControl =
                     (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             if (mode == 0) {
@@ -62,7 +65,12 @@ public class Sound {
     public void playOnce(int mode) {
         try {
             clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(this.file));
+
+            AudioInputStream audioStream;
+            audioStream =
+                    AudioSystem.getAudioInputStream(
+                            file.getAbsoluteFile());
+            clip.open(audioStream);
             FloatControl gainControl =
                     (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             if (mode == 0) {
