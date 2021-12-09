@@ -76,7 +76,7 @@ public class TitleScreen extends Screen {
 	 * Shifts the focus to the next menu item. 포커스를 다음 메뉴 항목으로 이동합니다.
 	 */
 	private void nextMenuItem() {
-		if (this.returnCode == 4)
+		if (this.returnCode == 5)
 			this.returnCode = 0;
 		else if (this.returnCode == 0)
 			this.returnCode = 2;
@@ -89,7 +89,7 @@ public class TitleScreen extends Screen {
 	 */
 	private void previousMenuItem() {
 		if (this.returnCode == 0)
-			this.returnCode = 4;
+			this.returnCode = 5;
 		else if (this.returnCode == 2)
 			this.returnCode = 0;
 		else

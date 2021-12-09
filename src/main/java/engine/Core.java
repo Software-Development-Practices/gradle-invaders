@@ -292,6 +292,11 @@ public final class Core {
 				backGroundMusic.pause();
 				break;
 			case 4:
+				currentScreen = new SummaryScreen(width, height, FPS);
+				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT + " setting screen at " + FPS + " fps.");
+				returnCode = frame1.setScreen(currentScreen);
+				break;
+			case 5:
 				backGroundMusic = new Sound("./src/main/resources/music/settingScreenBgm.wav");
 				backGroundMusic.playSoundLoop(musicVolume);
 				currentScreen = new SettingScreen(width, height, FPS);
