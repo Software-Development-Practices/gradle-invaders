@@ -32,7 +32,7 @@ public final class InputManager implements KeyListener {
 	}
 
 	//키보드 입력 여부
-	private boolean isPressed=false;
+	public boolean isPressed=false;
 
 	//키보드 누를 때마다 갱신
 	private long starttime=0;
